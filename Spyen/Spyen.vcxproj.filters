@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core">
+      <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Renderer">
+      <UniqueIdentifier>{73D1DFBF-5F34-6F64-08BA-A71AF4FB3AE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window">
+      <UniqueIdentifier>{74C3D837-607B-1A85-C982-F3E0B559B575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glad">
+      <UniqueIdentifier>{9A8E79C1-0644-F2B6-8F38-EC8DFBECE8BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glad\src">
+      <UniqueIdentifier>{B1098FEA-1D95-FCAE-26A6-7FA392B058AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glm">
+      <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glm\include">
+      <UniqueIdentifier>{F528B309-E10C-745F-4A6D-6EB236705EE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\glm\include\glm">
+      <UniqueIdentifier>{C4257490-B01F-9DE2-998C-33F38525034F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core\Core.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Defines.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Log.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\BufferElement.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\BufferLayout.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\IndexBuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Shader.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ShaderDataType.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\VertexArray.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\VertexBuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Window.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\common.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\exponential.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\ext.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\fwd.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\geometric.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\glm.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\integer.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat2x2.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat2x3.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat2x4.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat3x2.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat3x3.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat3x4.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat4x2.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat4x3.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\mat4x4.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\matrix.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\packing.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\trigonometric.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\vec2.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\vec3.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\vec4.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\glm\include\glm\vector_relational.hpp">
+      <Filter>vendor\glm\include\glm</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\Core.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Log.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Shader.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\VertexArray.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\VertexBuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window\Window.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\glad\src\glad.c">
+      <Filter>vendor\glad\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
