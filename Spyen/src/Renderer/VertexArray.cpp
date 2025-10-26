@@ -43,6 +43,11 @@ namespace Spyen {
 		for (const auto& element : layout) {
 			switch (element.Type)
 			{
+			case ShaderDataType::None:
+				{
+				SPY_CORE_ERROR("Shader element type is none!");
+				break;
+			}
 			case ShaderDataType::Float:
 			case ShaderDataType::Float2:
 			case ShaderDataType::Float3:
@@ -54,7 +59,7 @@ namespace Spyen {
 					ShaderDataTypeToOpenGLBaseType(element.Type),
 					element.Normalized ? GL_TRUE : GL_FALSE,
 					layout.GetStride(),
-					(const void*)element.Offset);
+					reinterpret_cast<const void*>(element.Offset));
 				m_VertexBufferIndex++;
 				break;
 			}
@@ -68,7 +73,7 @@ namespace Spyen {
 						ShaderDataTypeToOpenGLBaseType(element.Type),
 						element.Normalized ? GL_TRUE : GL_FALSE,
 						layout.GetStride(),
-						(const void*)(element.Offset + sizeof(float) * count * i));
+						reinterpret_cast<const void*>(element.Offset + sizeof(float) * count * i));
 					glVertexAttribDivisor(m_VertexBufferIndex, 1);
 					m_VertexBufferIndex++;
 				}
@@ -85,7 +90,7 @@ namespace Spyen {
 					element.GetComponentCount(),
 					ShaderDataTypeToOpenGLBaseType(element.Type),
 					layout.GetStride(),
-					(const void*)element.Offset);
+					reinterpret_cast<const void*>(element.Offset));
 				m_VertexBufferIndex++;
 				break;
 			}

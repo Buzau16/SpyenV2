@@ -1,10 +1,8 @@
 #pragma once
 #include <print>
-#include <optional>
 
 #include <Window/Window.h>
 #include <Renderer/Renderer.h>
-#include <Core/Log.h>
 #include <memory>
 
 
@@ -14,12 +12,12 @@ namespace Spyen {
 		Engine() = default;
 		~Engine() = default;
 
-		Engine(const WindowSpecifications& specs);
+		explicit Engine(const WindowSpecifications& specs);
 
-		void Run();
+		void Run() const;
 
 	private:
-		std::shared_ptr<Window> m_Window;
-		std::shared_ptr<Renderer> m_Renderer;
+		std::unique_ptr<Window> m_Window;
+		std::unique_ptr<Renderer> m_Renderer;
 	};
 }

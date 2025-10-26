@@ -27,10 +27,12 @@ namespace Spyen {
 		void SetUniform3f(const std::string& name, const glm::vec3& value);
 		void SetUniform4f(const std::string& name, const glm::vec4& value);
 		void SetUniformMat4(const std::string& name, const glm::mat4& value);
+		void SetUniformHandle(const std::string& name, const uint64_t handle);
+		void SetUniformHandles(const std::string& name, const uint64_t* handles, size_t count);
 
 
 	private:
-		uint32_t CompileShader(uint32_t type, const std::string& filepath);
+		uint32_t CompileShader(uint32_t type, const std::string& source);
 		std::string ReadFile(const std::string& filepath);
 
 		uint32_t m_RendererID;

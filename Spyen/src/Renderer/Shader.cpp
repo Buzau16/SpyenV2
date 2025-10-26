@@ -151,6 +151,15 @@ namespace Spyen
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
 
-
+	void Shader::SetUniformHandle(const std::string& name, const uint64_t handle)
+	{
+		GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformHandleui64ARB(location, handle);
+	}
+	void Shader::SetUniformHandles(const std::string& name, const uint64_t* handles, size_t count)
+	{
+		GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformHandleui64vARB(location, count, handles);
+	}
 }
 

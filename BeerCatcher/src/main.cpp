@@ -3,7 +3,7 @@
 #include <Window/Window.h>
 
 int main() {
-	Spyen::Engine engine({ "Penis", 1280, 720 });
+	const Spyen::Engine engine({ "Penis", 1280, 720 });
 
 	engine.Run();
 }

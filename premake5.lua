@@ -26,7 +26,8 @@ project "Spyen"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/vendor/glad/src/glad.c",
 		"%{prj.name}/vendor/glm/include/glm/*.hpp",
-		"%{prj.name}/vendor/glm/include/glm/*.inl"
+		"%{prj.name}/vendor/glm/include/glm/*.inl",
+		"%{prj.name}/vendor/entt/*.hpp"
 	}
 	
 	includedirs {
@@ -36,6 +37,7 @@ project "Spyen"
 		"%{prj.name}/vendor/glm/include",
 		"%{prj.name}/vendor/glfw/include",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/entt",
 		"%{prj.name}/vendor/miniaudio"
 	}
 
@@ -106,6 +108,7 @@ project "BeerCatcher"
 		"Spyen/vendor/glad/include",
 		"Spyen/vendor/glm/include",
 		"Spyen/vendor/spdlog/include",
+		"Spyen/vendor/entt",
 		"Spyen/vendor/glfw/include"
 	}
 
