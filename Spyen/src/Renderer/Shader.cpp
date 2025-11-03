@@ -4,6 +4,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include "Renderer/Shader.h"
+
+#include "Core/Log.h"
+
 namespace Spyen
 {
 	Shader::Shader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) :
@@ -160,6 +163,16 @@ namespace Spyen
 	{
 		GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformHandleui64vARB(location, count, handles);
+	}
+
+	void Shader::Test()
+	{
+		GLuint shaderID = m_RendererID;
+		GLuint blockIndex = glGetUniformBlockIndex(shaderID, "CameraBuffer");
+		GLint blockBinding = -1;
+		glGetActiveUniformBlockiv(shaderID, blockIndex, GL_UNIFORM_BLOCK_BINDING, &blockBinding);
+
+		SPY_CORE_INFO("CameraBuffer block index = {}, binding = {}", blockIndex, blockBinding);
 	}
 }
 

@@ -5,13 +5,12 @@
 
 #include <glm/glm.hpp>
 #include <string>
-#include <string_view>
-#include <memory>
 
 namespace Spyen {
 	class Shader
 	{
 	public:
+		Shader() = default;
 		Shader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		~Shader();
 
@@ -30,6 +29,8 @@ namespace Spyen {
 		void SetUniformHandle(const std::string& name, const uint64_t handle);
 		void SetUniformHandles(const std::string& name, const uint64_t* handles, size_t count);
 
+
+		void Test();
 
 	private:
 		uint32_t CompileShader(uint32_t type, const std::string& source);

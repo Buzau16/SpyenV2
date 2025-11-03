@@ -6,6 +6,7 @@ namespace Spyen
 	class SSBO
 	{
 	public:
+		SSBO() = default;
 		SSBO(const void* data, size_t size);
 		~SSBO();
 

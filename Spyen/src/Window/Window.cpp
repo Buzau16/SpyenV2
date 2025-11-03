@@ -1,7 +1,6 @@
 #include "Window.h"
 #include <stdexcept>
 #include <Core/Log.h>
-#include <Core/Defines.h>
 
 
 namespace Spyen {

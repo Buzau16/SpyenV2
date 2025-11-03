@@ -151,6 +151,9 @@
     <ClInclude Include="src\Scene\Entity.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
     <ClInclude Include="src\Scene\Components.h" />
+    <ClInclude Include="src\Renderer\UniformBuffer.h" />
+    <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\AssetManager\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Core.cpp">
@@ -189,5 +192,8 @@
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="src\Renderer\stb_image.c" />
+    <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
+    <ClCompile Include="src\Renderer\Camera.cpp" />
+    <ClCompile Include="src\AssetManager\AssetManager.cpp" />
   </ItemGroup>
 </Project>

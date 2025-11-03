@@ -1,3 +1,4 @@
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Camera.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\Camera.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\stb_image.c;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\stb_image.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Entity.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\Entity.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Scene.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\Scene.obj
@@ -11,4 +12,5 @@ C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Texture.cpp;C
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\VertexArray.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\VertexArray.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\VertexBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\VertexBuffer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Window\Window.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\Window.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\UniformBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\UniformBuffer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\vendor\glad\src\glad.c;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Release-windows-x86_64\Spyen\glad.obj

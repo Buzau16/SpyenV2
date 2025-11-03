@@ -3,21 +3,25 @@
 #include "Components.h"
 #include "Core/Defines.h"
 #include "Entity.h"
+#include <Renderer/Renderer.h>
 
 namespace Spyen
 {
-	locked_ptr<Entity> Scene::CreateEntity(const std::string& name)
+
+	std::unordered_map<std::string, Entity> m_Entities;
+
+	Entity Scene::CreateEntity(const std::string& name)
 	{
 		SPY_CORE_ASSERT(!m_Entities.contains(name), "Entity {} already exists!", name.c_str());
-		m_Entities.insert({ name, std::make_shared<Entity>(m_Registry.create(), this) });
+		m_Entities.insert({ name, Entity(m_Registry.create(), this) });
 		auto& entity = m_Entities.at(name);
 
-		return locked_ptr<Entity>(entity);
+		return entity;
 	}
-	locked_ptr<Entity> Scene::GetEntityByName(const std::string& name) const
+	Entity Scene::GetEntityByName(const std::string& name) const
 	{
 		SPY_CORE_ASSERT(m_Entities.contains(name), "Entity {} does not exists!", name.c_str());
-		return locked_ptr<Entity>(m_Entities.at(name));
+		return m_Entities.at(name);
 	}
 	void Scene::OnRender(Renderer* renderer) const
 	{

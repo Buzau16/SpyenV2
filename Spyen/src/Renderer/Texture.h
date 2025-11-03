@@ -14,6 +14,7 @@ namespace Spyen
 	class Texture
 	{
 	public:
+		Texture() = default;
 		Texture(const std::filesystem::path& path);
 		Texture(const TextureSpecification& specs);
 		~Texture();

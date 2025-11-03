@@ -2,6 +2,7 @@
 #include <glm/ext/matrix_transform.hpp>
 
 #include "glm/glm.hpp"
+#include "Renderer/Texture.h"
 
 namespace Spyen
 {
@@ -27,11 +28,11 @@ namespace Spyen
 		struct Render
 		{
 			glm::vec3 Color = {0.0f, 0.0f, 0.0f};
-			std::shared_ptr<Texture> Texture = nullptr;
+			Spyen::Texture* Texture = nullptr;
 
 			Render() = default;
 			Render(const glm::vec3& color) : Color(color) {};
-			Render(const std::shared_ptr<Spyen::Texture>& texture) : Texture(texture) {};
+			Render(Spyen::Texture* texture) : Texture(texture) {};
 
 
 		};
