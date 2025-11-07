@@ -7,7 +7,7 @@ This version focuses on speed, modularity, and clean design, offering a solid fo
 
 ## 🚀 Overview
 
-spyenV2 is designed for developers who want to *write games like they write code* — no drag-and-drop editors, no GUI clutter, just clean APIs and pure logic.  
+SpyenV2 is designed for developers who want to *write games like they write code* — no drag-and-drop editors, no GUI clutter, just clean APIs and pure logic.  
 It provides a minimal but powerful framework for:
 
 - **Rendering** (2D graphics)
@@ -34,7 +34,7 @@ Compared to the original **Spyen**, this rewrite introduces:
 
 > “Code is the editor.”
 
-spyenV2 rejects traditional game editor bloat. Everything — from scenes to assets to behaviors — is defined in code.  
+SpyenV2 rejects traditional game editor bloat. Everything — from scenes to assets to behaviors — is defined in code.  
 This approach gives developers complete flexibility, better version control, and a deeper understanding of how their games run.
 
 ---
@@ -45,7 +45,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/Buzau16/SpyenV2.git
-cd spyenV2/
+cd SpyenV2/
 run the build.bat script
 open the solution in Visual Studio 2024
 ```
