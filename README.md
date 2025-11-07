@@ -1,6 +1,6 @@
 # 🕹️ spyenV2
 
-**spyenV2** is a complete rewrite of the original [**spyen**]((https://github.com/Buzau16/Spyen) — a lightweight, code-only **game engine** built for developers who prefer full control and zero bloat.  
+**spyenV2** is a complete rewrite of the original [**spyen**](https://github.com/Buzau16/Spyen) — a lightweight, code-only **game engine** built for developers who prefer full control and zero bloat.  
 This version focuses on speed, modularity, and clean design, offering a solid foundation for building 2D (and potentially 3D) games entirely through code.
 
 ---
@@ -76,4 +76,4 @@ This project is licensed under the Apache License 2.0
 🌌 Credits
 
 spyenV2 — rewritten and maintained by Buzau16
-Based on the original [spyen]((https://github.com/Buzau16/Spyen) project
+Based on the original [spyen](https://github.com/Buzau16/Spyen) project
