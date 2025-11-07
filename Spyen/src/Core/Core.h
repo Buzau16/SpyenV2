@@ -7,12 +7,14 @@
 #include <Renderer/Renderer.h>
 #include <memory>
 
+#include "AssetManager/AssetManager.h"
+
 
 namespace Spyen {
 	class Engine {
 	public:
 		Engine() = default;
-		~Engine() = default;
+		~Engine();
 
 		explicit Engine(const WindowSpecifications& specs);
 
@@ -26,8 +28,9 @@ namespace Spyen {
 		Scene* GetActiveScene() const { return m_ActiveScene; };
 
 	private:
-		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<Renderer> m_Renderer;
+		std::unique_ptr<Window> m_Window = nullptr;
+		std::unique_ptr<Renderer> m_Renderer = nullptr;
+		std::unique_ptr<AssetManager> m_AssetManager = nullptr;
 		std::unordered_map<std::string, std::unique_ptr<Scene>> m_Scenes;
 		Scene* m_ActiveScene = nullptr;
 	};

@@ -6,15 +6,13 @@
 
 namespace Spyen
 {
-	namespace Components
-	{
-		struct Transform
+		struct TransformComponent
 		{
 			glm::vec2 Position = {0.0f, 0.0f};
 			float Rotation = 0.0f;
 			float Scale = 1.0f;
 
-			Transform() = default;
+			TransformComponent() = default;
 
 			[[nodiscard]] glm::mat4 GetTransformMatrix() const noexcept
 			{
@@ -25,16 +23,15 @@ namespace Spyen
 		};
 
 
-		struct Render
+		struct RenderComponent
 		{
 			glm::vec3 Color = {0.0f, 0.0f, 0.0f};
 			Spyen::Texture* Texture = nullptr;
 
-			Render() = default;
-			Render(const glm::vec3& color) : Color(color) {};
-			Render(Spyen::Texture* texture) : Texture(texture) {};
+			RenderComponent() = default;
+			RenderComponent(const glm::vec3& color) : Color(color) {};
+			RenderComponent(Spyen::Texture* texture) : Texture(texture) {};
 
 
 		};
-	}
 }

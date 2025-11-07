@@ -15,6 +15,8 @@ namespace Spyen
 		SPY_CORE_ASSERT(!m_Entities.contains(name), "Entity {} already exists!", name.c_str());
 		m_Entities.insert({ name, Entity(m_Registry.create(), this) });
 		auto& entity = m_Entities.at(name);
+		entity.AddComponent<TransformComponent>();
+		entity.AddComponent<RenderComponent>();
 
 		return entity;
 	}
@@ -25,7 +27,7 @@ namespace Spyen
 	}
 	void Scene::OnRender(Renderer* renderer) const
 	{
-		const auto& view = m_Registry.view<Components::Transform, Components::Render>();
+		const auto& view = m_Registry.view<TransformComponent, RenderComponent>();
 
 		renderer->BeginFrame();
 

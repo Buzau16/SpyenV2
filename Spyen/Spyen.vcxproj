@@ -159,6 +159,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\AssetManager\IAssetManager.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="vendor\glm\include\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\stb_image.c" />

@@ -2,18 +2,29 @@
 #include <filesystem>
 
 
+#include "AssetManager/IAssetManager.h"
 #include "Scene/Components.h"
 #include "Scene/Entity.h" 
 
 
 namespace Spyen {
+	
+
 	Engine::Engine(const WindowSpecifications& specs)
 	{
 		Log::Init();
 		SPY_CORE_INFO("Working directory: {}", std::filesystem::current_path().string());
 		m_Window = std::make_unique<Window>(specs);
 		m_Renderer = std::make_unique<Renderer>("Shaders/QuadShader.vert", "Shaders/QuadShader.frag");
+		m_AssetManager = std::make_unique<AssetManager>();
+		IAssetManager::m_Instance = m_AssetManager.get();
 	}
+
+	Engine::~Engine()
+	{
+		IAssetManager::m_Instance = nullptr;
+	}
+
 	void Engine::Run() const
 	{
 		SPY_CORE_ASSERT(m_ActiveScene, "Please create and set an active scene!");
