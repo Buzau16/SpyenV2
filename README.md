@@ -1,6 +1,6 @@
-# 🕹️ spyenV2
+# 🕹️ SpyenV2
 
-**spyenV2** is a complete rewrite of the original [**spyen**](https://github.com/Buzau16/Spyen) — a lightweight, code-only **game engine** built for developers who prefer full control and zero bloat.  
+**SpyenV2** is a complete rewrite of the original [**Spyen**](https://github.com/Buzau16/Spyen) — a lightweight, code-only **game engine** built for developers who prefer full control and zero bloat.  
 This version focuses on speed, modularity, and clean design, offering a solid foundation for building 2D (and potentially 3D) games entirely through code.
 
 ---
@@ -20,7 +20,7 @@ It provides a minimal but powerful framework for:
 
 ## 🔁 What's New in V2
 
-Compared to the original **spyen**, this rewrite introduces:
+Compared to the original **Spyen**, this rewrite introduces:
 - 🧩 Modular architecture (plug-and-play systems)
 - ⚡ Faster and cleaner rendering pipeline
 - 🧠 Better separation of engine and user code
@@ -44,7 +44,7 @@ This approach gives developers complete flexibility, better version control, and
 Clone the repository:
 
 ```bash
-git clone https://github.com/Buzau16/spyenV2.git
+git clone https://github.com/Buzau16/SpyenV2.git
 cd spyenV2/
 run the build.bat script
 open the solution in Visual Studio 2024
@@ -55,7 +55,7 @@ open the solution in Visual Studio 2024
 🧑‍💻 Contributing
 
 Contributions are welcome!
-If you want to help improve spyenV2, feel free to:
+If you want to help improve SpyenV2, feel free to:
 
 Fork the repo
 
@@ -75,5 +75,5 @@ This project is licensed under the Apache License 2.0
 
 🌌 Credits
 
-spyenV2 — rewritten and maintained by Buzau16
-Based on the original [spyen](https://github.com/Buzau16/Spyen) project
+SpyenV2 — rewritten and maintained by Buzau16
+Based on the original [Spyen](https://github.com/Buzau16/Spyen) project
