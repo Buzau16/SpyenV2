@@ -31,6 +31,8 @@ namespace Spyen {
 			SPY_CORE_CRITICAL("Failed to load OpenGL functions");
 		}
 
+		glfwMakeContextCurrent(m_Window);
+
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);

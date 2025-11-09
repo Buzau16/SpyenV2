@@ -17,6 +17,8 @@ namespace Spyen
 		auto& entity = m_Entities.at(name);
 		entity.AddComponent<TransformComponent>();
 		entity.AddComponent<RenderComponent>();
+		entity.AddComponent<ColliderComponent>();
+		entity.AddComponent<RigidBodyComponent>();
 
 		return entity;
 	}
@@ -29,8 +31,6 @@ namespace Spyen
 	{
 		const auto& view = m_Registry.view<TransformComponent, RenderComponent>();
 
-		renderer->BeginFrame();
-
 		for (auto [entity, transform, render] : view.each())
 		{
 			if (render.Texture == nullptr)
@@ -42,8 +42,5 @@ namespace Spyen
 			}
 			
 		}
-
-		renderer->EndFrame();
-
 	}
 }

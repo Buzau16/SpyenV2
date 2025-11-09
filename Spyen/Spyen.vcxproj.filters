@@ -155,6 +155,9 @@
     <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\AssetManager\IAssetManager.h" />
+    <ClInclude Include="src\Physics\PhysicsEngine.h" />
+    <ClInclude Include="src\Time\TimeStep.h" />
+    <ClInclude Include="src\Physics\QuadTree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Core.cpp">
@@ -197,5 +200,8 @@
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
+    <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
+    <ClCompile Include="src\Time\TimeStep.cpp" />
+    <ClCompile Include="src\Physics\QuadTree.cpp" />
   </ItemGroup>
 </Project>

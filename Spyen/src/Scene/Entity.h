@@ -2,6 +2,7 @@
 #include <entt/entity/entity.hpp>
 #include "Scene.h"
 #include "Core/Log.h"
+#include "glm/vec2.hpp"
 
 
 namespace Spyen {
@@ -41,6 +42,12 @@ namespace Spyen {
 			}
 			return m_ParentScene->m_Registry.get<TComponent>(m_EntityHandle);
 		}
+
+		// Moves the entity using physics
+		void Move(glm::vec2 velocity);
+
+		// Adds an impulse
+		void AddImpulse(glm::vec2 force);
 
 		bool operator==(const Entity& other) const
 		{

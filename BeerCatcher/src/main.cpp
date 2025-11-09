@@ -15,8 +15,8 @@ int main() {
 	auto scene = engine.CreateSceneA("Cox");
 	auto ent = scene->CreateEntity("test");
 	auto& c = ent.GetComponent<Spyen::TransformComponent>();
-	c.Position = {640.f, 360.f};
-	c.Scale = 100.f;
+	c.Position = {640, 360};
+	c.Scale = { 100, 100 };
 	ent.GetComponent<Spyen::RenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Box");
 
 	engine.Run();

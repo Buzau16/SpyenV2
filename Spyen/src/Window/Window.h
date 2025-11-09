@@ -24,6 +24,9 @@ namespace Spyen {
 		inline void PollEvents() noexcept { glfwPollEvents(); };
 		void Clear(const float r, const float g, const float b, const float a = 1.0f) noexcept;
 
+		[[nodiscard]] uint32_t GetWidth() const noexcept { return m_Specs.Width; }
+		[[nodiscard]] uint32_t GetHeight() const noexcept { return m_Specs.Height; }
+
 	private:
 		WindowSpecifications m_Specs;
 		GLFWwindow* m_Window;

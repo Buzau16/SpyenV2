@@ -19,6 +19,12 @@ namespace Spyen
 		void OnRender(Renderer* renderer) const;
 		void OnUpdate() {}; // to be implemented
 
+		template<typename... TComponents>
+		auto GetEntitiesWith()
+		{
+			return m_Registry.view<TComponents...>();
+		}
+
 	private:
 		entt::registry m_Registry;
 		//std::unordered_map<std::string, Entity> m_Entities;

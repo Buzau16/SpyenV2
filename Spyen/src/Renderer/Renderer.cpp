@@ -12,23 +12,24 @@ namespace Spyen {
 	constexpr uint32_t MaxVertices	= MaxQuads * 4;
 	constexpr uint32_t MaxIndices	= MaxQuads * 6;
 
-	Renderer::Renderer(const std::string& vertexSrc, const std::string& fragmentSrc)
+	Renderer::Renderer()
 	{
 		SPY_CORE_INFO("Initializing the renderer!");
 
+		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
-		m_VertexArray = std::make_unique<VertexArray>();
-		m_VertexArray->Bind();
+		m_QuadVertexArray = std::make_unique<VertexArray>();
+		m_QuadVertexArray->Bind();
 
-		m_VertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(QuadVertex));
-		m_VertexBuffer->Bind();
-		m_VertexBuffer->SetLayout({
+		m_QuadVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(QuadVertex));
+		m_QuadVertexBuffer->Bind();
+		m_QuadVertexBuffer->SetLayout({
 			{ ShaderDataType::Float2, "a_Position"},
 			{ ShaderDataType::Float3, "a_Color"},
 			{ ShaderDataType::Float2, "a_TexCoord"},
 			{ ShaderDataType::Int, "a_TexIndex"}
 			});
-		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+		m_QuadVertexArray->AddVertexBuffer(m_QuadVertexBuffer);
 
 		m_QuadPositions[1] = { 0.5f, -0.5f, 1.f, 1.0f };
 		m_QuadPositions[0] = { -0.5f, -0.5f, 1.0f, 1.0f };
@@ -46,13 +47,28 @@ namespace Spyen {
 			indices[i + 5] = offset + 0;
 			offset += 4;
 		}
-		m_IndexBuffer = std::make_shared<IndexBuffer>(indices, MaxIndices);
-		m_VertexArray->AddIndexBuffer(m_IndexBuffer);
+		m_QuadIndexBuffer = std::make_shared<IndexBuffer>(indices, MaxIndices);
+		m_QuadVertexArray->AddIndexBuffer(m_QuadIndexBuffer);
 		delete[] indices;
 
-		m_Shader = std::make_unique<Shader>("QuadShader", vertexSrc, fragmentSrc);
+		m_QuadShader = std::make_unique<Shader>("QuadShader", "Shaders/QuadShader.vert", "Shaders/QuadShader.frag");
 
-		m_Shader->Bind();
+		m_QuadShader->Bind();
+
+		// Initializing for the Lines
+		m_LineVertexBufferBase = new LineVertex[MaxVertices];
+		m_LineVertexArray = std::make_unique<VertexArray>();
+		m_LineVertexArray->Bind();
+
+		m_LineVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(LineVertex));
+		m_LineVertexBuffer->SetLayout({
+			{ShaderDataType::Float2, "a_Position"},
+			{ShaderDataType::Float3, "a_Color"}
+		});
+		m_LineVertexArray->AddVertexBuffer(m_LineVertexBuffer);
+
+		m_LineShader = std::make_unique<Shader>("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag");
+
 
 		// Make a ssbo for texture handles
 		m_HandleBuffer = std::make_unique<SSBO>(nullptr, sizeof(uint64_t) * MaxQuads);
@@ -75,37 +91,61 @@ namespace Spyen {
 
 	Renderer::~Renderer()
 	{
-		glDeleteVertexArrays(1, &m_VertexArray->GetRendererID());
-		glDeleteBuffers(1, &m_VertexBuffer->GetRendererID());
-		glDeleteBuffers(1, &m_IndexBuffer->GetRendererID());
+		glDeleteVertexArrays(1, &m_QuadVertexArray->GetRendererID());
+		glDeleteBuffers(1, &m_QuadVertexBuffer->GetRendererID());
+		glDeleteBuffers(1, &m_QuadIndexBuffer->GetRendererID());
+
+		glDeleteVertexArrays(1, &m_LineVertexArray->GetRendererID());
+		glDeleteBuffers(1, &m_LineVertexBuffer->GetRendererID());
 
 
 		delete[] m_QuadVertexBufferBase;
+		delete[] m_LineVertexBufferBase;
 	}
 
 	void Renderer::BeginFrame()
 	{
 		m_QuadIndexCount = 0;
 		m_QuadVertexBufferPtr = m_QuadVertexBufferBase;
+
+		m_LineVertexCount = 0;
+		m_LineVertexBufferPtr = m_LineVertexBufferBase;
 	}
 
 	void Renderer::EndFrame()
 	{
-		size_t buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
-		m_VertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
-		m_Shader->Bind();
-
+		
 		// Set SSBO data
 		m_HandleBuffer->Bind(0);
 		m_HandleBuffer->SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
-		m_Shader->SetUniformHandles("u_Textures", m_TextureHandles.data(), m_TextureHandles.size());
+		m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), m_TextureHandles.size());
 
 		m_CameraBuffer->SetData(glm::value_ptr(m_Camera->GetViewProjMatrix()), sizeof(glm::mat4));
 
-		m_VertexArray->Bind();
-		m_VertexBuffer->Bind();
-		m_IndexBuffer->Bind();
-		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);
+		if (m_QuadIndexCount)
+		{
+			size_t buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
+			m_QuadVertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
+
+			m_QuadShader->Bind();
+			
+
+			m_QuadVertexArray->Bind();
+			m_QuadVertexBuffer->Bind();
+			m_QuadIndexBuffer->Bind();
+			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);
+		}
+		if (m_LineVertexCount)
+		{
+			size_t buffer_size = reinterpret_cast<uint8_t*>(m_LineVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_LineVertexBufferBase);
+			m_LineVertexBuffer->SetData(m_LineVertexBufferBase, buffer_size);
+
+			m_LineShader->Bind();
+			m_LineVertexArray->Bind();
+			glLineWidth(m_LineWidth);
+			glDrawArrays(GL_LINES, 0, m_LineVertexCount);
+		}
+		
 	}
 
 	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec3& color)
@@ -169,5 +209,18 @@ namespace Spyen {
 			m_QuadVertexBufferPtr++;
 		}
 		m_QuadIndexCount += 6;
+	}
+
+	void Renderer::	DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec3& color)
+	{
+		m_LineVertexBufferPtr->Position = p0;
+		m_LineVertexBufferPtr->Color = color;
+		m_LineVertexBufferPtr++;
+
+		m_LineVertexBufferPtr->Position = p1;
+		m_LineVertexBufferPtr->Color = color;
+		m_LineVertexBufferPtr++;
+
+		m_LineVertexCount += 2;
 	}
 }
