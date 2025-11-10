@@ -128,11 +128,7 @@ namespace Spyen {
 			m_QuadVertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
 
 			m_QuadShader->Bind();
-			
-
 			m_QuadVertexArray->Bind();
-			m_QuadVertexBuffer->Bind();
-			m_QuadIndexBuffer->Bind();
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);
 		}
 		if (m_LineVertexCount)
@@ -143,7 +139,7 @@ namespace Spyen {
 			m_LineShader->Bind();
 			m_LineVertexArray->Bind();
 			glLineWidth(m_LineWidth);
-			glDrawArrays(GL_LINES, 0, m_LineVertexCount);
+			glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(buffer_size));
 		}
 		
 	}

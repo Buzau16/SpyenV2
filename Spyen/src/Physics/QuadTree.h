@@ -1,6 +1,4 @@
 #pragma once
-#include <array>
-#include <cstdint>
 #include <vector>
 
 #include "Renderer/Renderer.h"
@@ -8,12 +6,12 @@
 namespace Spyen {
 	struct Point
 	{
-		uint32_t x, y;
+		int32_t x, y;
 	};
 
 	struct Boundary
 	{
-		uint32_t x, y, w, h;
+		int32_t x, y, w, h;
 
 		bool Contains(const Point& p) const noexcept
 		{

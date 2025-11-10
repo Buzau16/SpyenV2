@@ -11,7 +11,7 @@ namespace Spyen {
 		~PhysicsEngine() = default;
 
 		void AddEntity(Entity* entity);
-		void Update(Scene* scene, float Timestep);
+		void Update(Scene* scene, const glm::ivec2& dimensions, double Timestep);
 	private:
 		std::vector<Entity*> m_Entities;
 	};

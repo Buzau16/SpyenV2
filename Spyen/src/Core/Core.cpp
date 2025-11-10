@@ -9,7 +9,8 @@
 
 
 namespace Spyen {
-	
+
+	constexpr float PhysicsStep = 1.0f / 60.f;
 
 	Engine::Engine(const WindowSpecifications& specs)
 	{
@@ -32,11 +33,12 @@ namespace Spyen {
 		SPY_CORE_ASSERT(m_ActiveScene, "Please create and set an active scene!");
 
 		auto LastFrameTime = 0.0f;
+		double accumulator = 0.0F;
 
-		
-		
 		while (m_Window->IsOpen()) {
 			m_Window->PollEvents();
+
+			//glfwSwapInterval(0);
 
 			m_Window->Clear(0.33f, 0.7f, 0.96f);
 
@@ -44,24 +46,24 @@ namespace Spyen {
 			Timestep TimeStep(Time - LastFrameTime);
 			LastFrameTime = Time;
 
-			m_Renderer->BeginFrame();
+			accumulator += TimeStep;
 
-			m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 0.0f, 100.0f };
-
-			m_PhysicsEngine->Update(m_ActiveScene, TimeStep);
-			m_ActiveScene->OnRender(m_Renderer.get());
-
-			QuadTree tree({ 640,360, m_Window->GetWidth(), m_Window->GetHeight() }, 4);
-			for (uint32_t y : std::ranges::iota_view(0, 1000))
-			{
-				tree.Insert(Point{ static_cast<uint32_t>(rand() % 1280) , static_cast<uint32_t>(rand() % 720) });
+			// Update physics at a fixed rate, independent of the fps / the rate that the game loop is running at
+			while (accumulator >= PhysicsStep) {
+				m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { -100.0f, 0.0f };
+				m_PhysicsEngine->Update(m_ActiveScene, { m_Window->GetWidth(), m_Window->GetHeight() }, PhysicsStep);
+				accumulator -= PhysicsStep;
 			}
 
-			m_Renderer->SetLineWidth(20.f);
+			// Rendering
+			m_Renderer->BeginFrame();
 
-			tree.Draw(m_Renderer.get());
+			m_ActiveScene->OnRender(m_Renderer.get());
 
 			m_Renderer->EndFrame();
+
+			/*auto fps = 1.0f / TimeStep;
+			SPY_CORE_INFO("FPS: {}", fps);*/
 
 			m_Window->SwapBuffers();
 		}

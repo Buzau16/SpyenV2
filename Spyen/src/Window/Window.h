@@ -1,5 +1,7 @@
 #pragma once
 
+
+#define NOMINMAX
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -20,7 +22,7 @@ namespace Spyen {
 		~Window();
 
 		inline bool IsOpen() const noexcept { return !glfwWindowShouldClose(m_Window); };
-		inline void SwapBuffers() noexcept { glfwSwapBuffers(m_Window); };
+		inline void SwapBuffers() const noexcept { glfwSwapBuffers(m_Window); };
 		inline void PollEvents() noexcept { glfwPollEvents(); };
 		void Clear(const float r, const float g, const float b, const float a = 1.0f) noexcept;
 

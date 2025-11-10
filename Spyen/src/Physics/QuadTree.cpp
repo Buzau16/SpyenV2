@@ -9,8 +9,8 @@ namespace Spyen {
 
 	void QuadTree::Subdivide()
 	{
-		uint32_t halfW = m_Boundary.w / 2;
-		uint32_t halfH = m_Boundary.h / 2;
+		int32_t halfW = m_Boundary.w / 2;
+		int32_t halfH = m_Boundary.h / 2;
 
 		m_NorthWest = new QuadTree({ m_Boundary.x - halfW / 2, m_Boundary.y + halfH / 2, halfW, halfH }, m_Capacity);
 		m_NorthEast = new QuadTree({ m_Boundary.x + halfW / 2, m_Boundary.y + halfH / 2, halfW, halfH }, m_Capacity);

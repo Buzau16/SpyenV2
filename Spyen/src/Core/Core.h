@@ -1,5 +1,8 @@
 #pragma once
 
+#ifdef SP_RELEASE
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#endif
 
 #include "Scene/Scene.h"
 
