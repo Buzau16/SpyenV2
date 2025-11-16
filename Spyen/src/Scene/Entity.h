@@ -1,5 +1,7 @@
 #pragma once
 #include <entt/entity/entity.hpp>
+
+#include "Components.h"
 #include "Scene.h"
 #include "Core/Log.h"
 #include "glm/vec2.hpp"
@@ -42,12 +44,90 @@ namespace Spyen {
 			}
 			return m_ParentScene->m_Registry.get<TComponent>(m_EntityHandle);
 		}
+		////////////////////////////////////////////////////////////////////////////////////////////
+		//		  _   _      _                  ______                _   _						  //
+		//		 | | | |    | |                 |  ___|              | | (_)					  //
+		//	 	 | |_| | ___| |_ __  ___ _ __   | |_ _   _ _ __   ___| |_ _  ___  _ __  ___       //
+		//	  	 |  _  |/ _ \ | '_ \/ _ \ '__|  |  _| | | | '_ \ / __| __| |/ _ \| '_ \ / __|     //
+		//		 | | | |  __/ | |_) | __/ |     | | | |_| | | | | (__| |_| | (_) | | | \__ \      //
+		//		 \_| |_/\___|_| .__/\___|_|     \_| \__,__|_| |_|\___|\__|_|\___/|_| |_| ___/     //
+		//					  | |																  //
+		//			          |_|																  //
+		////////////////////////////////////////////////////////////////////////////////////////////
 
-		// Moves the entity using physics
-		void Move(glm::vec2 velocity);
+		/// <summary>
+		/// Sets the position of the entity
+		/// </summary>
+		/// <param name="pos">the position as a vec2</param>
+		inline void SetPosition(const glm::vec2& pos)
+		{
+			GetComponent<TransformComponent>().Position = pos;
+		}
 
-		// Adds an impulse
-		void AddImpulse(glm::vec2 force);
+		/// <summary>
+		/// Gets the position of the entity
+		/// </summary>
+		/// <returns>the position as a vec2</returns>
+		inline glm::vec2 GetPosition()
+		{
+			return GetComponent<TransformComponent>().Position;
+		}
+
+		/// <summary>
+		/// Sets the rotation of the entity
+		/// </summary>
+		/// <param name="rot">the rotation in degrees as a float</param>
+		inline void SetRotation(float rot)
+		{
+			GetComponent<TransformComponent>().Rotation = rot;
+		}
+
+		/// <summary>
+		/// Gets the rotation of the entity
+		/// </summary>
+		/// <returns>the rotation in degrees as a float</returns>
+		inline float GetRotation()
+		{
+			return GetComponent<TransformComponent>().Rotation;
+		}
+
+		/// <summary>
+		/// Sets the scale of the entity
+		/// </summary>
+		/// <param name="scale">the scale as a vec2 where the parameters are the scale on the x and y-axis</param>
+		inline void SetScale(const glm::vec2& scale)
+		{
+			GetComponent<TransformComponent>().Scale = scale;
+		}
+
+		/// <summary>
+		/// Gets the scale of the entity
+		/// </summary>
+		/// <returns>the scale as a vec2 where the parameters are the scale on the x and y-axis</returns>
+		inline glm::vec2 GetScale()
+		{
+			return GetComponent<TransformComponent>().Scale;
+		}
+
+		/// <summary>
+		/// Sets the texture of the entity
+		/// </summary>
+		/// <param name="texture">a texture ptr from the AssetManager</param>
+		inline void SetTexture(Texture* texture)
+		{
+			GetComponent<RenderComponent>().Texture = texture;
+		}
+
+		/// <summary>
+		/// Sets the color of the entity
+		/// </summary>
+		/// <param name="red">the red value in the range 0-255</param>
+		/// <param name="green">the green value in the range 0-255</param>
+		/// <param name="blue">the blue value in the range 0-255</param>
+		inline void SetColor(uint8_t red, uint8_t green, uint8_t blue)
+		{
+			GetComponent<RenderComponent>().Color = {static_cast<float>(red) / 255.f, static_cast<float>(green) / 255.f, static_cast<float>(blue) / 255.f};
+		}
 
 		bool operator==(const Entity& other) const
 		{

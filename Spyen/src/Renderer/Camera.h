@@ -10,7 +10,7 @@ namespace Spyen {
 	{
 	public:
 		Camera() = default;
-		Camera(const glm::vec2& position, float zoom, const glm::ivec2& bounds);
+		Camera(const glm::vec2& position, const glm::ivec2& bounds, float zoom);
 		~Camera() = default;
 
 		glm::mat4 GetViewProjMatrix() const;

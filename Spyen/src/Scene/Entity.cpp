@@ -6,10 +6,10 @@
 
 namespace Spyen
 {
-	void Entity::AddImpulse(glm::vec2 force)
+	/*void Entity::AddImpulse(glm::vec2 force)
 	{
 		SPY_CORE_ASSERT(HasComponent<RigidBodyComponent>(), "Entity does not have a rigid body component!");
 		auto& comp = GetComponent<RigidBodyComponent>();
 		comp.Velocity = force;
-	}
+	}*/
 }

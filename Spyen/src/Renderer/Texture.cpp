@@ -52,8 +52,10 @@ namespace Spyen
 
 	Texture::~Texture()
 	{
-		glMakeTextureHandleNonResidentARB(m_TextureHandle);
-		glDeleteTextures(1, &m_RendererID);
+		if (m_RendererID != 0) {
+			glMakeTextureHandleNonResidentARB(m_TextureHandle);
+			glDeleteTextures(1, &m_RendererID);
+		}
 	}
 
 	void Texture::SetData(const void* data, size_t size) const

@@ -14,14 +14,14 @@ namespace Spyen
 	Texture* AssetManager::LoadTexture(const std::string& name, const std::filesystem::path& path)
 	{
 		SPY_CORE_ASSERT(!m_TextureMap.contains(name), "Texture {} already exists!", name);
-		m_TextureMap.insert({ name, Texture(path) });
+		m_TextureMap.insert({ name, std::make_unique<Texture>(path) });
 		SPY_CORE_INFO("Loading texture {0} at {1}", name, path.string());
-		return &m_TextureMap.at(name);
+		return m_TextureMap.at(name).get();
 	}
 
 	Texture* AssetManager::GetTexture(const char* name)
 	{
 		SPY_CORE_ASSERT(m_TextureMap.contains(name), "Texture {} already exists!", name);
-		return &m_TextureMap.at(name);
+		return m_TextureMap.at(name).get();
 	}
 }

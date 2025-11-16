@@ -14,7 +14,6 @@ namespace Spyen {
 
 	Renderer::Renderer()
 	{
-		SPY_CORE_INFO("Initializing the renderer!");
 
 		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
@@ -69,7 +68,6 @@ namespace Spyen {
 
 		m_LineShader = std::make_unique<Shader>("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag");
 
-
 		// Make a ssbo for texture handles
 		m_HandleBuffer = std::make_unique<SSBO>(nullptr, sizeof(uint64_t) * MaxQuads);
 
@@ -80,54 +78,55 @@ namespace Spyen {
 		m_WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
 
-		m_Camera = std::make_unique<Camera>(glm::vec2{ 0.0f, 0.0f }, 1.0f, glm::ivec2{ 1280, 720 });
+		//m_Camera = std::make_unique<Camera>(glm::vec2{ 0.0f, 0.0f }, 1.0f, glm::ivec2{ 1280, 720 });
 
 		m_CameraBuffer = std::make_unique<UniformBuffer>(sizeof(glm::mat4), 1);
 
-		SPY_CORE_INFO("Renderer loaded!");
-		SPY_CORE_INFO("OpenGL Version: {}", (const char*)glGetString(GL_VERSION));
-		SPY_CORE_INFO("GPU: {}", (const char*)glGetString(GL_RENDERER));
+		SPY_CORE_INFO("Renderer Loaded!");
+		SPY_CORE_INFO("  Vendor: {0}", (const char*)glGetString(GL_VENDOR));
+		SPY_CORE_INFO("  Renderer: {0}", (const char*)glGetString(GL_RENDERER));
+		SPY_CORE_INFO("  Version: {0}", (const char*)glGetString(GL_VERSION));
 	}
 
 	Renderer::~Renderer()
 	{
-		glDeleteVertexArrays(1, &m_QuadVertexArray->GetRendererID());
-		glDeleteBuffers(1, &m_QuadVertexBuffer->GetRendererID());
-		glDeleteBuffers(1, &m_QuadIndexBuffer->GetRendererID());
-
-		glDeleteVertexArrays(1, &m_LineVertexArray->GetRendererID());
-		glDeleteBuffers(1, &m_LineVertexBuffer->GetRendererID());
-
-
 		delete[] m_QuadVertexBufferBase;
 		delete[] m_LineVertexBufferBase;
 	}
 
-	void Renderer::BeginFrame()
+	void Renderer::BeginBatch()
 	{
 		m_QuadIndexCount = 0;
 		m_QuadVertexBufferPtr = m_QuadVertexBufferBase;
 
 		m_LineVertexCount = 0;
 		m_LineVertexBufferPtr = m_LineVertexBufferBase;
+
+		m_TextureHandles.clear();
+		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
+	}
+
+	void Renderer::BeginFrame(const Camera* camera)
+	{
+		m_CameraBuffer->SetData(glm::value_ptr(camera->GetViewProjMatrix()), sizeof(glm::mat4));
+
+		BeginBatch();
 	}
 
 	void Renderer::EndFrame()
 	{
-		
-		// Set SSBO data
-		m_HandleBuffer->Bind(0);
-		m_HandleBuffer->SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
-		m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), m_TextureHandles.size());
-
-		m_CameraBuffer->SetData(glm::value_ptr(m_Camera->GetViewProjMatrix()), sizeof(glm::mat4));
-
 		if (m_QuadIndexCount)
 		{
+
 			size_t buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
 			m_QuadVertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
 
 			m_QuadShader->Bind();
+
+			m_HandleBuffer->Bind(0);
+			m_HandleBuffer->SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
+			m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), m_TextureHandles.size());
+
 			m_QuadVertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);
 		}
@@ -155,7 +154,7 @@ namespace Spyen {
 
 		if (m_QuadIndexCount >= MaxIndices) {
 			EndFrame();
-			BeginFrame();
+			BeginBatch();
 		}
 
 		for (int i = 0; i < 4; i++) {
@@ -180,7 +179,7 @@ namespace Spyen {
 
 		if (m_QuadIndexCount >= MaxIndices) {
 			EndFrame();
-			BeginFrame();
+			BeginBatch();
 		}
 		uint64_t handle = texture ? texture->GetTextureHandle() : m_WhiteTexture->GetTextureHandle();
 		uint32_t texIdx = 0;

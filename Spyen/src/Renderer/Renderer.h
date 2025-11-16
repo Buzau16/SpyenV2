@@ -28,7 +28,9 @@ namespace Spyen {
 		Renderer();
 		~Renderer();
 
-		void BeginFrame();
+		void BeginBatch();
+
+		void BeginFrame(const Camera* camera);
 		void EndFrame();
 
 		void DrawQuad(const glm::mat4& transform, const glm::vec3& color);
@@ -39,6 +41,7 @@ namespace Spyen {
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
 	private:
+		
 		QuadVertex* m_QuadVertexBufferBase = nullptr;
 		QuadVertex* m_QuadVertexBufferPtr = nullptr;
 		LineVertex* m_LineVertexBufferBase = nullptr;
@@ -52,7 +55,6 @@ namespace Spyen {
 		std::unique_ptr<Shader> m_LineShader = nullptr;
 		std::unique_ptr<VertexArray> m_QuadVertexArray = nullptr;
 		std::unique_ptr<VertexArray> m_LineVertexArray = nullptr;
-		std::unique_ptr<Camera> m_Camera = nullptr;
 		std::unique_ptr<SSBO> m_HandleBuffer = nullptr;
 		std::unique_ptr<UniformBuffer> m_CameraBuffer = nullptr;
 		std::unique_ptr<Texture> m_WhiteTexture = nullptr;

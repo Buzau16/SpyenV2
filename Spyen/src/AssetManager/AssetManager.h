@@ -16,7 +16,7 @@ namespace Spyen {
 		Texture* GetTexture(const char* name);
 
 	private:
-		std::unordered_map<std::string, Texture> m_TextureMap;
+		std::unordered_map<std::string, std::unique_ptr<Texture>> m_TextureMap;
 	};
 
 }

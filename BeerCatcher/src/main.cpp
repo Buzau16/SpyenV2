@@ -5,8 +5,6 @@
 #include "AssetManager/IAssetManager.h"
 #include "Scene/Components.h"
 
-
-
 constexpr uint32_t Width = 1280;
 constexpr uint32_t Height = 720;
 
@@ -18,16 +16,14 @@ int main() {
 
 	auto scene = engine.CreateSceneA("Cox");
 	auto ent = scene->CreateEntity("test");
+
 	auto& c = ent.GetComponent<Spyen::TransformComponent>();
-	c.Position = {Width / 2, Height / 2};
-	c.Scale = { 100, 100 };
-	ent.GetComponent<Spyen::RenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Box");
+	ent.SetPosition({ Width / 2, Height / 2 });
+	ent.SetTexture(Spyen::IAssetManager::GetTexture("Box"));
 
 	auto ente = scene->CreateEntity("collider");
-	auto& comp = ente.GetComponent<Spyen::TransformComponent>();
-	comp.Position = { Width / 4, Height / 2 };
-	comp.Scale = { 100, 100 };
-	ente.GetComponent<Spyen::RenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Box");
+	ente.SetPosition({ Width / 1.5f, Height / 2 });
+	ente.SetTexture(Spyen::IAssetManager::GetTexture("Box"));
 
 	engine.Run();
 }

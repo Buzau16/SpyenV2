@@ -4,13 +4,21 @@
 namespace Spyen {
 	QuadTree::QuadTree(Boundary boundary, uint32_t capacity) : m_Boundary(boundary), m_Capacity(capacity)
 	{
-		m_Points.reserve(capacity);
+		m_Colliders.reserve(capacity);
+	}
+
+	QuadTree::~QuadTree()
+	{
+		delete m_NorthWest;
+		delete m_NorthEast;
+		delete m_SouthWest;
+		delete m_SouthEast;
 	}
 
 	void QuadTree::Subdivide()
 	{
-		int32_t halfW = m_Boundary.w / 2;
-		int32_t halfH = m_Boundary.h / 2;
+		float halfW = m_Boundary.w / 2;
+		float halfH = m_Boundary.h / 2;
 
 		m_NorthWest = new QuadTree({ m_Boundary.x - halfW / 2, m_Boundary.y + halfH / 2, halfW, halfH }, m_Capacity);
 		m_NorthEast = new QuadTree({ m_Boundary.x + halfW / 2, m_Boundary.y + halfH / 2, halfW, halfH }, m_Capacity);
@@ -20,69 +28,69 @@ namespace Spyen {
 		m_IsDivided = true;
 	}
 
-	bool QuadTree::Insert(const Point& p)
+	bool QuadTree::Insert(const OBB& box)
 	{
-		if (!m_Boundary.Contains(p))
+		if (!m_Boundary.Contains({ box.Position.x, box.Position.y }))
 		{
 			return false;
 		}
-		if (m_Points.size() < m_Capacity && m_IsDivided == false)
+		if (m_Colliders.size() < m_Capacity && m_IsDivided == false)
 		{
-			m_Points.push_back(p);
+			m_Colliders.push_back(box);
 			return true;
 		}
 		if (!m_IsDivided)
 			Subdivide();
 
-		if (m_NorthWest->Insert(p)) return true;
-		if (m_NorthEast->Insert(p)) return true;
-		if (m_SouthWest->Insert(p)) return true;
-		if (m_SouthEast->Insert(p)) return true;
+		if (m_NorthWest->Insert(box)) return true;
+		if (m_NorthEast->Insert(box)) return true;
+		if (m_SouthWest->Insert(box)) return true;
+		if (m_SouthEast->Insert(box)) return true;
 
 		return false;
 	}
 
-	std::vector<Point> QuadTree::Query(const Boundary& boundary) const
+	std::vector<OBB> QuadTree::Query(const Boundary& boundary) const
 	{
-		std::vector<Point> points;
+		std::vector<OBB> colliders;
 
 		if (!m_Boundary.Intersects(boundary))
-			return points;
+			return colliders;
 
-		for (auto& p : m_Points)
+		for (auto& collider : m_Colliders)
 		{
-			if (boundary.Contains(p))
+			if (boundary.Contains({collider.Position.x, collider.Position.y}))
 			{
-				points.push_back(p);
+				colliders.push_back(collider);
 			}
 		}
 
 		if (!m_IsDivided)
 		{
-			return points;
+			return colliders;
 		}
 
 		for (auto& p : m_NorthWest->Query(boundary))
 		{
-			points.push_back(p);
+			colliders.push_back(p);
 		}
 		for (auto& p : m_NorthEast->Query(boundary))
 		{
-			points.push_back(p);
+			colliders.push_back(p);
 		}
 		for (auto& p : m_SouthWest->Query(boundary))
 		{
-			points.push_back(p);
+			colliders.push_back(p);
 		}
 		for (auto& p : m_SouthEast->Query(boundary))
 		{
-			points.push_back(p);
+			colliders.push_back(p);
 		}
 
-		return points;
+		return colliders;
 	}
 
-	void QuadTree::Draw(Renderer* renderer)
+	void QuadTree::Draw(Renderer* renderer) const
 	{
 		uint32_t offset = 2;
 		

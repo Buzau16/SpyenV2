@@ -158,6 +158,7 @@
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Time\TimeStep.h" />
     <ClInclude Include="src\Physics\QuadTree.h" />
+    <ClInclude Include="src\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Core.cpp">

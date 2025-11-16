@@ -6,7 +6,7 @@
 
 
 namespace Spyen {
-	Camera::Camera(const glm::vec2& position, float zoom, const glm::ivec2& bounds) : m_Position(position), m_Zoom(zoom)
+	Camera::Camera(const glm::vec2& position, const glm::ivec2& bounds, float zoom) : m_Position(position), m_Zoom(zoom)
 	{
 		m_Proj = glm::ortho(0.0f, static_cast<float>(bounds.x), 0.0f, static_cast<float>(bounds.y));
 	}

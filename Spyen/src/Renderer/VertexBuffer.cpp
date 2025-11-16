@@ -15,7 +15,7 @@ namespace Spyen {
 
 	VertexBuffer::~VertexBuffer()
 	{
-		glDeleteBuffers(GL_ARRAY_BUFFER, &m_RendererID);
+		glDeleteBuffers(1, &m_RendererID);
 	}
 	void VertexBuffer::Bind() const
 	{

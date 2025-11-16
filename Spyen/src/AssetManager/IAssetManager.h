@@ -7,7 +7,6 @@ namespace Spyen
 	class IAssetManager
 	{
 	public:
-
 		static inline Texture* LoadTexture(const std::string& name, const std::filesystem::path& path)
 		{
 			return m_Instance->LoadTexture(name, path);

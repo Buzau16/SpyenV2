@@ -11,7 +11,6 @@
 #include <memory>
 #include "AssetManager/AssetManager.h"
 #include "Physics/PhysicsEngine.h"
-#include "Time/TimeStep.h"
 
 
 namespace Spyen {

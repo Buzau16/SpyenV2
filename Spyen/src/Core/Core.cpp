@@ -5,7 +5,8 @@
 #include "AssetManager/IAssetManager.h"
 #include "Physics/QuadTree.h"
 #include "Scene/Components.h"
-#include "Scene/Entity.h" 
+#include "Scene/Entity.h"
+#include "Time/TimeStep.h"
 
 
 namespace Spyen {
@@ -25,7 +26,10 @@ namespace Spyen {
 
 	Engine::~Engine()
 	{
-		IAssetManager::m_Instance = nullptr;
+		if (IAssetManager::m_Instance)
+		{
+			IAssetManager::m_Instance = nullptr;
+		}
 	}
 
 	void Engine::Run() const
@@ -50,13 +54,13 @@ namespace Spyen {
 
 			// Update physics at a fixed rate, independent of the fps / the rate that the game loop is running at
 			while (accumulator >= PhysicsStep) {
-				m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { -100.0f, 0.0f };
+				m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
 				m_PhysicsEngine->Update(m_ActiveScene, { m_Window->GetWidth(), m_Window->GetHeight() }, PhysicsStep);
 				accumulator -= PhysicsStep;
 			}
 
 			// Rendering
-			m_Renderer->BeginFrame();
+			m_Renderer->BeginFrame(m_ActiveScene->m_MainCamera.get());
 
 			m_ActiveScene->OnRender(m_Renderer.get());
 
@@ -81,7 +85,9 @@ namespace Spyen {
 		SPY_CORE_ASSERT(!m_Scenes.contains(name), "Scene {} already exists!", name.c_str());
 		m_Scenes.emplace(name, std::make_unique<Scene>());
 		auto scene = m_Scenes.at(name).get();
+		scene->MakeSceneCamera({ m_Window->GetWidth() / 2, m_Window->GetHeight() / 2 }, { m_Window->GetWidth(), m_Window->GetHeight() });
 		m_ActiveScene = scene;
+		
 		return scene;
 	}
 
@@ -96,6 +102,10 @@ namespace Spyen {
 		SPY_CORE_ASSERT(m_Scenes.contains(name), "Scene {} doesn't exists!", name.c_str());
 		auto scene = m_Scenes.at(name).get();
 		m_ActiveScene = scene;
+		if (!scene->m_MainCamera)
+		{
+			scene->MakeSceneCamera({ m_Window->GetWidth() / 2, m_Window->GetHeight() / 2 }, { m_Window->GetWidth(), m_Window->GetHeight() });
+		}
 		return scene;
 	}
 }

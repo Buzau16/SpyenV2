@@ -2,6 +2,8 @@
 
 #include <entt/entt.hpp>
 
+#include "Renderer/Camera.h"
+
 namespace Spyen
 {
 	class Renderer;
@@ -25,11 +27,17 @@ namespace Spyen
 			return m_Registry.view<TComponents...>();
 		}
 
+		inline void MakeSceneCamera(const glm::vec2& position, const glm::ivec2& bounds, float zoom = 1.0f)
+		{
+			m_MainCamera = std::make_unique<Camera>(position, bounds, zoom);
+		}
+
 	private:
 		entt::registry m_Registry;
 		//std::unordered_map<std::string, Entity> m_Entities;
-
+		std::unique_ptr<Camera> m_MainCamera = nullptr;
 		friend class Entity;
+		friend class Engine;
 	};
 }
 

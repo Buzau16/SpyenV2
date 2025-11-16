@@ -18,7 +18,6 @@ namespace Spyen
 		entity.AddComponent<TransformComponent>();
 		entity.AddComponent<RenderComponent>();
 		entity.AddComponent<ColliderComponent>();
-		auto& comp = entity.GetComponent<ColliderComponent>().OBB = {};
 		entity.AddComponent<RigidBodyComponent>();
 
 		return entity;

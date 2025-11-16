@@ -28,6 +28,7 @@ namespace Spyen {
 
 		[[nodiscard]] uint32_t GetWidth() const noexcept { return m_Specs.Width; }
 		[[nodiscard]] uint32_t GetHeight() const noexcept { return m_Specs.Height; }
+		[[nodiscard]] GLFWwindow* GetWindowHandle() const noexcept { return m_Window; };
 
 	private:
 		WindowSpecifications m_Specs;

@@ -8,9 +8,9 @@ namespace Spyen
 {
 		struct TransformComponent
 		{
-			glm::ivec2 Position = {0.0f, 0.0f};
+			glm::vec2 Position = {0.0f, 0.0f};
 			float Rotation = 0.0f;
-			glm::ivec2 Scale = {100, 100};
+			glm::vec2 Scale = {100, 100};
 
 			TransformComponent() = default;
 
@@ -27,6 +27,7 @@ namespace Spyen
 		{
 			glm::vec3 Color = {0.0f, 0.0f, 0.0f};
 			Spyen::Texture* Texture = nullptr;
+			bool IsVisible = true;
 
 			RenderComponent() = default;
 			RenderComponent(const glm::vec3& color) : Color(color) {};
@@ -36,17 +37,11 @@ namespace Spyen
 
 		// needed for other functions in other places
 		struct OBB {
-			glm::ivec2 Position = { 0, 0 };
+			glm::vec2 Position = { 0, 0 };
 			glm::vec2 HalfSize = { 0, 0 };
 			float Rotation = 0.0f;
 
 			//OBB(const TransformComponent& comp) : Position(comp.Position), HalfSize({static_cast<float>(comp.Scale.x / 2), static_cast<float>(comp.Scale.y) / 2}), Rotation(comp.Rotation) {};
-		};
-		
-		struct Projection
-		{
-			float min, max;
-			//Projection(float mn, float mx) : min(mn), max(mx) {};
 		};
 
 		struct RigidBodyComponent
@@ -61,7 +56,6 @@ namespace Spyen
 		struct ColliderComponent
 		{
 			OBB OBB;
-			Projection Projection;
 
 			ColliderComponent() = default;
 			//ColliderComponent(const TransformComponent& comp) : OBB(comp), Projection({ 0,0 }) {}
