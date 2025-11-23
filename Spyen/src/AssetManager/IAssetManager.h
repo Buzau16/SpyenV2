@@ -15,6 +15,15 @@ namespace Spyen
 		{
 			return m_Instance->GetTexture(name);
 		}
+
+		static inline Sound* LoadSound(const std::string& name, const std::filesystem::path& path) {
+			return m_Instance->LoadSound(name, path);
+		}
+
+		static inline Sound* GetSound(const char* name) {
+			return m_Instance->GetSound(name);
+		}
+
 	private:
 		static AssetManager* m_Instance;
 		friend class Engine;
