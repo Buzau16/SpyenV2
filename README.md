@@ -46,9 +46,10 @@ Clone the repository:
 ```bash
 git clone https://github.com/Buzau16/SpyenV2.git
 cd SpyenV2/
-run the build.bat script
-open the solution in Visual Studio 2024
 ```
+Run the build.bat script
+
+Open the generated solution in Visual Studio 2024
 
 ---
 
