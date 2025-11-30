@@ -13,11 +13,16 @@ int main() {
 	Spyen::Engine engine({ "Penis", Width, Height });
 
 	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/Box.png");
+	Spyen::IAssetManager::LoadSound("shot", "assets/sounds/shot.mp3");
+
+
+
+	// Create a scene
+	// 
 
 	auto scene = engine.CreateSceneA("Cox");
-	auto ent = scene->CreateEntity("test");
 
-	auto& c = ent.GetComponent<Spyen::TransformComponent>();
+	auto ent = scene->CreateEntity("test");
 	ent.SetPosition({ Width / 2, Height / 2 });
 	ent.SetTexture(Spyen::IAssetManager::GetTexture("Box"));
 

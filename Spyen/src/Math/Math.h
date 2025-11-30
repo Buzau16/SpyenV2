@@ -7,6 +7,9 @@
 
 namespace Spyen
 {
+
+	// TODO: Implement Vec2 Vec3 and Vec3 structs
+
 	namespace Math
 	{
 		inline std::pair<float, float> Project(const OBB& box, const glm::vec2& axis)

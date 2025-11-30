@@ -3,6 +3,7 @@
 #include "QuadTree.h"
 #include "Scene/Components.h"
 #include "Math/Math.h"
+#include <AssetManager/IAssetManager.h>
 
 
 namespace Spyen

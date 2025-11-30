@@ -16,6 +16,10 @@ namespace Spyen
 			return m_Instance->GetTexture(name);
 		}
 
+		static inline Texture* LoadTexture(const std::filesystem::path& path) {
+			return m_Instance->LoadTextureP(path);
+		}
+
 		static inline Sound* LoadSound(const std::string& name, const std::filesystem::path& path) {
 			return m_Instance->LoadSound(name, path);
 		}

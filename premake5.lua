@@ -109,7 +109,8 @@ project "BeerCatcher"
 		"Spyen/vendor/glm/include",
 		"Spyen/vendor/spdlog/include",
 		"Spyen/vendor/entt",
-		"Spyen/vendor/glfw/include"
+		"Spyen/vendor/glfw/include",
+		"Spyen/vendor/miniaudio/include"
 	}
 
 	libdirs{

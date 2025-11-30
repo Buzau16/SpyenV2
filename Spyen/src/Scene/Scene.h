@@ -15,8 +15,13 @@ namespace Spyen
 		Scene() = default;
 		~Scene() = default;
 
+#if 1
 		Entity CreateEntity(const std::string& name);
 		[[nodiscard]] Entity GetEntityByName(const std::string& name) const;
+
+#else
+		
+#endif
 
 		void OnRender(Renderer* renderer) const;
 		void OnUpdate() {}; // to be implemented

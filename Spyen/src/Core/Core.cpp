@@ -7,6 +7,7 @@
 #include "Scene/Components.h"
 #include "Scene/Entity.h"
 #include "Time/TimeStep.h"
+#include <Audio/IAudioEngine.h>
 
 
 namespace Spyen {
@@ -19,6 +20,8 @@ namespace Spyen {
 		SPY_CORE_INFO("Working directory: {}", std::filesystem::current_path().string());
 		m_Window = std::make_unique<Window>(specs);
 		m_Renderer = std::make_unique<Renderer>();
+		m_AudioEngine = std::make_unique<AudioEngine>();
+		IAudioEngine::s_Engine = m_AudioEngine.get();
 		m_AssetManager = std::make_unique<AssetManager>();
 		IAssetManager::m_Instance = m_AssetManager.get();
 		m_PhysicsEngine = std::make_unique<PhysicsEngine>();
@@ -29,6 +32,10 @@ namespace Spyen {
 		if (IAssetManager::m_Instance)
 		{
 			IAssetManager::m_Instance = nullptr;
+		}
+		if (IAudioEngine::s_Engine)
+		{
+			IAudioEngine::s_Engine = nullptr;
 		}
 	}
 
@@ -57,6 +64,7 @@ namespace Spyen {
 				m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
 				m_PhysicsEngine->Update(m_ActiveScene, { m_Window->GetWidth(), m_Window->GetHeight() }, PhysicsStep);
 				accumulator -= PhysicsStep;
+				
 			}
 
 			// Rendering

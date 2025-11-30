@@ -5,6 +5,7 @@
 #include <glm/gtc/type_ptr.inl>
 
 #include "BufferElement.h"
+#include <glm/ext/matrix_transform.hpp>
 
 
 namespace Spyen {
@@ -143,6 +144,35 @@ namespace Spyen {
 		
 	}
 
+	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture)
+	{
+		if (m_QuadIndexCount >= MaxIndices) {
+			EndFrame();
+			BeginBatch();
+		}
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+			glm::scale(glm::mat4(1.0f), glm::vec3(scale.x, scale.y, 1.0f));
+
+		DrawQuad(transform, texture);
+	}
+
+	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color)
+	{
+		if (m_QuadIndexCount >= MaxIndices) {
+			EndFrame();
+			BeginBatch();
+		}
+
+		glm::mat4 transform =	glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f))*
+								glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))*
+								glm::scale(glm::mat4(1.0f), glm::vec3(scale.x, scale.y, 1.0f));
+
+
+		DrawQuad(transform, color);
+	}
+
 	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec3& color)
 	{
 		glm::vec2 textCoords[4] = {
@@ -151,11 +181,6 @@ namespace Spyen {
 			{ 1.0f, 1.0f },
 			{ 0.0f, 1.0f }
 		};
-
-		if (m_QuadIndexCount >= MaxIndices) {
-			EndFrame();
-			BeginBatch();
-		}
 
 		for (int i = 0; i < 4; i++) {
 			m_QuadVertexBufferPtr->Position = transform * m_QuadPositions[i];
@@ -177,10 +202,6 @@ namespace Spyen {
 			{ 0.0f, 1.0f }
 		};
 
-		if (m_QuadIndexCount >= MaxIndices) {
-			EndFrame();
-			BeginBatch();
-		}
 		uint64_t handle = texture ? texture->GetTextureHandle() : m_WhiteTexture->GetTextureHandle();
 		uint32_t texIdx = 0;
 

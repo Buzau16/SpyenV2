@@ -33,6 +33,12 @@ namespace Spyen {
 		void BeginFrame(const Camera* camera);
 		void EndFrame();
 
+
+		// Draw Functions
+		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture);
+		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color);
+
+		// Under the hood function kind of
 		void DrawQuad(const glm::mat4& transform, const glm::vec3& color);
 		void DrawQuad(const glm::mat4& transform, const Texture* texture);
 
@@ -41,7 +47,6 @@ namespace Spyen {
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
 	private:
-		
 		QuadVertex* m_QuadVertexBufferBase = nullptr;
 		QuadVertex* m_QuadVertexBufferPtr = nullptr;
 		LineVertex* m_LineVertexBufferBase = nullptr;

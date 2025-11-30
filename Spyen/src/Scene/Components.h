@@ -41,13 +41,14 @@ namespace Spyen
 			glm::vec2 HalfSize = { 0, 0 };
 			float Rotation = 0.0f;
 
-			//OBB(const TransformComponent& comp) : Position(comp.Position), HalfSize({static_cast<float>(comp.Scale.x / 2), static_cast<float>(comp.Scale.y) / 2}), Rotation(comp.Rotation) {};
+			constexpr OBB(const glm::vec2& position, const glm::vec2& halfsize, const float rotation) :
+				Position(position), HalfSize(halfsize), Rotation(rotation) {};
 		};
 
 		struct RigidBodyComponent
 		{
-			glm::vec2 Velocity;
-			glm::vec2 Acceleration;
+			glm::vec2 Velocity = { 0,0 };
+			glm::vec2 Acceleration = { 0,0 };
 			bool IsKinematic = false;
 
 			RigidBodyComponent() = default;

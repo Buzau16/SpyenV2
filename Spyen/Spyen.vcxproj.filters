@@ -69,6 +69,9 @@
     <ClInclude Include="src\Audio\AudioEngine.h">
       <Filter>src\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Audio\IAudioEngine.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="src\Audio\Sound.h">
       <Filter>src\Audio</Filter>
     </ClInclude>
@@ -219,7 +222,8 @@
     <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h">
       <Filter>vendor\miniaudio\include\miniaudio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\IAudioEngine.h" />
+    <ClInclude Include="src\Scene\Node.h" />
+    <ClInclude Include="src\Scene\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -229,6 +233,9 @@
       <Filter>src\AssetManager</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\AudioEngine.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\IAudioEngine.cpp">
       <Filter>src\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\Sound.cpp">
@@ -288,6 +295,9 @@
     <ClCompile Include="vendor\glad\src\glad.c">
       <Filter>vendor\glad\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Audio\IAudioEngine.cpp" />
+    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.cpp" />
+    <ClCompile Include="src\Renderer\stb_image.c" />
+    <ClCompile Include="src\Scene\Node.cpp" />
+    <ClCompile Include="src\Scene\Sprite.cpp" />
   </ItemGroup>
 </Project>

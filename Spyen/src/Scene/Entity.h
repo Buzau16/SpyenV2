@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Core/Log.h"
 #include "glm/vec2.hpp"
+#include "AssetManager/IAssetManager.h"
 
 
 namespace Spyen {
@@ -44,6 +45,11 @@ namespace Spyen {
 			}
 			return m_ParentScene->m_Registry.get<TComponent>(m_EntityHandle);
 		}
+
+
+		/*virtual void OnInit() = 0;
+		virtual void OnUpdate() = 0;*/
+
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//		  _   _      _                  ______                _   _						  //
 		//		 | | | |    | |                 |  ___|              | | (_)					  //
@@ -116,6 +122,14 @@ namespace Spyen {
 		inline void SetTexture(Texture* texture)
 		{
 			GetComponent<RenderComponent>().Texture = texture;
+		}
+
+		/// <summary>
+		/// Sets the texture of the entity
+		/// </summary>
+		/// <param name="path">the path of the texture</param>
+		inline void SetTexture(const std::filesystem::path& path) {
+			IAssetManager::LoadTexture(path);
 		}
 
 		/// <summary>
