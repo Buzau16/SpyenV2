@@ -1,8 +1,5 @@
 #pragma once
-
-#include <entt/entt.hpp>
-
-#include "Renderer/Camera.h"
+#if 0
 
 namespace Spyen
 {
@@ -15,13 +12,9 @@ namespace Spyen
 		Scene() = default;
 		~Scene() = default;
 
-#if 1
 		Entity CreateEntity(const std::string& name);
 		[[nodiscard]] Entity GetEntityByName(const std::string& name) const;
 
-#else
-		
-#endif
 
 		void OnRender(Renderer* renderer) const;
 		void OnUpdate() {}; // to be implemented
@@ -45,5 +38,33 @@ namespace Spyen
 		friend class Engine;
 	};
 }
+
+#else
+
+#include <Scene/Node.h>
+
+namespace Spyen {
+
+	//TODO: find a way to make the camera a node and make a camera controller class
+
+	class Scene{
+	public:
+		Scene() = default;
+		virtual ~Scene() = default;
+
+		virtual void OnInit() {};
+		virtual void OnUpdate(Timestep dt);
+		virtual void OnRender(Renderer* renderer);
+
+		void AddNode(std::unique_ptr<Node> node);
+
+		static std::unique_ptr<Scene> Create();
+
+	private:
+		std::vector<std::unique_ptr<Node>> m_Nodes;
+	};
+}
+
+#endif
 
 

@@ -1,21 +1,12 @@
 #include "Node.h"
-
-void Spyen::Node::OnInit()
+void Spyen::Node::AddChild(std::unique_ptr<Node> child)
 {
-	if (Collidable) {
-		//Create the OBB
-		Collider.Position = Position;
-		Collider.HalfSize = glm::vec2{ Scale.x / 2, Scale.y / 2 };
-		Collider.Rotation = Rotation;
-	}
+	child->m_Parent = this;
+
+	m_Children.push_back(std::move(child));
 }
 
-void Spyen::Node::OnUpdate(Timestep dt)
+std::unique_ptr<Spyen::Node> Spyen::Node::Create()
 {
-	if (Collidable) {
-		//Update the OBB
-		Collider.Position = Position;
-		Collider.HalfSize = glm::vec2{ Scale.x / 2, Scale.y / 2 };
-		Collider.Rotation = Rotation;
-	}
+	return std::make_unique<Spyen::Node>();
 }

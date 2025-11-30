@@ -7,3 +7,11 @@
 #define SPY_ASSERT(x, ...) x
 #define SPY_CORE_ASSERT(x, ...) x
 #endif
+
+#define SP_SYNTHESIZE(type, name, func) \
+	constexpr type Get##func() const noexcept { return name; }\
+	inline void Set##func(const type& value) noexcept { name = value; }
+
+#define SP_SYNTHESIZE_NR(type, name, func) \
+	constexpr type Get##func() const noexcept { return name; }\
+	inline void Set##func(const type value) noexcept { name = value; }

@@ -159,6 +159,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\RigidBody.h" />
     <ClInclude Include="src\Scene\Sprite.h" />
     <ClInclude Include="src\Scene\Node.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\RigidBody.cpp" />
     <ClCompile Include="src\Scene\Sprite.cpp" />
     <ClCompile Include="src\Scene\Node.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />

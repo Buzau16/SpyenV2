@@ -1,9 +1,12 @@
 #include "Scene.h"
 
+#if 0
+
 #include "Components.h"
 #include "Core/Defines.h"
 #include "Entity.h"
 #include <Renderer/Renderer.h>
+
 
 namespace Spyen
 {
@@ -43,4 +46,34 @@ namespace Spyen
 			
 		}
 	}
+	
 }
+
+#else
+
+
+namespace Spyen {
+#include "Sprite.h"
+
+	void Scene::OnUpdate(Timestep dt)
+	{
+		for (auto& node : m_Nodes) {
+			node->OnUpdate(dt);
+		}
+	}
+	void Scene::OnRender(Renderer* renderer)
+	{
+		for (auto& node : m_Nodes) {
+			node->OnRender(renderer);
+		}
+	}
+	void Scene::AddNode(std::unique_ptr<Node> node)
+	{
+		m_Nodes.push_back(std::move(node));
+	}
+	std::unique_ptr<Scene> Scene::Create()
+	{
+		return std::make_unique<Scene>();
+	}
+}
+#endif

@@ -1,6 +1,7 @@
 #pragma once
 #include "Components.h"
 #include <Time/TimeStep.h>
+#include <Core/Defines.h>
 
 namespace Spyen {
 	class Renderer;
@@ -11,47 +12,25 @@ namespace Spyen {
 		Node() = default;
 		virtual ~Node() = default;
 
-		virtual void OnInit();
-		virtual void OnUpdate(Timestep dt);
+		virtual void OnInit() {};
+		virtual void OnUpdate(Timestep dt) {};
 		virtual void OnRender(Renderer* renderer) {};
 
-		constexpr glm::vec2 GetPosition() const noexcept;
-		void SetPosition(const glm::vec2& position) noexcept;
+		SP_SYNTHESIZE(glm::vec2, Position, Position);
+		SP_SYNTHESIZE(glm::vec2, Scale, Scale);
+		SP_SYNTHESIZE_NR(float, Rotation, Rotation);
 
-		constexpr glm::vec2 GetScale() const noexcept;
-		void SetScale(const glm::vec2& scale) noexcept;
+		void AddChild(std::unique_ptr<Node> child);
 
-		constexpr float GetRotation() const noexcept;
-		void SetRotation(const float rotation) noexcept;
-
-		constexpr OBB GetOBB() const noexcept;
-		void SetOBB(const OBB& obb) noexcept;
-
-		constexpr glm::vec2 GetVelocity() const noexcept;
-		void SetVelocity(const glm::vec2& position) noexcept;
-
-		constexpr glm::vec2 GetAcceleration() const noexcept;
-		void SetAcceleration(const glm::vec2& scale) noexcept;
-
-
-		// to be implemented
-		void AddChild();
-
-
+		static std::unique_ptr<Node> Create();
 	private:
 		std::vector<std::unique_ptr<Node>> m_Children;
 	protected:
-		OBB Collider;
 		glm::vec2 Position{ 0,0 };
-		glm::vec2 Scale{ 0,0 };
-		glm::vec2 Velocity{ 0,0 };
-		glm::vec2 Acceleration{ 0,0 };
+		glm::vec2 Scale{ 100.f, 100.f };
 		float Rotation = 0.f;
 	private:
-		Node* m_Parent = nullptr;
-	protected:
-		bool IsKinematic = false;
-		bool Collidable = true;
+		Node* m_Parent = nullptr;	
 	};
 
 

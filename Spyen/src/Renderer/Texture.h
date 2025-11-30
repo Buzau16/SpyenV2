@@ -20,8 +20,11 @@ namespace Spyen
 		~Texture();
 
 		uint64_t GetTextureHandle() const { return m_TextureHandle; }
-
 		void SetData(const void* data, size_t size) const;
+
+		inline static Texture* Create(const std::filesystem::path& path) {
+			return new Texture(path);
+		};
 
 	private:
 		TextureSpecification m_Specs;

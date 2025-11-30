@@ -33,7 +33,6 @@ namespace Spyen {
 		void BeginFrame(const Camera* camera);
 		void EndFrame();
 
-
 		// Draw Functions
 		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture);
 		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color);

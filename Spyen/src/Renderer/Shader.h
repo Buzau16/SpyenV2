@@ -41,7 +41,6 @@ namespace Spyen {
 		std::string m_Filepath;
 		std::string m_VertexSrc;
 		std::string m_FragmentSrc;
-
 	};
 }
 

@@ -14,6 +14,8 @@
 #include <Audio/AudioEngine.h>
 
 
+// TODO: refactor the remaining physics engine update function, the run function and make some camera controller thing
+
 namespace Spyen {
 	class Engine {
 	public:

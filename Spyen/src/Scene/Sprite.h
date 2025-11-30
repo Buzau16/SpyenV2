@@ -1,27 +1,31 @@
 #pragma once
 #include <Scene/Node.h>
+#include <Renderer/Texture.h>
+#include <Core/Defines.h>
 
 namespace Spyen {
 	class Sprite : public Node
 	{
 	public:
 		Sprite() = default;
-		virtual ~Sprite() = default;
+		virtual ~Sprite();
 
-		virtual void OnInit() override;
-		virtual void OnUpdate(Timestep dt) override;
+		virtual void OnInit() {};
+		virtual void OnUpdate(Timestep dt) {};
 		virtual void OnRender(Renderer* renderer) override;
 
 		constexpr Texture* GetTexture() const noexcept;
-		void SetTexture(const std::filesystem::path& path) noexcept;
-		void SetTexture(const Texture* texture);
+		void SetTexture(const std::filesystem::path& path);
+		void SetTexture(Texture* texture);
 
-		constexpr glm::vec3 GetColor() const noexcept;
-		void SetColor(const glm::vec3& color) noexcept;
+		SP_SYNTHESIZE(glm::vec3, Color, Color);
 
+		static std::unique_ptr<Sprite> Create();
 	protected:
 		Texture* Texture = nullptr;
 		glm::vec3 Color{ 0,0,0 };
+	private:
+		bool IsTextureFromManager = false;
 	};
 
 }
