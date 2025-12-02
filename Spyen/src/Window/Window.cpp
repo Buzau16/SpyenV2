@@ -1,4 +1,7 @@
+#include "spypch.h"
 #include "Window.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <stdexcept>
 #include <Core/Log.h>
 
@@ -46,6 +49,18 @@ namespace Spyen {
 	{
 		glfwDestroyWindow(m_Window);
 		glfwTerminate();
+	}
+	bool Window::IsOpen() const noexcept
+	{
+		return !glfwWindowShouldClose(m_Window);
+	}
+	void Window::SwapBuffers() const noexcept
+	{
+		 glfwSwapBuffers(m_Window);
+	}
+	void Window::PollEvents() noexcept
+	{
+		glfwPollEvents();
 	}
 	void Window::Clear(const float r, const float g, const float b, const float a) noexcept
 	{

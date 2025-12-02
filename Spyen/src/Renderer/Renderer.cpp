@@ -1,11 +1,12 @@
+#include "spypch.h"
 #include "Renderer.h"
 
 #include <glad/glad.h>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/gtc/type_ptr.inl>
+#include <Math/glm/ext/matrix_clip_space.hpp>
+#include <Math/glm/gtc/type_ptr.inl>
 
 #include "BufferElement.h"
-#include <glm/ext/matrix_transform.hpp>
+#include <Math/glm/ext/matrix_transform.hpp>
 
 
 namespace Spyen {
@@ -107,9 +108,9 @@ namespace Spyen {
 		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
 	}
 
-	void Renderer::BeginFrame(const Camera* camera)
+	void Renderer::BeginFrame(const Camera& camera)
 	{
-		m_CameraBuffer->SetData(glm::value_ptr(camera->GetViewProjMatrix()), sizeof(glm::mat4));
+		m_CameraBuffer->SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
 
 		BeginBatch();
 	}

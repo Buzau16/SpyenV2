@@ -73,7 +73,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>spypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_GL;SPYEN_DLL_BUILD;SP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;src;vendor\glad\include;vendor\glm\include;vendor\glfw\include;vendor\spdlog\include;vendor\entt;vendor\miniaudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -100,7 +101,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>spypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_GL;SPYEN_DLL_BUILD;SP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;src;vendor\glad\include;vendor\glm\include;vendor\glfw\include;vendor\spdlog\include;vendor\entt;vendor\miniaudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -130,7 +132,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>spypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_GL;SPYEN_DLL_BUILD;SP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;src;vendor\glad\include;vendor\glm\include;vendor\glfw\include;vendor\spdlog\include;vendor\entt;vendor\miniaudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -159,9 +162,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Scene\RigidBody.h" />
-    <ClInclude Include="src\Scene\Sprite.h" />
-    <ClInclude Include="src\Scene\Node.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\AssetManager\IAssetManager.h" />
     <ClInclude Include="src\Audio\AudioEngine.h" />
@@ -169,14 +169,15 @@
     <ClInclude Include="src\Audio\Sound.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Defines.h" />
+    <ClInclude Include="src\Core\Director.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\SceneManager.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
     <ClInclude Include="src\Math\Math.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Physics\QuadTree.h" />
     <ClInclude Include="src\Renderer\BufferElement.h" />
     <ClInclude Include="src\Renderer\BufferLayout.h" />
-    <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\SSBO.h" />
@@ -187,65 +188,75 @@
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Renderer\stb_image.h" />
+    <ClInclude Include="src\Scene\Camera.h" />
     <ClInclude Include="src\Scene\Components.h" />
-    <ClInclude Include="src\Scene\Entity.h" />
+    <ClInclude Include="src\Scene\Node.h" />
+    <ClInclude Include="src\Scene\NodeGraph.h" />
     <ClInclude Include="src\Scene\Scene.h" />
+    <ClInclude Include="src\Scene\Sprite.h" />
     <ClInclude Include="src\Time\TimeStep.h" />
     <ClInclude Include="src\Window\Window.h" />
-    <ClInclude Include="vendor\glm\include\glm\common.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\exponential.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\ext.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\fwd.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\geometric.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\glm.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\integer.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat2x2.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat2x3.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat2x4.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat3x2.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat3x3.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat3x4.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat4x2.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat4x3.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\mat4x4.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\matrix.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\packing.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\trigonometric.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\vec2.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\vec3.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\vec4.hpp" />
-    <ClInclude Include="vendor\glm\include\glm\vector_relational.hpp" />
-    <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h" />
+    <ClInclude Include="src\spypch.h" />
+    <ClInclude Include="src\Math\glm\common.hpp" />
+    <ClInclude Include="src\Math\glm\exponential.hpp" />
+    <ClInclude Include="src\Math\glm\ext.hpp" />
+    <ClInclude Include="src\Math\glm\fwd.hpp" />
+    <ClInclude Include="src\Math\glm\geometric.hpp" />
+    <ClInclude Include="src\Math\glm\glm.hpp" />
+    <ClInclude Include="src\Math\glm\integer.hpp" />
+    <ClInclude Include="src\Math\glm\mat2x2.hpp" />
+    <ClInclude Include="src\Math\glm\mat2x3.hpp" />
+    <ClInclude Include="src\Math\glm\mat2x4.hpp" />
+    <ClInclude Include="src\Math\glm\mat3x2.hpp" />
+    <ClInclude Include="src\Math\glm\mat3x3.hpp" />
+    <ClInclude Include="src\Math\glm\mat3x4.hpp" />
+    <ClInclude Include="src\Math\glm\mat4x2.hpp" />
+    <ClInclude Include="src\Math\glm\mat4x3.hpp" />
+    <ClInclude Include="src\Math\glm\mat4x4.hpp" />
+    <ClInclude Include="src\Math\glm\matrix.hpp" />
+    <ClInclude Include="src\Math\glm\packing.hpp" />
+    <ClInclude Include="src\Math\glm\trigonometric.hpp" />
+    <ClInclude Include="src\Math\glm\vec2.hpp" />
+    <ClInclude Include="src\Math\glm\vec3.hpp" />
+    <ClInclude Include="src\Math\glm\vec4.hpp" />
+    <ClInclude Include="src\Math\glm\vector_relational.hpp" />
+    <ClInclude Include="src\Audio\miniaudio\miniaudio.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Scene\RigidBody.cpp" />
-    <ClCompile Include="src\Scene\Sprite.cpp" />
-    <ClCompile Include="src\Scene\Node.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
     <ClCompile Include="src\Audio\IAudioEngine.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
+    <ClCompile Include="src\Core\Director.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
+    <ClCompile Include="src\Core\SceneManager.cpp" />
+    <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Physics\QuadTree.cpp" />
-    <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\SSBO.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Renderer\stb_image.c" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Scene\Entity.cpp" />
+    <ClCompile Include="src\Scene\Camera.cpp" />
+    <ClCompile Include="src\Scene\Components.cpp" />
+    <ClCompile Include="src\Scene\Node.cpp" />
+    <ClCompile Include="src\Scene\NodeGraph.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Scene\Sprite.cpp" />
     <ClCompile Include="src\Time\TimeStep.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
-    <ClCompile Include="vendor\glad\src\glad.c" />
-    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.cpp" />
+    <ClCompile Include="src\spypch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="vendor\glad\src\glad.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

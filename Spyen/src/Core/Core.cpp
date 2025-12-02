@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "Core.h"
 #include <filesystem>
 
@@ -5,10 +6,10 @@
 #include "AssetManager/IAssetManager.h"
 #include "Physics/QuadTree.h"
 #include "Scene/Components.h"
-#include "Scene/Entity.h"
 #include "Time/TimeStep.h"
 #include <Audio/IAudioEngine.h>
-
+#include <Core/Director.h>
+#include <GLFW/glfw3.h>
 
 namespace Spyen {
 
@@ -23,26 +24,29 @@ namespace Spyen {
 		m_AudioEngine = std::make_unique<AudioEngine>();
 		IAudioEngine::s_Engine = m_AudioEngine.get();
 		m_AssetManager = std::make_unique<AssetManager>();
-		IAssetManager::m_Instance = m_AssetManager.get();
+		IAssetManager::s_Instance = m_AssetManager.get();
 		m_PhysicsEngine = std::make_unique<PhysicsEngine>();
+		m_SceneManager = std::make_unique<SceneManager>();
+		Director::s_Instance = this;
 	}
 
 	Engine::~Engine()
 	{
-		if (IAssetManager::m_Instance)
+		if (IAssetManager::s_Instance)
 		{
-			IAssetManager::m_Instance = nullptr;
+			IAssetManager::s_Instance = nullptr;
 		}
 		if (IAudioEngine::s_Engine)
 		{
 			IAudioEngine::s_Engine = nullptr;
 		}
+		if (Director::s_Instance) {
+			Director::s_Instance = nullptr;
+		}
 	}
 
 	void Engine::Run() const
 	{
-		SPY_CORE_ASSERT(m_ActiveScene, "Please create and set an active scene!");
-
 		auto LastFrameTime = 0.0f;
 		double accumulator = 0.0F;
 
@@ -60,16 +64,18 @@ namespace Spyen {
 			accumulator += TimeStep;
 
 			// Update physics at a fixed rate, independent of the fps / the rate that the game loop is running at
-			while (accumulator >= PhysicsStep) {
-				//m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
-				m_PhysicsEngine->Update(m_ActiveScene, { m_Window->GetWidth(), m_Window->GetHeight() }, PhysicsStep);
-				accumulator -= PhysicsStep;
-			}
+			//while (accumulator >= PhysicsStep) {
+			//	//m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
+			//	m_PhysicsEngine->Update(m_SceneManager->GetActiveScene(), {m_Window->GetWidth(), m_Window->GetHeight()}, PhysicsStep);
+			//	accumulator -= PhysicsStep;
+			//}
+
+			m_SceneManager->GetActiveScene()->OnUpdate(TimeStep);
 
 			// Rendering
-			m_Renderer->BeginFrame(m_ActiveScene->m_MainCamera.get());
+			m_Renderer->BeginFrame(m_SceneManager->GetActiveScene()->GetCamera());
 
-			m_ActiveScene->OnRender(m_Renderer.get());
+			m_SceneManager->GetActiveScene()->OnRender(m_Renderer.get());
 
 			m_Renderer->EndFrame();
 
@@ -78,41 +84,5 @@ namespace Spyen {
 
 			m_Window->SwapBuffers();
 		}
-	}
-
-	Scene* Engine::CreateScene(const std::string& name)
-	{
-		SPY_CORE_ASSERT(!m_Scenes.contains(name), "Scene {} already exists!", name.c_str());
-		m_Scenes.emplace(name, std::make_unique<Scene>());
-		return m_Scenes.at(name).get();
-	}
-
-	Scene* Engine::CreateSceneA(const std::string& name)
-	{
-		SPY_CORE_ASSERT(!m_Scenes.contains(name), "Scene {} already exists!", name.c_str());
-		m_Scenes.emplace(name, std::make_unique<Scene>());
-		auto scene = m_Scenes.at(name).get();
-		scene->MakeSceneCamera({ m_Window->GetWidth() / 2, m_Window->GetHeight() / 2 }, { m_Window->GetWidth(), m_Window->GetHeight() });
-		m_ActiveScene = scene;
-		
-		return scene;
-	}
-
-	Scene* Engine::GetSceneByName(const std::string& name)
-	{
-		SPY_CORE_ASSERT(m_Scenes.contains(name), "Scene {} doesn't exists!", name.c_str());
-		return m_Scenes.at(name).get();
-	}
-
-	Scene* Engine::GetSceneByNameA(const std::string& name)
-	{
-		SPY_CORE_ASSERT(m_Scenes.contains(name), "Scene {} doesn't exists!", name.c_str());
-		auto scene = m_Scenes.at(name).get();
-		m_ActiveScene = scene;
-		if (!scene->m_MainCamera)
-		{
-			scene->MakeSceneCamera({ m_Window->GetWidth() / 2, m_Window->GetHeight() / 2 }, { m_Window->GetWidth(), m_Window->GetHeight() });
-		}
-		return scene;
 	}
 }

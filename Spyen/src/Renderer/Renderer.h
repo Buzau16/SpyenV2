@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "Scene/Camera.h"
 #include "SSBO.h"
 #include "UniformBuffer.h"
 #include "Renderer/VertexArray.h"
@@ -30,7 +30,7 @@ namespace Spyen {
 
 		void BeginBatch();
 
-		void BeginFrame(const Camera* camera);
+		void BeginFrame(const Camera& camera);
 		void EndFrame();
 
 		// Draw Functions

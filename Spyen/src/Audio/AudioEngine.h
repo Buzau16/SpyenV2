@@ -1,5 +1,6 @@
 #pragma once
-#include <miniaudio/miniaudio.h>
+#include <Audio/miniaudio/miniaudio.h>
+#include <string>
 
 
 namespace Spyen {

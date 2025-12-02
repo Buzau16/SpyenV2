@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
-
-#include "Scene/Entity.h"
+#include <Scene/Scene.h>
 
 namespace Spyen {
 	class PhysicsEngine

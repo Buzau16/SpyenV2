@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "AssetManager.h"
 
 #include "Core/Defines.h"
@@ -29,7 +30,7 @@ namespace Spyen
 	{
 		auto name = path.stem().string();
 		SPY_CORE_ASSERT(!m_TextureMap.contains(name), "Texture {} already exists!", name);
-		SPY_CORE_INFO("Loading texture from: {}", path);
+		SPY_CORE_INFO("Loading texture from: {}", path.string());
 		m_TextureMap.insert({name, std::make_unique<Texture>(path) });
 		return m_TextureMap.at(name).get();
 	}

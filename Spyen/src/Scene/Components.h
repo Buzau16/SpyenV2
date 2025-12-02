@@ -1,64 +1,65 @@
 #pragma once
-#include <glm/ext/matrix_transform.hpp>
-
-#include "glm/glm.hpp"
-#include "Renderer/Texture.h"
+#include <memory>
+#include <Time/TimeStep.h>
+#include <Math/Math.h>
+#include <Core/Defines.h>
 
 namespace Spyen
 {
-		struct TransformComponent
-		{
-			glm::vec2 Position = {0.0f, 0.0f};
-			float Rotation = 0.0f;
-			glm::vec2 Scale = {100, 100};
+	struct OBB {
+		Vec2 Position = { 0, 0 };
+		Vec2 HalfSize = { 0, 0 };
+		float Rotation = 0.0f;
 
-			TransformComponent() = default;
+		OBB() = default;
 
-			[[nodiscard]] glm::mat4 GetTransformMatrix() const noexcept
-			{
-				return glm::translate(glm::mat4(1.0f), glm::vec3(Position, 1.0f)) *
-					glm::rotate(glm::mat4(1.0f), glm::radians(Rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-					glm::scale(glm::mat4(1.0f), glm::vec3(Scale.x, Scale.y, 1.0f));
-			} 
+		constexpr OBB(const Vec2& position, const Vec2& halfsize, const float rotation) :
+			Position(position), HalfSize(halfsize), Rotation(rotation) {
 		};
+	};
 
+	class Node;
 
-		struct RenderComponent
-		{
-			glm::vec3 Color = {0.0f, 0.0f, 0.0f};
-			Spyen::Texture* Texture = nullptr;
-			bool IsVisible = true;
+	class ScriptComponent {
+	public:
+		ScriptComponent() = default;
+		virtual ~ScriptComponent();
 
-			RenderComponent() = default;
-			RenderComponent(const glm::vec3& color) : Color(color) {};
-			RenderComponent(Spyen::Texture* texture) : Texture(texture) {};
-		};
+		virtual void OnInit() {};
+		virtual void OnUpdate(Timestep dt) {};
 
+	protected:
+		Node* Parent;
+	private:
+		friend class Node;
+	};
 
-		// needed for other functions in other places
-		struct OBB {
-			glm::vec2 Position = { 0, 0 };
-			glm::vec2 HalfSize = { 0, 0 };
-			float Rotation = 0.0f;
+	class RigidBody
+	{
+	public:
+		RigidBody() = default;
+		explicit RigidBody(const Vec2& position, const Vec2& scale, const float rotation);
+		~RigidBody() = default;
 
-			constexpr OBB(const glm::vec2& position, const glm::vec2& halfsize, const float rotation) :
-				Position(position), HalfSize(halfsize), Rotation(rotation) {};
-		};
+		void OnUpdate(const Vec2& position, const Vec2& scale, const float rotation);
 
-		struct RigidBodyComponent
-		{
-			glm::vec2 Velocity = { 0,0 };
-			glm::vec2 Acceleration = { 0,0 };
-			bool IsKinematic = false;
+		SP_SYNTHESIZE(OBB, Collider, Collider);
+		SP_SYNTHESIZE(Vec2, Velocity, Velocity);
+		SP_SYNTHESIZE(Vec2, Acceleration, Acceleration);
 
-			RigidBodyComponent() = default;
-		};
+		constexpr bool IsKinematic() const noexcept;
+		void SetKinematic(const bool value) noexcept;
 
-		struct ColliderComponent
-		{
-			OBB OBB;
+		constexpr bool IsCollidable() const noexcept;
+		void SetCollidable(const bool value) noexcept;
 
-			ColliderComponent() = default;
-			//ColliderComponent(const TransformComponent& comp) : OBB(comp), Projection({ 0,0 }) {}
-		};
+		static std::unique_ptr<RigidBody> Create();
+
+	protected:
+		OBB Collider;
+		Vec2 Velocity{ 0,0 };
+		Vec2 Acceleration{ 0,0 };
+		bool Kinematic = false;
+		bool Collidable = true;
+	};
 }

@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "Texture.h"
 #include <renderer/stb_image.h>
 

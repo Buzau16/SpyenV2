@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "QuadTree.h"
 
 

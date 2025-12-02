@@ -1,7 +1,8 @@
+#include "spypch.h"
 #include "IAssetManager.h"
 
 
 namespace Spyen
 {
-	AssetManager* IAssetManager::m_Instance = nullptr;
+	AssetManager* IAssetManager::s_Instance = nullptr;
 }

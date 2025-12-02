@@ -2,7 +2,6 @@
 #include <string>
 #include <unordered_map>
 #include "Audio/Sound.h"
-
 #include "Renderer/Texture.h"
 
 namespace Spyen {

@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "Renderer/IndexBuffer.h"
 
 #include <glad/glad.h>

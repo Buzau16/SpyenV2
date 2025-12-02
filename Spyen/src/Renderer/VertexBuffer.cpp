@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "VertexBuffer.h"
 
 #include <glad/glad.h>

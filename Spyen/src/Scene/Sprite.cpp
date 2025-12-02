@@ -1,3 +1,4 @@
+#include "spypch.h"
 #include "Sprite.h"
 #include <Renderer/Renderer.h>
 
@@ -13,19 +14,19 @@ namespace Spyen {
 	void Sprite::OnRender(Renderer * renderer)
 	{
 		if (Sprite::Texture) {
-			renderer->DrawQuad(Position, Scale, Rotation, Sprite::Texture);
+			renderer->DrawQuad(Math::ToGLMVec2(Position), Math::ToGLMVec2(Scale), Rotation, Sprite::Texture);
 		}
 		else {
-			renderer->DrawQuad(Position, Scale, Rotation, Color);
+			renderer->DrawQuad(Math::ToGLMVec2(Position), Math::ToGLMVec2(Scale), Rotation, Math::ToGLMVec3(Color));
 		}
 	}
 
-	constexpr Texture* Sprite::GetTexture() const noexcept
+	Texture* Sprite::GetTexture() const noexcept
 	{
 		return this->Texture;
 	}
 
-	void Sprite::SetTexture(const std::filesystem::path& path) noexcept
+	void Sprite::SetTexture(const std::filesystem::path& path)
 	{
 		if (this->Texture) {
 			delete this->Texture;

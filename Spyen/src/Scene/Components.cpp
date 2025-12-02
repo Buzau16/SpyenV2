@@ -1,16 +1,20 @@
-#include "RigidBody.h"
+#include "spypch.h"
+#include "Components.h"
+#include <Scene/Node.h>
+
 
 namespace Spyen {
-	RigidBody::RigidBody(const glm::vec2& position, const glm::vec2& scale, const float rotation) : 
-		Collider(position, glm::vec2{scale.x / 2, scale.y / 2}, rotation)
-	{}
+	RigidBody::RigidBody(const Vec2& position, const Vec2& scale, const float rotation) :
+		Collider(position, scale / 2, rotation)
+	{
+	}
 
-	void RigidBody::OnUpdate(const glm::vec2& position, const glm::vec2& scale, const float rotation)
+	void RigidBody::OnUpdate(const Vec2& position, const Vec2& scale, const float rotation)
 	{
 		if (Collidable) {
 			//Update the OBB
 			Collider.Position = position;
-			Collider.HalfSize = glm::vec2{ scale.x / 2, scale.y / 2 };
+			Collider.HalfSize = scale / 2;
 			Collider.Rotation = rotation;
 		}
 	}
@@ -32,5 +36,13 @@ namespace Spyen {
 	}
 	void RigidBody::SetCollidable(const bool value) noexcept
 	{
+		Collidable = value;
+	}
+
+	ScriptComponent::~ScriptComponent()
+	{
+		if (Parent) {
+			Parent = nullptr;
+		}
 	}
 }

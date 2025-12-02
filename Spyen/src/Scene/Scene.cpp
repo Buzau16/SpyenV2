@@ -1,79 +1,46 @@
+#include "spypch.h"
 #include "Scene.h"
-
-#if 0
-
-#include "Components.h"
-#include "Core/Defines.h"
-#include "Entity.h"
 #include <Renderer/Renderer.h>
 
-
-namespace Spyen
-{
-
-	std::unordered_map<std::string, Entity> m_Entities;
-
-	Entity Scene::CreateEntity(const std::string& name)
+namespace Spyen {
+	void Scene::OnInit()
 	{
-		SPY_CORE_ASSERT(!m_Entities.contains(name), "Entity {} already exists!", name.c_str());
-		m_Entities.insert({ name, Entity(m_Registry.create(), this) });
-		auto& entity = m_Entities.at(name);
-		entity.AddComponent<TransformComponent>();
-		entity.AddComponent<RenderComponent>();
-		entity.AddComponent<ColliderComponent>();
-		entity.AddComponent<RigidBodyComponent>();
-
-		return entity;
-	}
-	Entity Scene::GetEntityByName(const std::string& name) const
-	{
-		SPY_CORE_ASSERT(m_Entities.contains(name), "Entity {} does not exists!", name.c_str());
-		return m_Entities.at(name);
-	}
-	void Scene::OnRender(Renderer* renderer) const
-	{
-		const auto& view = m_Registry.view<TransformComponent, RenderComponent>();
-
-		for (auto [entity, transform, render] : view.each())
-		{
-			if (render.Texture == nullptr)
-			{
-				renderer->DrawQuad(transform.GetTransformMatrix(), render.Color);
-			}else
-			{
-				renderer->DrawQuad(transform.GetTransformMatrix(), render.Texture);
-			}
-			
+		Camera.OnInit();
+		for (auto& node : NodeGraph) {
+			node->OnInit();
 		}
 	}
-	
-}
-
-#else
-
-
-namespace Spyen {
-#include "Sprite.h"
-
 	void Scene::OnUpdate(Timestep dt)
 	{
-		for (auto& node : m_Nodes) {
+		Camera.OnUpdate(dt);
+		for (auto& node : NodeGraph) {
 			node->OnUpdate(dt);
 		}
 	}
 	void Scene::OnRender(Renderer* renderer)
 	{
-		for (auto& node : m_Nodes) {
+		for (auto& node : NodeGraph) {
 			node->OnRender(renderer);
 		}
 	}
+
 	void Scene::AddNode(std::unique_ptr<Node> node)
 	{
-		m_Nodes.push_back(std::move(node));
+		NodeGraph.AddNode(std::move(node));
 	}
+
+	Camera& Scene::GetCamera() noexcept
+	{
+		return Camera;
+	}
+
+	NodeGraph& Scene::GetNodeGraph() noexcept
+	{
+		return Scene::NodeGraph;
+	}
+
 	std::unique_ptr<Scene> Scene::Create()
 	{
 		return std::make_unique<Scene>();
 	}
 }
-#endif

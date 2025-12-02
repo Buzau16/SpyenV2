@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer/BufferLayout.h"
-#include <stdint.h>
+#include <cstdint>
 
 namespace Spyen {
 	class VertexBuffer

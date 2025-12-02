@@ -18,6 +18,9 @@ project "Spyen"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "spypch.h"
+	pchsource "%{prj.name}/src/spypch.cpp"
+
     flags { "MultiProcessorCompile" }
     buildoptions { "/utf-8" }
 	
@@ -105,12 +108,6 @@ project "BeerCatcher"
 	
 	includedirs {
 		"Spyen/src",
-		"Spyen/vendor/glad/include",
-		"Spyen/vendor/glm/include",
-		"Spyen/vendor/spdlog/include",
-		"Spyen/vendor/entt",
-		"Spyen/vendor/glfw/include",
-		"Spyen/vendor/miniaudio/include"
 	}
 
 	libdirs{

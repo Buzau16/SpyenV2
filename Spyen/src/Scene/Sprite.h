@@ -1,7 +1,13 @@
 #pragma once
-#include <Scene/Node.h>
+#include <filesystem>
+#include <memory>
+#include <Renderer/Renderer.h>
 #include <Renderer/Texture.h>
-#include <Core/Defines.h>
+#include "Node.h"
+#include <Time/TimeStep.h>
+#include <Math/glm/glm.hpp>
+#include <Math/Math.h>
+
 
 namespace Spyen {
 	class Sprite : public Node
@@ -14,16 +20,16 @@ namespace Spyen {
 		virtual void OnUpdate(Timestep dt) {};
 		virtual void OnRender(Renderer* renderer) override;
 
-		constexpr Texture* GetTexture() const noexcept;
+		Spyen::Texture* GetTexture() const noexcept;
 		void SetTexture(const std::filesystem::path& path);
 		void SetTexture(Texture* texture);
 
-		SP_SYNTHESIZE(glm::vec3, Color, Color);
+		SP_SYNTHESIZE(Vec3, Color, Color);
 
 		static std::unique_ptr<Sprite> Create();
 	protected:
 		Texture* Texture = nullptr;
-		glm::vec3 Color{ 0,0,0 };
+		Vec3 Color{ 0,0,0 };
 	private:
 		bool IsTextureFromManager = false;
 	};

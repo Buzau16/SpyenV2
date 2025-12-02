@@ -15,3 +15,6 @@
 #define SP_SYNTHESIZE_NR(type, name, func) \
 	constexpr type Get##func() const noexcept { return name; }\
 	inline void Set##func(const type value) noexcept { name = value; }
+
+#define SP_AS(var, type) \
+	dynamic_cast<type*>(var)

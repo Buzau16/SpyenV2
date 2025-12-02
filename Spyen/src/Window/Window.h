@@ -2,10 +2,9 @@
 
 
 #define NOMINMAX
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <string>
+
+struct GLFWwindow;
 
 namespace Spyen {
 	struct WindowSpecifications{
@@ -21,9 +20,9 @@ namespace Spyen {
 		Window(const WindowSpecifications& specs);
 		~Window();
 
-		inline bool IsOpen() const noexcept { return !glfwWindowShouldClose(m_Window); };
-		inline void SwapBuffers() const noexcept { glfwSwapBuffers(m_Window); };
-		inline void PollEvents() noexcept { glfwPollEvents(); };
+		bool IsOpen() const noexcept;
+		void SwapBuffers() const noexcept;
+		void PollEvents() noexcept;
 		void Clear(const float r, const float g, const float b, const float a = 1.0f) noexcept;
 
 		[[nodiscard]] uint32_t GetWidth() const noexcept { return m_Specs.Width; }
