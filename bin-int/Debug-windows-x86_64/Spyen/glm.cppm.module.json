@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "C:\\Users\\gpro9\\source\\repos\\Buzau16\\BeerCatcher\\Spyen\\..\\bin-int\\Debug-windows-x86_64\\Spyen\\\\glm1.obj",
+            "outputs": [
+                "C:\\Users\\gpro9\\source\\repos\\Buzau16\\BeerCatcher\\bin\\Debug-windows-x86_64\\Spyen\\Spyen.pdb",
+                "C:\\Users\\gpro9\\source\\repos\\Buzau16\\BeerCatcher\\Spyen\\..\\bin-int\\Debug-windows-x86_64\\Spyen\\",
+                "C:\\Users\\gpro9\\source\\repos\\Buzau16\\BeerCatcher\\bin-int\\Debug-windows-x86_64\\Spyen\\glm.cppm.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "glm",
+                    "source-path": "c:\\users\\gpro9\\source\\repos\\buzau16\\beercatcher\\spyen\\src\\math\\glm\\glm.cppm",
+                    "is-interface": true
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

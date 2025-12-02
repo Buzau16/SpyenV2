@@ -1,7 +1,7 @@
 #include "spypch.h"
 #include "math.h"
 
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <Scene/Components.h>
 
 glm::vec2 Spyen::Math::ToGLMVec2(const Vec2& v)

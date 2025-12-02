@@ -1,6 +1,6 @@
 #include "spypch.h"
 #include "Camera.h"
-#include <Math/glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <Core/Director.h>
 
 namespace Spyen {
@@ -9,17 +9,16 @@ namespace Spyen {
         Node::OnInit();
 
         auto d = Director::GetWindowDimensions();
-        uint64_t weird = 0;
         switch (m_Type) {
         case CameraType::NONE:
             SPY_CORE_ERROR("No camera type set, falling back to a orthographic projection!");
-            m_Projection = glm::ortho(weird, d.x, weird, d.y);
+            m_Projection = glm::ortho(0.f, d.x, 0.f, d.y);
             break;
         case CameraType::Orthographic:
-            m_Projection = glm::ortho(weird, d.x, weird, d.y);
+            m_Projection = glm::ortho(0.f, d.x, 0.f, d.y);
             break;
         case CameraType::Perspective:
-            m_Projection = glm::perspective(glm::radians(90.f), static_cast<float>(d.x) / d.y, 0.1f, 1.f);
+            //m_Projection = glm::perspective(glm::radians(90.f), d.x / d.y, 0.1f, 1.f);
             break;
         }
     }

@@ -10,11 +10,23 @@
     <Filter Include="src\Audio">
       <UniqueIdentifier>{EE2696B2-5A91-4A29-A3CF-FBCE0F79287E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Audio\miniaudio">
+      <UniqueIdentifier>{BC28AC72-288A-8980-B1F7-CF321D58C03F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Math">
       <UniqueIdentifier>{261422CF-12E1-7CDA-3BFA-6A822726B268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math\glm">
+      <UniqueIdentifier>{7541D7FC-61A4-66A1-0A2A-9F57F66B3224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math\glm\detail">
+      <UniqueIdentifier>{9763B408-03C5-9116-8C32-D8C8F892C8D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math\glm\simd">
+      <UniqueIdentifier>{F1CE064F-5DE5-04E5-A65C-900612B2D56C}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Physics">
       <UniqueIdentifier>{9F8B9316-0B41-0C0C-9435-06E300EA0210}</UniqueIdentifier>
@@ -74,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="src\Audio\Sound.h">
       <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\miniaudio\miniaudio.h">
+      <Filter>src\Audio\miniaudio</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Core.h">
       <Filter>src\Core</Filter>
@@ -165,76 +180,76 @@
     <ClInclude Include="src\spypch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\common.hpp">
+    <ClInclude Include="vendor\glm\include\glm\common.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\exponential.hpp">
+    <ClInclude Include="vendor\glm\include\glm\exponential.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\ext.hpp">
+    <ClInclude Include="vendor\glm\include\glm\ext.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\fwd.hpp">
+    <ClInclude Include="vendor\glm\include\glm\fwd.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\geometric.hpp">
+    <ClInclude Include="vendor\glm\include\glm\geometric.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\glm.hpp">
+    <ClInclude Include="vendor\glm\include\glm\glm.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\integer.hpp">
+    <ClInclude Include="vendor\glm\include\glm\integer.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat2x2.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat2x2.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat2x3.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat2x3.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat2x4.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat2x4.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat3x2.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat3x2.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat3x3.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat3x3.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat3x4.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat3x4.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat4x2.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat4x2.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat4x3.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat4x3.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\mat4x4.hpp">
+    <ClInclude Include="vendor\glm\include\glm\mat4x4.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\matrix.hpp">
+    <ClInclude Include="vendor\glm\include\glm\matrix.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\packing.hpp">
+    <ClInclude Include="vendor\glm\include\glm\packing.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\trigonometric.hpp">
+    <ClInclude Include="vendor\glm\include\glm\trigonometric.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\vec2.hpp">
+    <ClInclude Include="vendor\glm\include\glm\vec2.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\vec3.hpp">
+    <ClInclude Include="vendor\glm\include\glm\vec3.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\vec4.hpp">
+    <ClInclude Include="vendor\glm\include\glm\vec4.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\glm\vector_relational.hpp">
+    <ClInclude Include="vendor\glm\include\glm\vector_relational.hpp">
       <Filter>vendor\glm\include\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\miniaudio\miniaudio.h">
+    <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h">
       <Filter>vendor\miniaudio\include\miniaudio</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,5 +344,7 @@
     <ClCompile Include="vendor\glad\src\glad.c">
       <Filter>vendor\glad\src</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.c" />
+    <ClCompile Include="src\Renderer\stb_image.c" />
   </ItemGroup>
 </Project>

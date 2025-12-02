@@ -7,8 +7,8 @@
 namespace Spyen
 {
 	struct OBB {
-		Vec2 Position = { 0, 0 };
-		Vec2 HalfSize = { 0, 0 };
+		Vec2 Position = { 0.f, 0.f };
+		Vec2 HalfSize = { 0.f, 0.f };
 		float Rotation = 0.0f;
 
 		OBB() = default;

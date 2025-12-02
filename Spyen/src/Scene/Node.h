@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <Time/TimeStep.h>
 #include <Scene/Components.h>
 #include <memory>
@@ -57,7 +57,7 @@ namespace Spyen {
 		std::vector<std::unique_ptr<ScriptComponent>> m_Scripts;
 	protected:
 		std::string Name;
-		Vec2 Position { 0,0 };
+		Vec2 Position { 0.f,0.f };
 		Vec2 Scale{ 100.f, 100.f };
 		float Rotation = 0.f;
 	private:

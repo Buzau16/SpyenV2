@@ -12,7 +12,7 @@ namespace Spyen {
 		Director(const Director& other) = delete;
 		~Director() = default;
 
-		static IVec2 GetWindowDimensions();
+		static Vec2 GetWindowDimensions();
 		static Scene* GetActiveScene();
 		static void SetActiveScene(const std::string& name);
 		static void AddScene(const std::string& name, std::unique_ptr<Scene> scene);

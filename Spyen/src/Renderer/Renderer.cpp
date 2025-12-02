@@ -2,11 +2,11 @@
 #include "Renderer.h"
 
 #include <glad/glad.h>
-#include <Math/glm/ext/matrix_clip_space.hpp>
-#include <Math/glm/gtc/type_ptr.inl>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/gtc/type_ptr.inl>
 
 #include "BufferElement.h"
-#include <Math/glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 
 namespace Spyen {

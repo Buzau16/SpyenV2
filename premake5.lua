@@ -108,6 +108,12 @@ project "BeerCatcher"
 	
 	includedirs {
 		"Spyen/src",
+		"Spyen/vendor/glad/include",
+		"Spyen/vendor/glm/include",
+		"Spyen/vendor/glfw/include",
+		"Spyen/vendor/spdlog/include",
+		"Spyen/vendor/entt",
+		"Spyen/vendor/miniaudio/include"
 	}
 
 	libdirs{

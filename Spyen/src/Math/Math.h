@@ -1,20 +1,32 @@
 #pragma once
 #include <array>
 #include <utility>
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 namespace Spyen
 {	
 	struct Vec2 {
 		float x, y;
 
-		constexpr Vec2(float X, float Y) : x(X), y(Y) {};
-		constexpr Vec2(float XY) : x(XY), y(XY) {};
+
+		constexpr Vec2() : x(0.f), y(0.f) {};
+
+		// Universal type construtor :)
+		template<typename X, typename Y>
+			requires (std::is_arithmetic_v<X>&& std::is_arithmetic_v<Y>)
+		constexpr Vec2(X xx, Y yy)
+			: x(static_cast<float>(xx)), y(static_cast<float>(yy)) {
+		}
+		template<typename XY>
+			requires (std::is_arithmetic_v<XY>)
+		constexpr Vec2(XY xxyy)
+			: x(static_cast<float>(xxyy)), y(static_cast<float>(xxyy)) {
+		}
 
 		constexpr Vec2& operator+=(const Vec2& other) { x += other.x; y += other.y;	return *this; }
 		constexpr Vec2& operator-=(const Vec2& other) { x -= other.x; y -= other.y;	return *this; }
 		constexpr Vec2& operator*=(const Vec2& other) { x *= other.x; y *= other.y;	return *this; }
-		constexpr Vec2& operator/=(const Vec2& other) {	x /= other.x; y /= other.y;	return *this; }
+		constexpr Vec2& operator/=(const Vec2& other) { x /= other.x; y /= other.y;	return *this; }
 
 		constexpr Vec2& operator+=(const float s) { x += s; y += s;	return *this; }
 		constexpr Vec2& operator-=(const float s) { x -= s; y -= s;	return *this; }
@@ -42,8 +54,20 @@ namespace Spyen
 	struct IVec2 {
 		uint64_t x, y;
 
-		constexpr IVec2(uint64_t X, uint64_t Y) : x(X), y(Y) {};
-		constexpr IVec2(uint64_t XY) : x(XY), y(XY) {};
+		constexpr IVec2() : x(0), y(0) {};
+
+		// Universal type construtor :)
+		template<typename X, typename Y>
+			requires (std::is_arithmetic_v<X>&& std::is_arithmetic_v<Y>)
+		constexpr IVec2(X xx, Y yy)
+			: x(static_cast<uint64_t>(xx)), y(static_cast<uint64_t>(yy)) {
+		}
+		template<typename XY>
+			requires (std::is_arithmetic_v<XY>)
+		constexpr IVec2(XY xxyy)
+			: x(static_cast<uint64_t>(xxyy)), y(static_cast<uint64_t>(xxyy)) {
+		}
+
 
 		constexpr IVec2& operator+=(const IVec2& other) { x += other.x; y += other.y;	return *this; }
 		constexpr IVec2& operator-=(const IVec2& other) { x -= other.x; y -= other.y;	return *this; }
@@ -76,9 +100,19 @@ namespace Spyen
 	struct Vec3 {
 		float x, y, z;
 
-		constexpr Vec3() : x(0), y(0), z(0) {};
-		constexpr Vec3(float X, float Y, float Z) : x(X), y(Y), z(Z) {};
-		constexpr Vec3(float XYZ) : x(XYZ), y(XYZ), z(XYZ) {};
+		constexpr Vec3() : x(0.f), y(0.f), z(0.f) {};
+
+		// Universal type construtor :)
+		template<typename X, typename Y, typename Z>
+		requires (std::is_arithmetic_v<X>&& std::is_arithmetic_v<Y> && std::is_arithmetic_v<Z>)
+		constexpr Vec3(X xx, Y yy, Z zz)
+			: x(static_cast<float>(xx)), y(static_cast<float>(yy)), z(static_cast<float>(zz)) {
+		}
+		template<typename XYZ>
+			requires (std::is_arithmetic_v<XYZ>)
+		constexpr Vec3(XYZ xxyyzz)
+			: x(static_cast<float>(xxyyzz)), y(static_cast<float>(xxyyzz)), z(static_cast<float>(xxyyzz)) {
+		}
 
 		constexpr Vec3& operator+=(const Vec3& other) { x += other.x; y += other.y; z += other.z; return *this; }
 		constexpr Vec3& operator-=(const Vec3& other) { x -= other.x; y -= other.y;	z -= other.z; return *this; }
@@ -111,8 +145,19 @@ namespace Spyen
 	struct IVec3 {
 		uint64_t x, y, z;
 
-		constexpr IVec3(uint64_t X, uint64_t Y, uint64_t Z) : x(X), y(Y), z(Z) {};
-		constexpr IVec3(uint64_t XYZ) : x(XYZ), y(XYZ), z(XYZ) {};
+		constexpr IVec3() : x(0), y(0), z(0) {};
+
+		// Universal type construtor :)
+		template<typename X, typename Y, typename Z>
+			requires (std::is_arithmetic_v<X>&& std::is_arithmetic_v<Y>&& std::is_arithmetic_v<Z>)
+		constexpr IVec3(X xx, Y yy, Z zz)
+			: x(static_cast<uint64_t>(xx)), y(static_cast<uint64_t>(yy)), z(static_cast<uint64_t>(zz)) {
+		}
+		template<typename XYZ>
+			requires (std::is_arithmetic_v<XYZ>)
+		constexpr IVec3(XYZ xxyyzz)
+			: x(static_cast<uint64_t>(xxyyzz)), y(static_cast<uint64_t>(xxyyzz)), z(static_cast<uint64_t>(xxyyzz)) {
+		}
 
 		constexpr IVec3& operator+=(const IVec3& other) { x += other.x; y += other.y; z += other.z; return *this; }
 		constexpr IVec3& operator-=(const IVec3& other) { x -= other.x; y -= other.y; z -= other.z; return *this; }
@@ -142,8 +187,7 @@ namespace Spyen
 		inline IVec3 Normalize() const { auto len = Length(); return IVec3{ x / len, y / len, z / len }; };
 	};
 
-	struct OBB;
-
+struct OBB;
 	namespace Math
 	{
 		glm::vec2 ToGLMVec2(const Vec2& v);
@@ -151,10 +195,10 @@ namespace Spyen
 		glm::ivec2 ToGLMIVec2(const IVec2& v);
 		glm::ivec3 ToGLMIVec3(const IVec3& v);
 
-		constexpr float Dot(const Vec2& a, const Vec2& b){ return a.x * b.x + a.y * b.y; }
-		constexpr float Dot(const Vec3& a, const Vec3& b){ return a.x * b.x + a.y * b.y + a.z * b.z; }
-		constexpr float Dot(const IVec2& a, const IVec2& b){ return a.x * b.x + a.y * b.y; }
-		constexpr float Dot(const IVec3& a, const IVec3& b){ return a.x * b.x + a.y * b.y + a.z * b.z; }
+		constexpr float Dot(const Vec2& a, const Vec2& b) { return a.x * b.x + a.y * b.y; }
+		constexpr float Dot(const Vec3& a, const Vec3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+		constexpr float Dot(const IVec2& a, const IVec2& b) { return a.x * b.x + a.y * b.y; }
+		constexpr float Dot(const IVec3& a, const IVec3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
 		std::pair<float, float> Project(const OBB& box, const Vec2& axis);
 		bool IsColliding(const OBB& a, const OBB& b);

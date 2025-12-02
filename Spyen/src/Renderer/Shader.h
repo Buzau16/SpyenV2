@@ -3,7 +3,7 @@
 #pragma warning(push)
 #pragma warning(disable: 4251)
 
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <string>
 
 namespace Spyen {

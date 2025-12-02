@@ -1,7 +1,7 @@
 #pragma once
 #include <Scene/Node.h>
 #include <Time/TimeStep.h>
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 namespace Spyen {
 	enum class CameraType {

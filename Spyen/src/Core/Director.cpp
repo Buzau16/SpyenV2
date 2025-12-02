@@ -3,9 +3,9 @@
 
 namespace Spyen {
 	Engine* Director::s_Instance = nullptr;
-	IVec2 Director::GetWindowDimensions()
+	Vec2 Director::GetWindowDimensions()
 	{
-		return IVec2{s_Instance->m_Window->GetWidth(), s_Instance->m_Window->GetHeight() };
+		return Vec2{ s_Instance->m_Window->GetWidth(), s_Instance->m_Window->GetHeight() };
 	}
 	Scene* Director::GetActiveScene()
 	{

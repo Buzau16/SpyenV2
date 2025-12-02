@@ -5,7 +5,7 @@
 #include <Renderer/Texture.h>
 #include "Node.h"
 #include <Time/TimeStep.h>
-#include <Math/glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <Math/Math.h>
 
 

@@ -167,6 +167,7 @@
     <ClInclude Include="src\Audio\AudioEngine.h" />
     <ClInclude Include="src\Audio\IAudioEngine.h" />
     <ClInclude Include="src\Audio\Sound.h" />
+    <ClInclude Include="src\Audio\miniaudio\miniaudio.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Defines.h" />
     <ClInclude Include="src\Core\Director.h" />
@@ -197,30 +198,30 @@
     <ClInclude Include="src\Time\TimeStep.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="src\spypch.h" />
-    <ClInclude Include="src\Math\glm\common.hpp" />
-    <ClInclude Include="src\Math\glm\exponential.hpp" />
-    <ClInclude Include="src\Math\glm\ext.hpp" />
-    <ClInclude Include="src\Math\glm\fwd.hpp" />
-    <ClInclude Include="src\Math\glm\geometric.hpp" />
-    <ClInclude Include="src\Math\glm\glm.hpp" />
-    <ClInclude Include="src\Math\glm\integer.hpp" />
-    <ClInclude Include="src\Math\glm\mat2x2.hpp" />
-    <ClInclude Include="src\Math\glm\mat2x3.hpp" />
-    <ClInclude Include="src\Math\glm\mat2x4.hpp" />
-    <ClInclude Include="src\Math\glm\mat3x2.hpp" />
-    <ClInclude Include="src\Math\glm\mat3x3.hpp" />
-    <ClInclude Include="src\Math\glm\mat3x4.hpp" />
-    <ClInclude Include="src\Math\glm\mat4x2.hpp" />
-    <ClInclude Include="src\Math\glm\mat4x3.hpp" />
-    <ClInclude Include="src\Math\glm\mat4x4.hpp" />
-    <ClInclude Include="src\Math\glm\matrix.hpp" />
-    <ClInclude Include="src\Math\glm\packing.hpp" />
-    <ClInclude Include="src\Math\glm\trigonometric.hpp" />
-    <ClInclude Include="src\Math\glm\vec2.hpp" />
-    <ClInclude Include="src\Math\glm\vec3.hpp" />
-    <ClInclude Include="src\Math\glm\vec4.hpp" />
-    <ClInclude Include="src\Math\glm\vector_relational.hpp" />
-    <ClInclude Include="src\Audio\miniaudio\miniaudio.h" />
+    <ClInclude Include="vendor\glm\include\glm\common.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\exponential.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\ext.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\fwd.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\geometric.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\glm.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\integer.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat2x2.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat2x3.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat2x4.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat3x2.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat3x3.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat3x4.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat4x2.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat4x3.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\mat4x4.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\matrix.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\packing.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\trigonometric.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\vec2.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\vec3.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\vec4.hpp" />
+    <ClInclude Include="vendor\glm\include\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
@@ -239,6 +240,10 @@
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\SSBO.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Renderer\stb_image.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
@@ -256,6 +261,11 @@
     </ClCompile>
     <ClCompile Include="vendor\glad\src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
