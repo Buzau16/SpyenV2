@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 
 namespace Spyen {
-	VertexBuffer::VertexBuffer(const void* data, uint32_t size)
+	VertexBuffer::VertexBuffer(const void* data, size_t size)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -26,7 +26,7 @@ namespace Spyen {
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-	void VertexBuffer::SetData(const void* data, uint32_t size)
+	void VertexBuffer::SetData(const void* data, size_t size)
 	{
 		Bind();
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);

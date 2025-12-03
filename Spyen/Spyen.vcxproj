@@ -175,6 +175,7 @@
     <ClInclude Include="src\Core\SceneManager.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
     <ClInclude Include="src\Math\Math.h" />
+    <ClInclude Include="src\Math\Vector\Vec.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Physics\QuadTree.h" />
     <ClInclude Include="src\Renderer\BufferElement.h" />

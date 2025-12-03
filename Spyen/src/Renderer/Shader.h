@@ -27,7 +27,7 @@ namespace Spyen {
 		void SetUniform4f(const std::string& name, const glm::vec4& value);
 		void SetUniformMat4(const std::string& name, const glm::mat4& value);
 		void SetUniformHandle(const std::string& name, const uint64_t handle);
-		void SetUniformHandles(const std::string& name, const uint64_t* handles, size_t count);
+		void SetUniformHandles(const std::string& name, const uint64_t* handles, uint32_t count);
 
 
 		void Test();

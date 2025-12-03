@@ -120,14 +120,14 @@ namespace Spyen {
 		if (m_QuadIndexCount)
 		{
 
-			size_t buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
+			GLsizeiptr buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
 			m_QuadVertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
 
 			m_QuadShader->Bind();
 
 			m_HandleBuffer->Bind(0);
 			m_HandleBuffer->SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
-			m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), m_TextureHandles.size());
+			m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), static_cast<uint32_t>(m_TextureHandles.size()));
 
 			m_QuadVertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);

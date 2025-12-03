@@ -25,6 +25,7 @@ namespace Spyen {
 		}
 
 		SPY_CORE_CRITICAL("Failed to find node {}!");
+		return nullptr;
 	}
 
 	std::vector<std::unique_ptr<Node>>::iterator NodeGraph::begin()

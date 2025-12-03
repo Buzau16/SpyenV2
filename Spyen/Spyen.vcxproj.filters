@@ -252,6 +252,7 @@
     <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h">
       <Filter>vendor\miniaudio\include\miniaudio</Filter>
     </ClInclude>
+    <ClInclude Include="src\Math\Vector\Vec.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
