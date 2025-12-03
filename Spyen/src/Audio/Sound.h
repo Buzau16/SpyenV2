@@ -1,5 +1,5 @@
 #pragma once
-#include <Audio/miniaudio/miniaudio.h>
+#include <miniaudio/miniaudio.h>
 #include <filesystem>
 
 

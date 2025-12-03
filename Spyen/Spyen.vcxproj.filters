@@ -87,9 +87,6 @@
     <ClInclude Include="src\Audio\Sound.h">
       <Filter>src\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Audio\miniaudio\miniaudio.h">
-      <Filter>src\Audio\miniaudio</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Core.h">
       <Filter>src\Core</Filter>
     </ClInclude>
