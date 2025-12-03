@@ -11,6 +11,16 @@ namespace Spyen {
 		else delete this->Texture;
 	}
 
+	void Sprite::OnInit()
+	{
+		Node::OnInit();
+	}
+
+	void Sprite::OnUpdate(Timestep dt)
+	{
+		Node::OnUpdate(dt);
+	}
+
 	void Sprite::OnRender(Renderer * renderer)
 	{
 		if (Sprite::Texture) {
@@ -19,6 +29,8 @@ namespace Spyen {
 		else {
 			renderer->DrawQuad(Math::ToGLMVec2(Position), Math::ToGLMVec2(Scale), Rotation, Math::ToGLMVec3(Color));
 		}
+
+		Node::OnRender(renderer);
 	}
 
 	Texture* Sprite::GetTexture() const noexcept

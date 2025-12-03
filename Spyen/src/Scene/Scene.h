@@ -5,9 +5,6 @@
 #include <memory>
 #include "Node.h"
 
-#define CREATE_MOVE(type) \
-	std::move(std::make_unique<type>())
-
 
 namespace Spyen {
 	class Renderer;

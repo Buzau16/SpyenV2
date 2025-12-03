@@ -23,6 +23,7 @@ project "Spyen"
 
     flags { "MultiProcessorCompile" }
     buildoptions { "/utf-8" }
+
 	
 	files {
 		"%{prj.name}/src/**.cpp",
@@ -32,7 +33,21 @@ project "Spyen"
 		"%{prj.name}/vendor/glm/include/glm/*.inl",
 		"%{prj.name}/vendor/entt/*.hpp",
 		"%{prj.name}/vendor/miniaudio/include/miniaudio/*.h",
+		"%{prj.name}/vendor/miniaudio/include/miniaudio/*.c",
+		"%{prj.name}/vendor/stb_image/include/stb_image/*.h",
+		"%{prj.name}/vendor/stb_image/include/stb_image/*.c"
 	}
+
+	filter "files:vendor/glad/src/glad.c"
+		flags { "NoPCH" }
+
+	filter "files:vendor/stb_image/include/stb_image/stb_image.c"
+		flags { "NoPCH" }
+
+	filter "files:vendor/miniaudio/include/miniaudio/miniaudio.c"
+		flags { "NoPCH" }
+
+	filter {}
 	
 	includedirs {
 		"Spyen/include",
@@ -42,6 +57,7 @@ project "Spyen"
 		"%{prj.name}/vendor/glfw/include",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/entt",
+		"%{prj.name}/vendor/stb_image/include",
 		"%{prj.name}/vendor/miniaudio/include"
 	}
 

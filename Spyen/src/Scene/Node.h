@@ -19,7 +19,7 @@ namespace Spyen {
 
 		virtual void OnInit();
 		virtual void OnUpdate(Timestep dt);
-		virtual void OnRender(Renderer* renderer) {};
+		virtual void OnRender(Renderer* renderer);
 
 		Vec2 GetPosition() const noexcept; 
 		void SetPosition(const Vec2& value) noexcept;
@@ -49,6 +49,7 @@ namespace Spyen {
 		void AddScript(std::unique_ptr<ScriptComponent> script);
 
 		void AddChild(std::unique_ptr<Node> child);
+		const std::vector<std::unique_ptr<Node>>& GetChildren() const;
 
 		static std::unique_ptr<Node> Create();
 	private:

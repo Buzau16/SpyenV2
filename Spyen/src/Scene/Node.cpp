@@ -7,6 +7,9 @@
 namespace Spyen {
 	void Node::OnInit()
 	{
+		for (auto& child : m_Children) {
+			child->OnInit();
+		}
 		for (auto& script : m_Scripts) {
 			script->OnInit();
 		}
@@ -14,8 +17,18 @@ namespace Spyen {
 
 	void Node::OnUpdate(Timestep dt)
 	{
+		for (auto& child : m_Children) {
+			child->OnUpdate(dt);
+		}
 		for (auto& script : m_Scripts) {
 			script->OnUpdate(dt);
+		}
+	}
+
+	void Node::OnRender(Renderer* renderer)
+	{
+		for (auto& child : m_Children) {
+			child->OnRender(renderer);
 		}
 	}
 
@@ -91,6 +104,11 @@ namespace Spyen {
 		child->m_Parent = this;
 
 		m_Children.push_back(std::move(child));
+	}
+
+	const std::vector<std::unique_ptr<Node>>& Node::GetChildren() const
+	{
+		return m_Children;
 	}
 
 	std::unique_ptr<Node> Node::Create()

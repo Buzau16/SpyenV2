@@ -13,7 +13,8 @@ namespace Spyen {
 		Timestep(const Timestep& other) = default;
 		Timestep(Timestep&& other) noexcept : m_Time(other.m_Time) { other.m_Time = 0; }
 
-		operator double() const { return m_Time; }
+		//operator double() const { return m_Time; }
+		operator float() const { return static_cast<float>(m_Time); }
 		Timestep& operator=(float time) { m_Time = time; return *this; }
 
 		double GetSeconds() const { return m_Time; }

@@ -5,7 +5,7 @@
 
 namespace Spyen {
 	template<typename T>
-	requires(std::is_arithmetic_v<T>)
+	requires std::is_arithmetic_v<T>
 	struct Vector2 {
 		T x, y;
 
@@ -67,7 +67,7 @@ namespace Spyen {
 	};
 
 	template<typename T>
-	requires(std::is_arithmetic_v<T>)
+		requires std::is_arithmetic_v<T>
 	struct Vector3 {
 		T x, y, z;
 

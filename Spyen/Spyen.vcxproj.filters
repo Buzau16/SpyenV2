@@ -10,23 +10,14 @@
     <Filter Include="src\Audio">
       <UniqueIdentifier>{EE2696B2-5A91-4A29-A3CF-FBCE0F79287E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Audio\miniaudio">
-      <UniqueIdentifier>{BC28AC72-288A-8980-B1F7-CF321D58C03F}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Math">
       <UniqueIdentifier>{261422CF-12E1-7CDA-3BFA-6A822726B268}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Math\glm">
-      <UniqueIdentifier>{7541D7FC-61A4-66A1-0A2A-9F57F66B3224}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Math\glm\detail">
-      <UniqueIdentifier>{9763B408-03C5-9116-8C32-D8C8F892C8D5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Math\glm\simd">
-      <UniqueIdentifier>{F1CE064F-5DE5-04E5-A65C-900612B2D56C}</UniqueIdentifier>
+    <Filter Include="src\Math\Vector">
+      <UniqueIdentifier>{88EB315D-F476-9F21-FD87-22166992FB21}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Physics">
       <UniqueIdentifier>{9F8B9316-0B41-0C0C-9435-06E300EA0210}</UniqueIdentifier>
@@ -70,6 +61,15 @@
     <Filter Include="vendor\miniaudio\include\miniaudio">
       <UniqueIdentifier>{82196876-6E55-6BE0-D767-83D7C3C213FB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image\include">
+      <UniqueIdentifier>{8084391F-6CA9-889F-95F4-6D2F817887BD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image\include\stb_image">
+      <UniqueIdentifier>{1AD50333-0611-079D-6F23-1F945B7EAFB7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AssetManager\AssetManager.h">
@@ -108,6 +108,9 @@
     <ClInclude Include="src\Math\Math.h">
       <Filter>src\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Math\Vector\Vec.h">
+      <Filter>src\Math\Vector</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\PhysicsEngine.h">
       <Filter>src\Physics</Filter>
     </ClInclude>
@@ -145,9 +148,6 @@
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\VertexBuffer.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\stb_image.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\Camera.h">
@@ -249,7 +249,12 @@
     <ClInclude Include="vendor\miniaudio\include\miniaudio\miniaudio.h">
       <Filter>vendor\miniaudio\include\miniaudio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\Vector\Vec.h" />
+    <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h">
+      <Filter>vendor\stb_image\include\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Input.h" />
+    <ClInclude Include="src\Input\KeyCodes.h" />
+    <ClInclude Include="src\Input\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -342,7 +347,12 @@
     <ClCompile Include="vendor\glad\src\glad.c">
       <Filter>vendor\glad\src</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.c" />
-    <ClCompile Include="src\Renderer\stb_image.c" />
+    <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.c">
+      <Filter>vendor\miniaudio\include\miniaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\include\stb_image\stb_image.c">
+      <Filter>vendor\stb_image\include\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Input.cpp" />
   </ItemGroup>
 </Project>

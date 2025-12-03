@@ -26,4 +26,8 @@ namespace Spyen {
 	{
 		s_Instance->m_SceneManager->Transition(name);
 	}
+	GLFWwindow* Director::GetWindow()
+	{
+		return s_Instance->m_Window->GetWindowHandle();
+	}
 }

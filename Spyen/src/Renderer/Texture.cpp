@@ -1,6 +1,6 @@
 #include "spypch.h"
 #include "Texture.h"
-#include <renderer/stb_image.h>
+#include <stb_image/stb_image.h>
 
 #include "Core/Defines.h"
 #include "Core/Log.h"

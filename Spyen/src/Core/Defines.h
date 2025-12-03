@@ -18,3 +18,10 @@
 
 #define SP_AS(var, type) \
 	dynamic_cast<type*>(var)
+
+#define SP_CREATE_FUNC(type) \
+	static std::unique_ptr<type> Create(){ return std::make_unique<type>();}
+
+#define SP_MOVE(type) std::move(type)
+
+#define SP_CREATE_MOVE(type) std::move(std::make_unique<type>())

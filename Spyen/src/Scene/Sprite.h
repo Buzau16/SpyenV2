@@ -16,8 +16,8 @@ namespace Spyen {
 		Sprite() = default;
 		virtual ~Sprite();
 
-		virtual void OnInit() {};
-		virtual void OnUpdate(Timestep dt) {};
+		virtual void OnInit() override;
+		virtual void OnUpdate(Timestep dt) override;
 		virtual void OnRender(Renderer* renderer) override;
 
 		Spyen::Texture* GetTexture() const noexcept;
