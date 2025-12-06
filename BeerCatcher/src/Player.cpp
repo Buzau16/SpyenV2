@@ -45,6 +45,7 @@ void Player::OnUpdate(Spyen::Timestep dt)
 		auto fs = food->GetScale();
 		if (Position.x < fp.x + fs.x && Position.x + Scale.x > fp.x && Position.y < fp.y + fs.y && Position.y + Scale.y > fp.y) {
 			SPY_INFO("Food eaten");
+			Spyen::IAudioEngine::PlaySound("shot");
 			Spyen::NodeHitEvent event(this, food);
 			Spyen::Director::RaiseEvent(event);
 		}

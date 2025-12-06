@@ -6,7 +6,7 @@
 void FoodSpawner::OnInit()
 {
 	SetName("Spawner");
-	//SpawnFood();
+
 	Node::OnInit();
 }
 
@@ -24,7 +24,7 @@ void FoodSpawner::OnEvent(Spyen::Event& event)
 void FoodSpawner::SpawnFood()
 {
 	auto food = Food::Create();
-	food->SetPosition({ Spyen::Math::Random<float>(0, 1280), Spyen::Math::Random<float>(0, 720) });
+	food->SetPosition({ Spyen::Math::Random<uint32_t>(0, 1280), Spyen::Math::Random<uint32_t>(0, 720) });
 	Spyen::Director::GetActiveScene()->AddNode(SP_MOVE(food));
 }
 
@@ -34,6 +34,4 @@ bool FoodSpawner::OnFoodEaten(Spyen::NodeHitEvent& event)
 		Spyen::Director::GetActiveScene()->RemoveNode(event.GetTarget());
 		SpawnFood();
 		return true;
-	//}
-	return false;
 }

@@ -7,6 +7,8 @@
 
 #include "Player.h"
 #include "FoodSpawner.h"
+#include "Food.h"
+#include "TransitionScript.h"
 #include <Core/Defines.h>
 
 constexpr uint32_t Width = 1280;
@@ -25,11 +27,21 @@ int main() {
 	auto foodspawner = FoodSpawner::Create();
 	auto player = Player::Create();
 	
+	//scene->AddNode(SP_CREATE_MOVE(Food));
 	scene->AddNode(SP_MOVE(foodspawner));
 	scene->AddNode(SP_MOVE(player));
+
+	scene->SetName("main");
+
+	auto start = Spyen::Scene::Create();
+	//start->AddNode(SP_CREATE_MOVE(Food));
+	start->AddNode(SP_CREATE_MOVE(TransitionScript));
+
+	start->SetName("start");
 	
 
 	Spyen::Director::AddScene("main", std::move(scene));
+	Spyen::Director::AddScene("start", std::move(start));
 	Spyen::Director::SetActiveScene("main");
 
 	engine.Run();

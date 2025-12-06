@@ -19,7 +19,7 @@ project "Spyen"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "spypch.h"
-	pchsource "%{prj.name}/src/spypch.cpp"
+	pchsource "%{prj.name}/src/spypch.cpp"	
 
     flags { "MultiProcessorCompile" }
     buildoptions { "/utf-8" }
@@ -37,17 +37,7 @@ project "Spyen"
 		"%{prj.name}/vendor/stb_image/include/stb_image/*.h",
 		"%{prj.name}/vendor/stb_image/include/stb_image/*.c"
 	}
-
-	filter "files:vendor/glad/src/glad.c"
-		flags { "NoPCH" }
-
-	filter "files:vendor/stb_image/include/stb_image/stb_image.c"
-		flags { "NoPCH" }
-
-	filter "files:vendor/miniaudio/include/miniaudio/miniaudio.c"
-		flags { "NoPCH" }
-
-	filter {}
+	
 	
 	includedirs {
 		"Spyen/include",
@@ -69,6 +59,9 @@ project "Spyen"
 		"glfw3",
 		"opengl32"
 	}
+
+	filter "files:Spyen/vendor/**.c"
+	flags {"NoPCH"}
 	
 	filter "system:windows"
 		cppdialect "C++23"

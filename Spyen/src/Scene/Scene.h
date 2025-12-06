@@ -25,12 +25,15 @@ namespace Spyen {
 		Node* GetNode(const std::string_view name);
 		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
 
+		SP_SYNTHESIZE(std::string, Name, Name);
+
 		Camera& GetCamera() noexcept;
 		NodeGraph& GetNodeGraph() noexcept;
 
 		static std::unique_ptr<Scene> Create();
 
 	protected:
+		std::string Name;
 		Camera Camera;
 		NodeGraph NodeGraph;
 	};

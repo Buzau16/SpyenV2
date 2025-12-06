@@ -162,12 +162,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Events\Event.h" />
-    <ClInclude Include="src\Events\KeyEvents.h" />
-    <ClInclude Include="src\Events\MouseEvents.h" />
-    <ClInclude Include="src\Events\NodeEvents.h" />
-    <ClInclude Include="src\Input\MouseCodes.h" />
-    <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\AssetManager\IAssetManager.h" />
     <ClInclude Include="src\Audio\AudioEngine.h" />
@@ -178,8 +172,15 @@
     <ClInclude Include="src\Core\Director.h" />
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Core\SceneManager.h" />
+    <ClInclude Include="src\Core\UUID.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
+    <ClInclude Include="src\Events\Event.h" />
+    <ClInclude Include="src\Events\KeyEvents.h" />
+    <ClInclude Include="src\Events\MouseEvents.h" />
+    <ClInclude Include="src\Events\NodeEvents.h" />
+    <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\KeyCodes.h" />
+    <ClInclude Include="src\Input\MouseCodes.h" />
     <ClInclude Include="src\Math\Common.h" />
     <ClInclude Include="src\Math\Math.h" />
     <ClInclude Include="src\Math\Primitives\Primitives.h" />
@@ -206,7 +207,6 @@
     <ClInclude Include="src\Time\TimeStep.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="src\spypch.h" />
-    <ClInclude Include="src\Core\UUID.h" />
     <ClInclude Include="vendor\glm\include\glm\common.hpp" />
     <ClInclude Include="vendor\glm\include\glm\exponential.hpp" />
     <ClInclude Include="vendor\glm\include\glm\ext.hpp" />
@@ -234,7 +234,6 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
@@ -244,6 +243,8 @@
     <ClCompile Include="src\Core\Director.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
     <ClCompile Include="src\Core\SceneManager.cpp" />
+    <ClCompile Include="src\Core\UUID.cpp" />
+    <ClCompile Include="src\Input\Input.cpp" />
     <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Physics\QuadTree.cpp" />
@@ -266,18 +267,14 @@
     <ClCompile Include="src\spypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="vendor\glad\src\glad.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\miniaudio\include\miniaudio\miniaudio.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\include\stb_image\stb_image.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

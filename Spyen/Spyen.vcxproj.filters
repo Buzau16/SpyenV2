@@ -13,8 +13,17 @@
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Events">
+      <UniqueIdentifier>{7162C20E-5D1A-045C-C621-DDB7B2F89E4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Input">
+      <UniqueIdentifier>{EC4823B3-58B3-D729-A1F1-88CF0D9BB57E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Math">
       <UniqueIdentifier>{261422CF-12E1-7CDA-3BFA-6A822726B268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math\Primitives">
+      <UniqueIdentifier>{41EEF266-AD4F-D074-36BD-1627A21D0734}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Math\Vector">
       <UniqueIdentifier>{88EB315D-F476-9F21-FD87-22166992FB21}</UniqueIdentifier>
@@ -102,11 +111,41 @@
     <ClInclude Include="src\Core\SceneManager.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\UUID.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\locked_ptr.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Events\Event.h">
+      <Filter>src\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Events\KeyEvents.h">
+      <Filter>src\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Events\MouseEvents.h">
+      <Filter>src\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Events\NodeEvents.h">
+      <Filter>src\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Input.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\KeyCodes.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\MouseCodes.h">
+      <Filter>src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Common.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Math\Math.h">
       <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Primitives\Primitives.h">
+      <Filter>src\Math\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Vector\Vec.h">
       <Filter>src\Math\Vector</Filter>
@@ -252,16 +291,6 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\Input.h" />
-    <ClInclude Include="src\Input\KeyCodes.h" />
-    <ClInclude Include="src\Input\MouseCodes.h" />
-    <ClInclude Include="src\Math\Primitives\Primitives.h" />
-    <ClInclude Include="src\Math\Common.h" />
-    <ClInclude Include="src\Events\Event.h" />
-    <ClInclude Include="src\Core\UUID.h" />
-    <ClInclude Include="src\Events\KeyEvents.h" />
-    <ClInclude Include="src\Events\MouseEvents.h" />
-    <ClInclude Include="src\Events\NodeEvents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -290,6 +319,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\SceneManager.cpp">
       <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\UUID.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Input.cpp">
+      <Filter>src\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Math.cpp">
       <Filter>src\Math</Filter>
@@ -360,7 +395,5 @@
     <ClCompile Include="vendor\stb_image\include\stb_image\stb_image.c">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\Input.cpp" />
-    <ClCompile Include="src\Core\UUID.cpp" />
   </ItemGroup>
 </Project>
