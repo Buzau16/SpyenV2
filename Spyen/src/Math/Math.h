@@ -3,18 +3,13 @@
 #include <utility>
 #include <glm/glm.hpp>
 #include <Math/Vector/Vec.h>
+#include <Math/Primitives/Primitives.h>
+#include <Math/Common.h>
 #include <numbers>
 
 namespace Spyen
 {	
-	using Vec2 = Vector2<float>;
-	using IVec2 = Vector2<int64_t>;
-	using UVec2 = Vector2<uint64_t>;
-	using Vec3 = Vector3<float>;
-	using IVec3 = Vector3<int64_t>;
-	using UVec3 = Vector3<uint64_t>;
-
-struct OBB;
+	using OBB = Rectangle;
 	namespace Math
 	{
 		// for converting degrees to radians mostly
@@ -117,8 +112,8 @@ struct OBB;
 			requires std::is_arithmetic_v<T>
 		constexpr Vector2<T> Min(const Vector2<T>& a, const Vector2<T>& b) noexcept {
 			Vector2<T> vec;
-			vec.x = std::min(a.x, b.x);
-			vec.y = std::min(a.y, b.y);
+			vec.x = Math::Min(a.x, b.x);
+			vec.y = Math::Min(a.y, b.y);
 			return vec;
 		}
 
@@ -126,8 +121,8 @@ struct OBB;
 			requires std::is_arithmetic_v<T>
 		constexpr Vector2<T> Max(const Vector2<T>& a, const Vector2<T>& b) noexcept {
 			Vector2<T> vec;
-			vec.x = std::max(a.x, b.x);
-			vec.y = std::max(a.y, b.y);
+			vec.x = Math::Max(a.x, b.x);
+			vec.y = Math::Max(a.y, b.y);
 			return vec;
 		}
 

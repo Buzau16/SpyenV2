@@ -7,6 +7,7 @@
 #include <optional>
 #include <vector>
 #include <string>
+#include <Events/Event.h>
 
 namespace Spyen {
 	class Renderer;
@@ -20,6 +21,7 @@ namespace Spyen {
 		virtual void OnInit();
 		virtual void OnUpdate(Timestep dt);
 		virtual void OnRender(Renderer* renderer);
+		virtual void OnEvent(Event& event);
 
 		Vec2 GetPosition() const noexcept; 
 		void SetPosition(const Vec2& value) noexcept;
@@ -30,8 +32,12 @@ namespace Spyen {
 		float GetRotation() const noexcept;
 		void SetRotation(const float value) noexcept;
 
+		//SP_SYNTHESIZE(Vec2, LocalPosition, LocalPosition);
+
 		std::string GetName() const noexcept;
 		void SetName(const std::string& value) noexcept;
+
+		SP_SYNTHESIZE(std::string, Tag, Tag);
 
 		std::optional<RigidBody> GetRigidBody() const noexcept;
 		RigidBody& RGetRigidBody() noexcept;
@@ -58,7 +64,10 @@ namespace Spyen {
 		std::vector<std::unique_ptr<ScriptComponent>> m_Scripts;
 	protected:
 		std::string Name;
-		Vec2 Position { 0.f,0.f };
+		std::string Tag;
+		Vec2 Position { 0.f,0.f }; // WorldPosition
+		// figure this out
+		//Vec2 LocalPosition{ 0.f,0.f };
 		Vec2 Scale{ 100.f, 100.f };
 		float Rotation = 0.f;
 	private:

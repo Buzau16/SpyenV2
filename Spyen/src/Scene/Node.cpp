@@ -7,17 +7,12 @@
 namespace Spyen {
 	void Node::OnInit()
 	{
-		for (auto& child : m_Children) {
-			child->OnInit();
-		}
-		for (auto& script : m_Scripts) {
-			script->OnInit();
-		}
 	}
 
 	void Node::OnUpdate(Timestep dt)
 	{
 		for (auto& child : m_Children) {
+			//child->Position = child->AnchorPoint + this->Position;
 			child->OnUpdate(dt);
 		}
 		for (auto& script : m_Scripts) {
@@ -29,6 +24,14 @@ namespace Spyen {
 	{
 		for (auto& child : m_Children) {
 			child->OnRender(renderer);
+		}
+	}
+
+	void Node::OnEvent(Event& event)
+	{
+		for (auto& child : m_Children) {
+			//child->Position = child->AnchorPoint + this->Position;
+			child->OnEvent(event);
 		}
 	}
 
@@ -96,13 +99,15 @@ namespace Spyen {
 	void Node::AddScript(std::unique_ptr<ScriptComponent> script)
 	{
 		script->Parent = this;
+		script->OnInit();
 		m_Scripts.push_back(std::move(script));
 	}
 
 	void Node::AddChild(std::unique_ptr<Node> child)
 	{
 		child->m_Parent = this;
-
+		//child->LocalPosition = this->Position;
+		child->OnInit();
 		m_Children.push_back(std::move(child));
 	}
 

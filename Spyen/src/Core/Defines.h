@@ -25,3 +25,7 @@
 #define SP_MOVE(type) std::move(type)
 
 #define SP_CREATE_MOVE(type) std::move(std::make_unique<type>())
+
+#define SP_STRINGIFY(x) #x
+
+#define SP_BIND_EVENT_FUNC(func) [this](auto&&... args) -> decltype(auto) { return this->func(std::forward<decltype(args)>(args)...); } 

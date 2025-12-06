@@ -13,8 +13,9 @@ namespace Spyen {
 		~NodeGraph() = default;
 
 		void AddNode(std::unique_ptr<Node> node);
-		//void RemoveNode(const std::string_view name);
+		void RemoveNode(Node* node);
 		Node* GetNode(const std::string_view name);
+		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
 
 		std::vector<std::unique_ptr<Node>>::iterator begin();
 		std::vector<std::unique_ptr<Node>>::iterator end();
@@ -22,9 +23,14 @@ namespace Spyen {
 		std::vector<std::unique_ptr<Node>>::const_iterator end() const;
 
 		//std::vector<RigidBody> GetRigidBodies() const;
+		void ProccesDeffered();
 
 	private:
+		
+
 		std::vector<std::unique_ptr<Node>> m_Nodes;
+		std::vector<std::unique_ptr<Node>> m_NodesToAdd;
+		std::vector<Node*> m_NodesToRemove;
 	};
 
 }

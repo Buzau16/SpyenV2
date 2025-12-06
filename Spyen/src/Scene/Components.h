@@ -6,17 +6,7 @@
 
 namespace Spyen
 {
-	struct OBB {
-		Vec2 Position = { 0.f, 0.f };
-		Vec2 HalfSize = { 0.f, 0.f };
-		float Rotation = 0.0f;
-
-		OBB() = default;
-
-		constexpr OBB(const Vec2& position, const Vec2& halfsize, const float rotation) :
-			Position(position), HalfSize(halfsize), Rotation(rotation) {
-		};
-	};
+	using OBB = Rectangle;
 
 	class Node;
 

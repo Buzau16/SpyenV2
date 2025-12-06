@@ -19,6 +19,7 @@ namespace Spyen {
 		virtual void OnInit() override;
 		virtual void OnUpdate(Timestep dt) override;
 		virtual void OnRender(Renderer* renderer) override;
+		virtual void OnEvent(Event& event) override;
 
 		Spyen::Texture* GetTexture() const noexcept;
 		void SetTexture(const std::filesystem::path& path);

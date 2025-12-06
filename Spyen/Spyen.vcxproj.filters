@@ -255,6 +255,13 @@
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\KeyCodes.h" />
     <ClInclude Include="src\Input\MouseCodes.h" />
+    <ClInclude Include="src\Math\Primitives\Primitives.h" />
+    <ClInclude Include="src\Math\Common.h" />
+    <ClInclude Include="src\Events\Event.h" />
+    <ClInclude Include="src\Core\UUID.h" />
+    <ClInclude Include="src\Events\KeyEvents.h" />
+    <ClInclude Include="src\Events\MouseEvents.h" />
+    <ClInclude Include="src\Events\NodeEvents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -354,5 +361,6 @@
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Core\UUID.cpp" />
   </ItemGroup>
 </Project>

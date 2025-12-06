@@ -4,6 +4,7 @@
 #include <Time/TimeStep.h>
 #include <memory>
 #include "Node.h"
+#include <Events/Event.h>
 
 
 namespace Spyen {
@@ -17,8 +18,12 @@ namespace Spyen {
 		void OnInit();
 		void OnUpdate(Timestep dt);
 		void OnRender(Renderer* renderer);
+		void OnEvent(Event& event);
 
 		void AddNode(std::unique_ptr<Node> node);
+		void RemoveNode(Node* node);
+		Node* GetNode(const std::string_view name);
+		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
 
 		Camera& GetCamera() noexcept;
 		NodeGraph& GetNodeGraph() noexcept;

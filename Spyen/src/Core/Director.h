@@ -17,6 +17,7 @@ namespace Spyen {
 		static void SetActiveScene(const std::string& name);
 		static void AddScene(const std::string& name, std::unique_ptr<Scene> scene);
 		static void Transition(const std::string& name);
+		static void RaiseEvent(Event& event);
 		static GLFWwindow* GetWindow();
 
 	private:

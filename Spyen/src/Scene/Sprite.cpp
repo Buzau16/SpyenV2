@@ -21,6 +21,11 @@ namespace Spyen {
 		Node::OnUpdate(dt);
 	}
 
+	void Sprite::OnEvent(Event& event)
+	{
+		Node::OnEvent(event);
+	}
+
 	void Sprite::OnRender(Renderer * renderer)
 	{
 		if (Sprite::Texture) {

@@ -19,12 +19,16 @@ namespace Spyen {
 
 	void Director::AddScene(const std::string& name, std::unique_ptr<Scene> scene)
 	{
-		return s_Instance->m_SceneManager->AddScene(name, std::move(scene));
+		s_Instance->m_SceneManager->AddScene(name, std::move(scene));
 	}
 
 	void Director::Transition(const std::string& name)
 	{
 		s_Instance->m_SceneManager->Transition(name);
+	}
+	void Director::RaiseEvent(Event& event)
+	{
+		s_Instance->RaiseEvent(event);
 	}
 	GLFWwindow* Director::GetWindow()
 	{

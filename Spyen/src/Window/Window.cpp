@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 #include <Core/Log.h>
+#include <Events/KeyEvents.h>
+#include <Events/MouseEvents.h>
 
 
 namespace Spyen {
@@ -43,6 +45,50 @@ namespace Spyen {
 		glViewport(0, 0, m_Specs.Width, m_Specs.Height);
 
 		glfwSetWindowUserPointer(m_Window, &m_Specs);
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* handle, int key, int scancode, int action, int mods) {
+			Window& window = *(reinterpret_cast<Window*>(glfwGetWindowUserPointer(handle)));
+
+			switch (action) {
+			case GLFW_PRESS:
+			{
+				KeyPressedEvent event(key, false);
+				window.RaiseEvent(event);
+				break;
+			}
+			case GLFW_RELEASE:
+			{
+				KeyReleasedEvent event(key);
+				window.RaiseEvent(event);
+				break;
+			}
+			case GLFW_REPEAT:
+			{
+				KeyPressedEvent event(key, true);
+				window.RaiseEvent(event);
+				break;
+			}
+			}
+		});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* handle, int button, int action, int mods) {
+			Window& window = *(reinterpret_cast<Window*>(glfwGetWindowUserPointer(handle)));
+
+			switch (action) {
+			case GLFW_PRESS:
+			{
+				MouseButtonPressedEvent event(button);
+				window.RaiseEvent(event);
+				break;
+			}
+			case GLFW_RELEASE:
+			{
+				MouseButtonReleasedEvent event(button);
+				window.RaiseEvent(event);
+				break;
+			}
+			}
+		});
 	}
 
 	Window::~Window()
@@ -66,5 +112,11 @@ namespace Spyen {
 	{
 		glClearColor(r, g, b, a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+	void Window::RaiseEvent(Event& event)
+	{
+		if (m_Specs.callback) {
+			m_Specs.callback(event);
+		}
 	}
 }

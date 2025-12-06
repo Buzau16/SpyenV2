@@ -9,7 +9,8 @@ namespace Spyen {
 	struct Vector2 {
 		T x, y;
 
-		constexpr Vector2() : x(0), y(0) {};
+		constexpr Vector2() : x(0), y(0) {}
+		constexpr ~Vector2() = default;
 
 		// Universal type construtor :)
 		template<typename X, typename Y>
@@ -45,6 +46,10 @@ namespace Spyen {
 
 		constexpr bool operator==(const Vector2& o) const { return x == o.x && y == o.y; }
 		constexpr bool operator!=(const Vector2& o) const { return !(*this == o); }
+		constexpr bool operator> (const Vector2& o) const { return x > o.x && y > o.y; }
+		constexpr bool operator< (const Vector2& o) const { return x < o.x && y < o.y; }
+		constexpr bool operator>=(const Vector2& o) const { return x >= o.x && y >= o.y; }
+		constexpr bool operator<=(const Vector2& o) const { return x <= o.x && y <= o.y; }
 
 		constexpr T LengthSq() const noexcept{
 			return x * x + y * y;
@@ -72,6 +77,7 @@ namespace Spyen {
 		T x, y, z;
 
 		constexpr Vector3() : x(0), y(0), z(0) {};
+		constexpr ~Vector3() = default;
 
 		// Universal type construtor :)
 		template<typename X, typename Y, typename Z>
@@ -107,6 +113,10 @@ namespace Spyen {
 
 		constexpr bool operator==(const Vector3& other) const { return x == other.x && y == other.y && z == other.z; }
 		constexpr bool operator!=(const Vector3& other) const { return !(*this == other); }
+		constexpr bool operator> (const Vector3& o) const { return x > o.x && y > o.y && z > o.z; }
+		constexpr bool operator< (const Vector3& o) const { return x < o.x && y < o.y && z < o.z; }
+		constexpr bool operator>=(const Vector3& o) const { return x >= o.x && y >= o.y && z >= o.z; }
+		constexpr bool operator<=(const Vector3& o) const { return x <= o.x && y <= o.y && z <= o.z; }
 
 		constexpr T LengthSq() const noexcept{
 			return x * x + y * y + z * z;
@@ -128,4 +138,11 @@ namespace Spyen {
 			return Vector3{ x / len, y / len, z / len };
 		};
 	};
+
+	using Vec2 = Vector2<float>;
+	using IVec2 = Vector2<int64_t>;
+	using UVec2 = Vector2<uint64_t>;
+	using Vec3 = Vector3<float>;
+	using IVec3 = Vector3<int64_t>;
+	using UVec3 = Vector3<uint64_t>;
 }

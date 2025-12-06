@@ -14,7 +14,7 @@ namespace Spyen {
 		if (Collidable) {
 			//Update the OBB
 			Collider.Position = position;
-			Collider.HalfSize = scale / 2;
+			Collider.Scale = scale / 2;
 			Collider.Rotation = rotation;
 		}
 	}

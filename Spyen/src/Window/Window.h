@@ -3,14 +3,18 @@
 
 #define NOMINMAX
 #include <string>
+#include <Events/Event.h>
 
 struct GLFWwindow;
 
 namespace Spyen {
 	struct WindowSpecifications{
-		std::string Title;
 		uint32_t Width;
 		uint32_t Height;
+		std::string Title;
+		
+		using EventFnCallback = std::function<void(Event&)>;
+		EventFnCallback callback;
 	};
 
 	class Window
@@ -24,6 +28,7 @@ namespace Spyen {
 		void SwapBuffers() const noexcept;
 		void PollEvents() noexcept;
 		void Clear(const float r, const float g, const float b, const float a = 1.0f) noexcept;
+		void RaiseEvent(Event& event);
 
 		[[nodiscard]] uint32_t GetWidth() const noexcept { return m_Specs.Width; }
 		[[nodiscard]] uint32_t GetHeight() const noexcept { return m_Specs.Height; }

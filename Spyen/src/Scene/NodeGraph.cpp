@@ -6,16 +6,14 @@
 namespace Spyen {
 	void NodeGraph::AddNode(std::unique_ptr<Node> node)
 	{
-		m_Nodes.push_back(std::move(node));
+		m_NodesToAdd.push_back(std::move(node));
 	}
 
-	/*void NodeGraph::RemoveNode(const std::string_view name)
+	void NodeGraph::RemoveNode(Node* node)
 	{
-		std::erase_if(m_Nodes, [&](const std::unique_ptr<Node> node) {
-			return node->GetName() == name;
-		});
-	}*/
-
+		m_NodesToRemove.push_back(node);
+	}
+	// add something in case of the return value being a nullptpr
 	Node* NodeGraph::GetNode(const std::string_view name)
 	{
 		for (auto& node : m_Nodes) {
@@ -24,8 +22,20 @@ namespace Spyen {
 			}
 		}
 
-		SPY_CORE_CRITICAL("Failed to find node {}!");
+		SPY_CORE_CRITICAL("Failed to find node {}!", name);
 		return nullptr;
+	}
+
+	std::vector<Node*> NodeGraph::GetNodesWithTag(const std::string_view tag)
+	{
+		std::vector<Node*> tagged_nodes;
+		for (auto& node : m_Nodes) {
+			if (node->GetTag() == tag) {
+				tagged_nodes.push_back(node.get());
+			}
+		}
+
+		return tagged_nodes;
 	}
 
 	std::vector<std::unique_ptr<Node>>::iterator NodeGraph::begin()
@@ -46,6 +56,36 @@ namespace Spyen {
 	std::vector<std::unique_ptr<Node>>::const_iterator NodeGraph::end() const
 	{
 		return m_Nodes.end();
+	}
+	void NodeGraph::ProccesDeffered()
+	{
+		if (!m_NodesToRemove.empty()) {
+			for (auto* node : m_NodesToRemove) {
+
+				auto it = std::find_if(
+					m_Nodes.begin(),
+					m_Nodes.end(),
+					[&](const std::unique_ptr<Node>& ptr) {
+						return ptr.get() == node;
+					}
+				);
+
+				if (it != m_Nodes.end()) {
+					m_Nodes.erase(it);
+				}
+			}
+
+			m_NodesToRemove.clear();
+		}
+
+
+		if (!m_NodesToAdd.empty()) {
+			for (auto& node : m_NodesToAdd) {
+				node->OnInit();
+				m_Nodes.push_back(std::move(node));
+			}
+			m_NodesToAdd.clear();
+		}
 	}
 	/*std::vector<RigidBody> NodeGraph::GetRigidBodies() const
 	{

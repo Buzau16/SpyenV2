@@ -13,10 +13,18 @@
 
 namespace Spyen {
 
+	// TODO: Add events!
+
 	constexpr float PhysicsStep = 1.0f / 60.f;
 
-	Engine::Engine(const WindowSpecifications& specs)
+	Engine::Engine(const uint32_t width, const uint32_t height, const std::string& title)
 	{
+		WindowSpecifications specs{
+			.Width = width,
+			.Height = height,
+			.Title = title,
+			.callback = [this](Event& event) {RaiseEvent(event); }
+		};
 		Log::Init();
 		SPY_CORE_INFO("Working directory: {}", std::filesystem::current_path().string());
 		m_Window = std::make_unique<Window>(specs);
@@ -84,5 +92,9 @@ namespace Spyen {
 
 			m_Window->SwapBuffers();
 		}
+	}
+	void Engine::RaiseEvent(Event& event)
+	{
+		m_SceneManager->GetActiveScene()->OnEvent(event);
 	}
 }

@@ -12,6 +12,7 @@
 #include <Physics/PhysicsEngine.h>
 #include <Core/SceneManager.h>
 #include <Audio/AudioEngine.h>
+#include <Events/Event.h>
 
 
 // TODO: refactor the remaining physics engine update function, the run function and make some camera controller thing
@@ -22,10 +23,12 @@ namespace Spyen {
 		Engine() = default;
 		~Engine();
 
-		explicit Engine(const WindowSpecifications& specs);
+		explicit Engine(const uint32_t width, const uint32_t height, const std::string& title);
 
 		void Run() const;
 	private:
+
+		void RaiseEvent(Event& event);
 		// The order of these matters! Messing with the order might cause crashes or memory corruption
 		std::unique_ptr<Window> m_Window = nullptr;
 		std::unique_ptr<Renderer> m_Renderer = nullptr;

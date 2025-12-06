@@ -142,13 +142,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\FoodSpawner.h" />
+    <ClInclude Include="src\Food.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FoodSpawner.cpp" />
+    <ClCompile Include="src\Food.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spyen\Spyen.vcxproj">
