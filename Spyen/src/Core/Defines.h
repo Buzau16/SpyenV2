@@ -29,3 +29,5 @@
 #define SP_STRINGIFY(x) #x
 
 #define SP_BIND_EVENT_FUNC(func) [this](auto&&... args) -> decltype(auto) { return this->func(std::forward<decltype(args)>(args)...); } 
+
+#define SP_IS_SAME_TYPE(target, type) typeid(*target) == typeid(type)

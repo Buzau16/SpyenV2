@@ -1,4 +1,4 @@
-#include "FoodSpawner.h"
+﻿#include "FoodSpawner.h"
 #include <Core/Director.h>
 #include "Food.h"
 #include "Player.h"
@@ -6,13 +6,17 @@
 void FoodSpawner::OnInit()
 {
 	SetName("Spawner");
-
+	//SpawnFood();
 	Node::OnInit();
+	
 }
 
 void FoodSpawner::OnUpdate(Spyen::Timestep dt)
 {
-
+	if (!IsThereFood) {
+		SpawnFood();
+		IsThereFood = true;
+	}
 }
 
 void FoodSpawner::OnEvent(Spyen::Event& event)
@@ -30,8 +34,14 @@ void FoodSpawner::SpawnFood()
 
 bool FoodSpawner::OnFoodEaten(Spyen::NodeHitEvent& event)
 {
-	//if (typeid(*event.GetNode()) == typeid(Player)) {
-		Spyen::Director::GetActiveScene()->RemoveNode(event.GetTarget());
-		SpawnFood();
-		return true;
+	Node* target = event.GetTarget();
+
+	if (SP_IS_SAME_TYPE(target, Player)) {
+		// nu șterge nimic dacă nu e food
+		return false;
+	}
+
+	Spyen::Director::GetActiveScene()->RemoveNode(target);
+	SpawnFood();
+	return true;
 }

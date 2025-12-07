@@ -72,11 +72,11 @@ namespace Spyen {
 			accumulator += TimeStep;
 
 			// Update physics at a fixed rate, independent of the fps / the rate that the game loop is running at
-			//while (accumulator >= PhysicsStep) {
-			//	//m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
-			//	m_PhysicsEngine->Update(m_SceneManager->GetActiveScene(), {m_Window->GetWidth(), m_Window->GetHeight()}, PhysicsStep);
-			//	accumulator -= PhysicsStep;
-			//}
+			while (accumulator >= PhysicsStep) {
+				//m_ActiveScene->GetEntityByName("test").GetComponent<RigidBodyComponent>().Velocity = { 100.0f, 0.0f };
+				m_PhysicsEngine->Update(m_SceneManager->GetActiveScene(), {m_Window->GetWidth(), m_Window->GetHeight()}, PhysicsStep);
+				accumulator -= PhysicsStep;
+			}
 
 			m_SceneManager->GetActiveScene()->OnUpdate(TimeStep);
 

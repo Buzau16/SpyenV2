@@ -18,8 +18,8 @@ int main() {
 	
 	Spyen::Engine engine(Width, Height, "Penis");
 
-	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/Box.png");
-	Spyen::IAssetManager::LoadTexture("Tile", "assets/textures/Tile.png");
+	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/PixelArtTutorial.png");
+	Spyen::IAssetManager::LoadTexture("Food", "assets/textures/Apple.png");
 	Spyen::IAssetManager::LoadSound("shot", "assets/sounds/shot.mp3");
 
 	auto scene = Spyen::Scene::Create();
@@ -27,21 +27,12 @@ int main() {
 	auto foodspawner = FoodSpawner::Create();
 	auto player = Player::Create();
 	
-	//scene->AddNode(SP_CREATE_MOVE(Food));
 	scene->AddNode(SP_MOVE(foodspawner));
 	scene->AddNode(SP_MOVE(player));
 
 	scene->SetName("main");
 
-	auto start = Spyen::Scene::Create();
-	//start->AddNode(SP_CREATE_MOVE(Food));
-	start->AddNode(SP_CREATE_MOVE(TransitionScript));
-
-	start->SetName("start");
-	
-
 	Spyen::Director::AddScene("main", std::move(scene));
-	Spyen::Director::AddScene("start", std::move(start));
 	Spyen::Director::SetActiveScene("main");
 
 	engine.Run();

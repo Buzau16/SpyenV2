@@ -35,8 +35,8 @@ namespace Spyen {
 		~QuadTree(); 
 
 		void Subdivide();
-		bool Insert(const OBB& box);
-		std::vector<OBB> Query(const Boundary& boundary) const;
+		bool Insert(const RigidBody& box);
+		std::vector<RigidBody> Query(const Boundary& boundary) const;
 
 
 		// For debbuging
@@ -47,7 +47,7 @@ namespace Spyen {
 		QuadTree* m_SouthWest = nullptr;
 		QuadTree* m_SouthEast = nullptr;
 		bool m_IsDivided = false;
-		std::vector<OBB> m_Colliders;
+		std::vector<RigidBody> m_Colliders;
 		Boundary m_Boundary;
 		uint32_t m_Capacity = 0;
 	};

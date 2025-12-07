@@ -18,6 +18,9 @@ namespace Spyen {
 		for (auto& script : m_Scripts) {
 			script->OnUpdate(dt);
 		}
+		if (HasRigidBody()) {
+			m_RigidBody->OnUpdate(Position, Scale, Rotation);
+		}
 	}
 
 	void Node::OnRender(Renderer* renderer)

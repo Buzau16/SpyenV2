@@ -16,6 +16,8 @@ void Player::OnInit()
 	SetPosition(Spyen::Vec2{canvas.x / 2.f, canvas.y / 2.f});
 	SetScale({ 100.f, 100.f });
 
+	AddRigidBody();
+
 	Spyen::Sprite::OnInit();
 }
 
@@ -46,8 +48,8 @@ void Player::OnUpdate(Spyen::Timestep dt)
 		if (Position.x < fp.x + fs.x && Position.x + Scale.x > fp.x && Position.y < fp.y + fs.y && Position.y + Scale.y > fp.y) {
 			SPY_INFO("Food eaten");
 			Spyen::IAudioEngine::PlaySound("shot");
-			Spyen::NodeHitEvent event(this, food);
-			Spyen::Director::RaiseEvent(event);
+			//Spyen::NodeHitEvent event(this, food);
+			//Spyen::Director::RaiseEvent(event);
 		}
 	}
 	

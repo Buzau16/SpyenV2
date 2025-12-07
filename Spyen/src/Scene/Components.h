@@ -28,6 +28,7 @@ namespace Spyen
 	{
 	public:
 		RigidBody() = default;
+
 		explicit RigidBody(const Vec2& position, const Vec2& scale, const float rotation);
 		~RigidBody() = default;
 
@@ -43,13 +44,18 @@ namespace Spyen
 		constexpr bool IsCollidable() const noexcept;
 		void SetCollidable(const bool value) noexcept;
 
+		Node* GetParent() const noexcept;
+		void SetParent(Node* node) noexcept;
+
 		static std::unique_ptr<RigidBody> Create();
 
 	protected:
+		Node* Parent = nullptr;
 		OBB Collider;
 		Vec2 Velocity{ 0,0 };
 		Vec2 Acceleration{ 0,0 };
 		bool Kinematic = false;
 		bool Collidable = true;
+		friend class Node;
 	};
 }

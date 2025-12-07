@@ -1,4 +1,4 @@
-#include "spypch.h"
+﻿#include "spypch.h"
 #include "NodeGraph.h"
 #include <Core/Log.h>
 
@@ -36,6 +36,42 @@ namespace Spyen {
 		}
 
 		return tagged_nodes;
+	}
+
+	std::vector<RigidBody> NodeGraph::GetRigidBodies()
+	{
+		std::vector<RigidBody> nodes;
+		for (auto& node : m_Nodes) {
+			if (node->HasRigidBody()) {
+				nodes.push_back(node->RGetRigidBody());
+			}
+		}
+
+		return nodes;
+	}
+
+	std::vector<Node*> NodeGraph::GetNodes()
+	{
+		std::vector<Node*> nodes;
+		nodes.reserve(m_Nodes.size());
+
+		for (auto& nodePtr : m_Nodes)
+			nodes.push_back(nodePtr.get());
+
+		return nodes;
+	}
+
+	std::vector<Node*> NodeGraph::GetNodesWithRigidBodies()
+	{
+		std::vector<Node*> nodes;
+
+		for (auto& node : m_Nodes) {
+			if (node->HasRigidBody()) {
+				nodes.push_back(node.get());
+			}
+		}
+
+		return nodes;
 	}
 
 	std::vector<std::unique_ptr<Node>>::iterator NodeGraph::begin()
@@ -87,15 +123,4 @@ namespace Spyen {
 			m_NodesToAdd.clear();
 		}
 	}
-	/*std::vector<RigidBody> NodeGraph::GetRigidBodies() const
-	{
-		std::vector<RigidBody> bodies;
-		for (auto& node : m_Nodes) {
-			if (node->HasRigidBody()) {
-				bodies.push_back(node->RGetRigidBody());
-			}
-		}
-
-		return bodies;
-	}*/
 }

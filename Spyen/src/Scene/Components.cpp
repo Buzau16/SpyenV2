@@ -39,6 +39,16 @@ namespace Spyen {
 		Collidable = value;
 	}
 
+	Node* RigidBody::GetParent() const noexcept
+	{
+		return Parent;
+	}
+
+	void RigidBody::SetParent(Node* node) noexcept
+	{
+		Parent = node;
+	}
+
 	ScriptComponent::~ScriptComponent()
 	{
 		if (Parent) {

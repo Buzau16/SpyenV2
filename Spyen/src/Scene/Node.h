@@ -46,9 +46,10 @@ namespace Spyen {
 		bool IsTransformDirty() const noexcept;
 		void ClearDirtyFlag() noexcept;
 
-		template<typename... Args>
-		RigidBody& AddRigidBody(Args&&... args) {
-			m_RigidBody.emplace(std::forward<Args>(args)...);
+		RigidBody& AddRigidBody() {
+			RigidBody rb;
+			rb.Parent = this;
+			m_RigidBody.emplace(rb);
 			return m_RigidBody.value();
 		}
 

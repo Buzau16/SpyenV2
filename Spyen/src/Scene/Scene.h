@@ -24,6 +24,9 @@ namespace Spyen {
 		void RemoveNode(Node* node);
 		Node* GetNode(const std::string_view name);
 		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
+		std::vector<RigidBody> GetRigidBodies();
+		std::vector<Node*> GetNodesWithRigidBodies();
+		std::vector<Node*> GetNodes();
 
 		SP_SYNTHESIZE(std::string, Name, Name);
 

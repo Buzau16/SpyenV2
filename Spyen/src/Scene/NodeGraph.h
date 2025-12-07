@@ -16,6 +16,9 @@ namespace Spyen {
 		void RemoveNode(Node* node);
 		Node* GetNode(const std::string_view name);
 		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
+		std::vector<RigidBody> GetRigidBodies();
+		std::vector<Node*> GetNodes();
+		std::vector<Node*> GetNodesWithRigidBodies();
 
 		std::vector<std::unique_ptr<Node>>::iterator begin();
 		std::vector<std::unique_ptr<Node>>::iterator end();

@@ -10,22 +10,7 @@
 
 void Food::OnInit()
 {
-	SetTexture(Spyen::IAssetManager::GetTexture("Tile"));
+	SetTexture(Spyen::IAssetManager::GetTexture("Food"));
 	SetTag("Food");
-	//SetPosition({ 640, 340 });
+	AddRigidBody();
 }
-
-//void Food::OnEvent(Spyen::Event& event)
-//{
-//	Spyen::EventDispatcher dispatcher(event);
-//	dispatcher.Dispatch<Spyen::NodeHitEvent>(SP_BIND_EVENT_FUNC(DestroySelf));
-//}
-//
-//void Food::OnUpdate(Spyen::Timestep dt)
-//{
-//}
-//
-//bool Food::DestroySelf(Spyen::NodeHitEvent e) {
-//	Spyen::Director::GetActiveScene()->RemoveNode(this);
-//	return true;
-//}

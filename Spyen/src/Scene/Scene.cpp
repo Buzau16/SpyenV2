@@ -54,6 +54,21 @@ namespace Spyen {
 		return NodeGraph.GetNodesWithTag(tag);
 	}
 
+	std::vector<RigidBody> Scene::GetRigidBodies()
+	{
+		return NodeGraph.GetRigidBodies();
+	}
+
+	std::vector<Node*> Scene::GetNodesWithRigidBodies()
+	{
+		return NodeGraph.GetNodesWithRigidBodies();
+	}
+
+	std::vector<Node*> Scene::GetNodes()
+	{
+		return NodeGraph.GetNodes();
+	}
+
 	Camera& Scene::GetCamera() noexcept
 	{
 		return Camera;

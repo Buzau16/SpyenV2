@@ -29,9 +29,9 @@ namespace Spyen {
 		m_IsDivided = true;
 	}
 
-	bool QuadTree::Insert(const OBB& box)
+	bool QuadTree::Insert(const RigidBody& box)
 	{
-		if (!m_Boundary.Contains({ box.Position.x, box.Position.y }))
+		if (!m_Boundary.Contains({ box.GetCollider().Position.x, box.GetCollider().Position.y}))
 		{
 			return false;
 		}
@@ -51,18 +51,18 @@ namespace Spyen {
 		return false;
 	}
 
-	std::vector<OBB> QuadTree::Query(const Boundary& boundary) const
+	std::vector<RigidBody> QuadTree::Query(const Boundary& boundary) const
 	{
-		std::vector<OBB> colliders;
+		std::vector<RigidBody> colliders;
 
 		if (!m_Boundary.Intersects(boundary))
 			return colliders;
 
-		for (auto& collider : m_Colliders)
+		for (auto& rb : m_Colliders)
 		{
-			if (boundary.Contains({collider.Position.x, collider.Position.y}))
+			if (boundary.Contains({ rb.GetCollider().Position.x, rb.GetCollider().Position.y}))
 			{
-				colliders.push_back(collider);
+				colliders.push_back(rb);
 			}
 		}
 

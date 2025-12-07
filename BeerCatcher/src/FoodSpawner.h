@@ -14,5 +14,6 @@ public:
 	SP_CREATE_FUNC(FoodSpawner);
 private:
 	bool OnFoodEaten(Spyen::NodeHitEvent& event);
+	bool IsThereFood = false;
 };
 
