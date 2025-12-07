@@ -7,7 +7,7 @@ namespace Spyen
 
 	struct TextureSpecification
 	{
-		uint32_t Width = 0, Height = 0, BitDepth = 0;
+		int32_t Width = 0, Height = 0, BitDepth = 0;
 		uint32_t InternalFormat, DataFormat;
 	};
 

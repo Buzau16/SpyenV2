@@ -12,7 +12,7 @@ namespace Spyen
 	Texture::Texture(const std::filesystem::path& path)
 	{
 		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load(path.string().c_str(), reinterpret_cast<int*>(&m_Specs.Width), reinterpret_cast<int*>(&m_Specs.Height), reinterpret_cast<int*>(&m_Specs.BitDepth), 0);
+		unsigned char* data = stbi_load(path.string().c_str(), &m_Specs.Width, &m_Specs.Height, &m_Specs.BitDepth, 0);
 		SPY_CORE_ASSERT(data, "Failed to load texture image!");
 
 		m_Specs.InternalFormat = m_Specs.BitDepth == 4 ? GL_RGBA8 : GL_RGB8;

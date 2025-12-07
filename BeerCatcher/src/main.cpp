@@ -18,7 +18,7 @@ int main() {
 	
 	Spyen::Engine engine(Width, Height, "Penis");
 
-	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/PixelArtTutorial.png");
+	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/Player.png");
 	Spyen::IAssetManager::LoadTexture("Food", "assets/textures/Apple.png");
 	Spyen::IAssetManager::LoadSound("shot", "assets/sounds/shot.mp3");
 
