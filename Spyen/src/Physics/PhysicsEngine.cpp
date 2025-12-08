@@ -24,9 +24,7 @@ namespace Spyen
 			tree.Insert(rb);
 		}
 
-		//think how to do this
 		for (auto& node : nodes) {
-			//tree.Insert(node.GetCollider());
 			auto c = node->GetRigidBody()->GetCollider();
 			object_search_boundary = { c.Position.x, c.Position.y, c.Position.x + c.Scale.x + search_offset, c.Position.y + c.Scale.y + search_offset };
 			auto possible_collisions = tree.Query(object_search_boundary);

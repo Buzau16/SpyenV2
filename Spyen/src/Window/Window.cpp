@@ -6,6 +6,7 @@
 #include <Core/Log.h>
 #include <Events/KeyEvents.h>
 #include <Events/MouseEvents.h>
+#include <Events/WindowEvents.h>
 
 
 namespace Spyen {
@@ -90,6 +91,15 @@ namespace Spyen {
 				break;
 			}
 			}
+		});
+
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* handle, int width, int height) {
+			Window& window = *(reinterpret_cast<Window*>(glfwGetWindowUserPointer(handle)));
+			window.m_Specs.Width = width;
+			window.m_Specs.Height = height;
+			glViewport(0, 0, width, height);
+			WindowResizedEvent event(width, height);
+			window.RaiseEvent(event);
 		});
 	}
 

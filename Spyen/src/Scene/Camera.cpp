@@ -2,6 +2,8 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <Core/Director.h>
+#include <Events/WindowEvents.h>
+#include <Core/Defines.h>
 
 namespace Spyen {
     void Camera::OnInit()
@@ -31,6 +33,11 @@ namespace Spyen {
             ClearDirtyFlag();
         }        
     }
+    void Camera::OnEvent(Event& event)
+    {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowResizedEvent>([this](const WindowResizedEvent& event) {return RecalculateProjection(event.GetWidth(), event.GetHeight()); });
+    }
     void Camera::SetCameraType(CameraType type) noexcept
     {
         m_Type = type;
@@ -43,5 +50,10 @@ namespace Spyen {
     void Camera::RecalculateView()
     {
         
+    }
+    bool Camera::RecalculateProjection(uint32_t width, uint32_t height)
+    {
+        m_Projection = glm::ortho(0.f, (float)width, 0.f, (float)height);
+        return true;
     }
 }

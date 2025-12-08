@@ -25,6 +25,26 @@ namespace Spyen {
 		return glm::ivec3(v.x, v.y, v.z);
 	}
 
+	Vec2 Math::ToSpyenVec2(const glm::vec2& v)
+	{
+		return Vec2(v.x, v.y);
+	}
+
+	Vec3 Math::ToSpyenVec3(const glm::vec3& v)
+	{
+		return Vec3(v.x, v.y, v.z);
+	}
+
+	IVec2 Math::ToSpyenIVec2(const glm::ivec2& v)
+	{
+		return IVec2(v.x, v.y);
+	}
+
+	IVec3 Math::ToSpyenIVec3(const glm::ivec3& v)
+	{
+		return IVec3(v.x, v.y, v.z);
+	}
+
 	std::pair<float, float> Spyen::Math::Project(const OBB& box, const Vec2& axis)
 	{
 		{

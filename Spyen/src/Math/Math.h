@@ -39,6 +39,11 @@ namespace Spyen
 		glm::ivec2 ToGLMIVec2(const IVec2& v);
 		glm::ivec3 ToGLMIVec3(const IVec3& v);
 
+		Vec2 ToSpyenVec2(const glm::vec2& v);
+		Vec3 ToSpyenVec3(const glm::vec3& v);
+		IVec2 ToSpyenIVec2(const glm::ivec2& v);
+		IVec3 ToSpyenIVec3(const glm::ivec3& v);
+
 		template<typename T>
 			requires (std::is_arithmetic_v<T>&& std::is_floating_point_v<T>)
 		constexpr T Dot(const Vector2<T>& a, const Vector2<T>& b) noexcept{

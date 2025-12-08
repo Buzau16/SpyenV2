@@ -8,7 +8,7 @@
 #include "Renderer/Texture.h"
 
 namespace Spyen {
-
+	// Credit to: https://www.youtube.com/@TheCherno for the rendering architecture
 	struct QuadVertex {
 		glm::vec2 Position;
 		glm::vec3 Color;
@@ -28,9 +28,11 @@ namespace Spyen {
 		Renderer();
 		~Renderer();
 
+
+		// TODO: implement frustum culling
 		void BeginBatch();
 
-		void BeginFrame(const Camera& camera);
+		void BeginFrame(const Camera& camera, const uint32_t width, const uint32_t height);
 		void EndFrame();
 
 		// Draw Functions
@@ -46,11 +48,14 @@ namespace Spyen {
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
 	private:
+		bool IsQuadInFrustum(const Rectangle& rect);
+
 		QuadVertex* m_QuadVertexBufferBase = nullptr;
 		QuadVertex* m_QuadVertexBufferPtr = nullptr;
 		LineVertex* m_LineVertexBufferBase = nullptr;
 		LineVertex* m_LineVertexBufferPtr = nullptr;
 		std::vector<uint64_t> m_TextureHandles;
+		Rectangle m_DrawingSpace;
 		std::shared_ptr<VertexBuffer> m_QuadVertexBuffer = nullptr;
 		std::shared_ptr<IndexBuffer> m_QuadIndexBuffer = nullptr;
 		std::shared_ptr<VertexBuffer> m_LineVertexBuffer = nullptr;

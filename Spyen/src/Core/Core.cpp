@@ -81,7 +81,7 @@ namespace Spyen {
 			m_SceneManager->GetActiveScene()->OnUpdate(TimeStep);
 
 			// Rendering
-			m_Renderer->BeginFrame(m_SceneManager->GetActiveScene()->GetCamera());
+			m_Renderer->BeginFrame(m_SceneManager->GetActiveScene()->GetCamera(), m_Window->GetWidth(), m_Window->GetHeight());
 
 			m_SceneManager->GetActiveScene()->OnRender(m_Renderer.get());
 
@@ -95,6 +95,7 @@ namespace Spyen {
 	}
 	void Engine::RaiseEvent(Event& event)
 	{
+		m_SceneManager->GetActiveScene()->GetCamera().OnEvent(event);
 		m_SceneManager->GetActiveScene()->OnEvent(event);
 	}
 }

@@ -108,9 +108,10 @@ namespace Spyen {
 		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
 	}
 
-	void Renderer::BeginFrame(const Camera& camera)
+	void Renderer::BeginFrame(const Camera& camera, const uint32_t width, const uint32_t height)
 	{
 		m_CameraBuffer->SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
+		m_DrawingSpace = { {width / 2, height / 2}, {width, height}, 0.f };
 
 		BeginBatch();
 	}
@@ -147,6 +148,11 @@ namespace Spyen {
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture)
 	{
+		const Rectangle quad = Rectangle{Math::ToSpyenVec2(position), Math::ToSpyenVec2(scale), rotation};
+		if (!IsQuadInFrustum(quad)) {
+			//SPY_CORE_INFO("Culling quad at: {},{}", quad.Position.x, quad.Position.y);
+			return;
+		}
 		if (m_QuadIndexCount >= MaxIndices) {
 			EndFrame();
 			BeginBatch();
@@ -161,6 +167,11 @@ namespace Spyen {
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color)
 	{
+		const Rectangle quad = Rectangle{ Math::ToSpyenVec2(position), Math::ToSpyenVec2(scale), rotation };
+		if (!IsQuadInFrustum(quad)) {
+			//SPY_CORE_INFO("Culling quad at: {},{}", quad.Position.x, quad.Position.y);
+			return;
+		}
 		if (m_QuadIndexCount >= MaxIndices) {
 			EndFrame();
 			BeginBatch();
@@ -239,5 +250,9 @@ namespace Spyen {
 		m_LineVertexBufferPtr++;
 
 		m_LineVertexCount += 2;
+	}
+	bool Renderer::IsQuadInFrustum(const Rectangle& rect)
+	{
+		return Math::IsColliding(rect, m_DrawingSpace);
 	}
 }

@@ -13,7 +13,7 @@ void Player::OnInit()
 	
 	SetTexture(Spyen::IAssetManager::GetTexture("Box"));
 	auto canvas = Spyen::Director::GetWindowDimensions();
-	SetPosition(Spyen::Vec2{canvas.x / 2.f, canvas.y / 2.f});
+	SetPosition(Spyen::Vec2{-200, -200});
 	SetScale({ 100.f, 100.f });
 
 	AddRigidBody();
