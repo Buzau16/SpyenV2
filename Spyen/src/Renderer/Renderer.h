@@ -28,8 +28,6 @@ namespace Spyen {
 		Renderer();
 		~Renderer();
 
-
-		// TODO: implement frustum culling
 		void BeginBatch();
 
 		void BeginFrame(const Camera& camera, const uint32_t width, const uint32_t height);
