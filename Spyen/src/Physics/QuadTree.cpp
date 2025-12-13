@@ -53,39 +53,45 @@ namespace Spyen {
 
 	std::vector<RigidBody> QuadTree::Query(const Boundary& boundary) const
 	{
+		// Reworked Query to avoid creating many temporary vectors and repeated copying.
+		// Uses an explicit stack for traversal and accumulates results into a single vector.
 		std::vector<RigidBody> colliders;
 
 		if (!m_Boundary.Intersects(boundary))
 			return colliders;
 
-		for (auto& rb : m_Colliders)
+		colliders.reserve(64); // heuristic to reduce reallocations
+
+		// Use manual stack to avoid recursion and to let children append directly into colliders
+		std::vector<const QuadTree*> stack;
+		stack.reserve(16);
+		stack.push_back(this);
+
+		while (!stack.empty())
 		{
-			if (boundary.Contains({ rb.GetCollider().Position.x, rb.GetCollider().Position.y}))
+			const QuadTree* node = stack.back();
+			stack.pop_back();
+
+			if (!node->m_Boundary.Intersects(boundary))
+				continue;
+
+			for (const auto& rb : node->m_Colliders)
 			{
-				colliders.push_back(rb);
+				const auto& pos = rb.GetCollider().Position;
+				if (boundary.Contains({ pos.x, pos.y }))
+				{
+					colliders.push_back(rb);
+				}
 			}
-		}
 
-		if (!m_IsDivided)
-		{
-			return colliders;
-		}
+			if (!node->m_IsDivided)
+				continue;
 
-		for (auto& p : m_NorthWest->Query(boundary))
-		{
-			colliders.push_back(p);
-		}
-		for (auto& p : m_NorthEast->Query(boundary))
-		{
-			colliders.push_back(p);
-		}
-		for (auto& p : m_SouthWest->Query(boundary))
-		{
-			colliders.push_back(p);
-		}
-		for (auto& p : m_SouthEast->Query(boundary))
-		{
-			colliders.push_back(p);
+			// push children onto stack; order doesn't matter for correctness
+			if (node->m_NorthWest) stack.push_back(node->m_NorthWest);
+			if (node->m_NorthEast) stack.push_back(node->m_NorthEast);
+			if (node->m_SouthWest) stack.push_back(node->m_SouthWest);
+			if (node->m_SouthEast) stack.push_back(node->m_SouthEast);
 		}
 
 		return colliders;

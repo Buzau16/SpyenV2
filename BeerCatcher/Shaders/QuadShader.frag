@@ -16,5 +16,7 @@ void main()
 {
 	sampler2D tex = handles[v_TexIndex];
 	vec4 texColor = texture(tex, v_TexCoord);
+	if(texColor.a < 0.1) discard;
+
 	FragColor = texture(tex, v_TexCoord) * vec4(v_Color, 1.0);
 }

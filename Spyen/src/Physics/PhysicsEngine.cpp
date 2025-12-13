@@ -11,12 +11,16 @@
 
 namespace Spyen
 {
+	// todo: run this on another thread
 	void PhysicsEngine::Update(Scene* scene,const glm::vec2& dimensions, double Timestep)
 	{
 		// update each object from a scene
-		auto tree = QuadTree({dimensions.x / 2,dimensions.y / 2, dimensions.x, dimensions.y}, 8);
+		auto tree = QuadTree({dimensions.x / 2,dimensions.y / 2, dimensions.x, dimensions.y}, 64);
 		auto rbs = scene->GetRigidBodies();
 		auto nodes = scene->GetNodesWithRigidBodies();
+
+		//SPY_CORE_INFO("Proccesing physics for {} bodies", nodes.size());
+
 		Boundary object_search_boundary = {};
 		int32_t search_offset = 256;
 
@@ -33,10 +37,16 @@ namespace Spyen
 					continue;
 				}
 				if (Spyen::Math::IsColliding(c, rb.GetCollider())) {
-					SPY_CORE_INFO("Collision detected!");
+					//SPY_CORE_INFO("Collision detected!");
 					NodeHitEvent e(node, rb.GetParent());
 					Director::RaiseEvent(e);
 				}
+			}
+
+			// Integration
+			auto rb = node->GetRigidBody();
+			if (!rb->IsKinematic()) {
+				node->Move(rb->GetVelocity() * Timestep);
 			}
 		}
 

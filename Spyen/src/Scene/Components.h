@@ -38,10 +38,10 @@ namespace Spyen
 		SP_SYNTHESIZE(Vec2, Velocity, Velocity);
 		SP_SYNTHESIZE(Vec2, Acceleration, Acceleration);
 
-		constexpr bool IsKinematic() const noexcept;
+		bool IsKinematic() const noexcept;
 		void SetKinematic(const bool value) noexcept;
 
-		constexpr bool IsCollidable() const noexcept;
+		bool IsCollidable() const noexcept;
 		void SetCollidable(const bool value) noexcept;
 
 		Node* GetParent() const noexcept;

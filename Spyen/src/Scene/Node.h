@@ -26,6 +26,8 @@ namespace Spyen {
 		Vec2 GetPosition() const noexcept; 
 		void SetPosition(const Vec2& value) noexcept;
 
+		void Move(const Vec2& value) noexcept;
+
 		Vec2 GetScale() const noexcept;
 		void SetScale(const Vec2& value) noexcept;
 

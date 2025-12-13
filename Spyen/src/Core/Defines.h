@@ -1,13 +1,9 @@
 #pragma once
 
-#ifdef SP_DEBUG
-#define SPY_ASSERT(x, ...) { if(!(x)) { SPY_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define SPY_CORE_ASSERT(x, ...) { if(!(x)) { SPY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#else
-#define SPY_ASSERT(x, ...) x
-#define SPY_CORE_ASSERT(x, ...) x
-#endif
+// To be used only in the Spyen source Code
 
+
+// Can be used by the user
 #define SP_SYNTHESIZE(type, name, func) \
 	constexpr type Get##func() const noexcept { return name; }\
 	inline void Set##func(const type& value) noexcept { name = value; }

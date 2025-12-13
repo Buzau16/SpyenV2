@@ -45,33 +45,6 @@ namespace Spyen {
 		return IVec3(v.x, v.y, v.z);
 	}
 
-	std::pair<float, float> Spyen::Math::Project(const OBB& box, const Vec2& axis)
-	{
-		{
-			Vec2 boxAxisX = { cos(box.Rotation), sin(box.Rotation) };
-			Vec2 boxAxisY = { -sin(box.Rotation), cos(box.Rotation) };
-
-			std::array<Vec2, 4> corners = {
-				Vec2{box.Position + boxAxisX * box.Scale.x + boxAxisY * box.Scale.y},
-				Vec2{box.Position - boxAxisX * box.Scale.x + boxAxisY * box.Scale.y},
-				Vec2{box.Position - boxAxisX * box.Scale.x - boxAxisY * box.Scale.y},
-				Vec2{box.Position + boxAxisX * box.Scale.x - boxAxisY * box.Scale.y}
-			};
-
-			float min = Dot(corners[0], axis);
-			float max = min;
-
-			for (int i = 1; i < 4; i++)
-			{
-				float p = Dot(corners[i], axis);
-				min = std::min(p, min);
-				max = std::max(p, max);
-			}
-
-			return std::make_pair(min, max);
-		}
-	}
-
 	bool Spyen::Math::IsColliding(const OBB& a, const OBB& b)
 	{
 		// get the axis of each object
@@ -87,8 +60,9 @@ namespace Spyen {
 
 		for (const auto& axis : axes)
 		{
-			auto [minA, maxA] = Project(a, axis.Normalize());
-			auto [minB, maxB] = Project(b, axis.Normalize());
+			auto normAxis = axis.Normalize();
+			auto [minA, maxA] = Project(a, axes[0], axes[1], normAxis);
+			auto [minB, maxB] = Project(b, axes[2], axes[3], normAxis);
 
 			if (maxA < minB || maxB < minA)
 				return false;

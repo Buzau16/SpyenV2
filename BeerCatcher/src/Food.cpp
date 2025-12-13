@@ -13,4 +13,5 @@ void Food::OnInit()
 	SetTexture(Spyen::IAssetManager::GetTexture("Food"));
 	SetTag("Food");
 	AddRigidBody();
+//	RGetRigidBody().SetVelocity({10.f,0.f});
 }

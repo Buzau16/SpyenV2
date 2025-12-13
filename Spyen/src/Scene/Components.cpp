@@ -22,7 +22,7 @@ namespace Spyen {
 	{
 		return std::make_unique<RigidBody>();
 	}
-	constexpr bool RigidBody::IsKinematic() const noexcept
+	bool RigidBody::IsKinematic() const noexcept
 	{
 		return Kinematic;
 	}
@@ -30,7 +30,7 @@ namespace Spyen {
 	{
 		Kinematic = value;
 	}
-	constexpr bool RigidBody::IsCollidable() const noexcept
+	bool RigidBody::IsCollidable() const noexcept
 	{
 		return Collidable;
 	}

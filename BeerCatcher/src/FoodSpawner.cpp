@@ -29,6 +29,7 @@ void FoodSpawner::SpawnFood()
 {
 	auto food = Food::Create();
 	food->SetPosition({ Spyen::Math::Random<uint32_t>(0, 1280), Spyen::Math::Random<uint32_t>(0, 720) });
+	SPY_CORE_INFO("Spawning food");
 	Spyen::Director::GetActiveScene()->AddNode(SP_MOVE(food));
 }
 
@@ -37,7 +38,6 @@ bool FoodSpawner::OnFoodEaten(Spyen::NodeHitEvent& event)
 	Node* target = event.GetTarget();
 
 	if (SP_IS_SAME_TYPE(target, Player)) {
-		// nu șterge nimic dacă nu e food
 		return false;
 	}
 

@@ -292,6 +292,7 @@
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Events\WindowEvents.h" />
+    <ClInclude Include="src\Spyen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">

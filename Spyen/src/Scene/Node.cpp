@@ -47,6 +47,11 @@ namespace Spyen {
 		m_IsTransformDirty = true;
 	}
 
+	void Node::Move(const Vec2& value) noexcept
+	{
+		Position += value;
+	}
+
 	Vec2 Node::GetScale() const noexcept {
 		return Scale;
 	}

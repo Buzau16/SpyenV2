@@ -19,6 +19,8 @@ namespace Spyen {
 		}
 
 		NodeGraph.ProccesDeffered();
+
+		//SPY_CORE_INFO("Current nodes #: ", NodeGraph.GetSize());
 	}
 	void Scene::OnRender(Renderer* renderer)
 	{
@@ -29,8 +31,13 @@ namespace Spyen {
 
 	void Scene::OnEvent(Event& event)
 	{
+		Camera.OnEvent(event);
+		if (event.Handled) return;
+
 		for (auto& node : NodeGraph) {
 			node->OnEvent(event);
+			if (event.Handled)
+				break;
 		}
 	}
 

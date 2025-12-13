@@ -9,18 +9,24 @@ namespace Spyen {
 
 		template<typename T>
 			requires std::is_arithmetic_v<T>
-		constexpr T Min(const T& a, const T& b) {
+		constexpr const T& Min(const T& a, const T& b) {
 			return a < b ? a : b;
 		}
 
 		template<typename T>
 			requires std::is_arithmetic_v<T>
-		constexpr T Max(const T& a, const T& b) {
+		constexpr const T& Max(const T& a, const T& b) {
 			return a > b ? a : b;
 		}
 
 		template<typename T>
-		requires std::is_arithmetic_v<T>
+			requires std::is_arithmetic_v<T>
+		constexpr const T& Clamp(const T& v, const T& lo, const T& hi) noexcept {
+			return Min(Max(v, lo), hi);
+		}
+
+		template<typename T>
+			requires std::is_arithmetic_v<T>
 		T Random(T min = std::numeric_limits<T>::lowest(), T max = std::numeric_limits<T>::max()) {
 			if constexpr (std::is_integral_v<T>) {
 				std::uniform_int_distribution<T> dist(min, max);

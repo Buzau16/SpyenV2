@@ -11,6 +11,38 @@ namespace Spyen {
 		constexpr Rectangle(const Vec2& position, const Vec2& scale, const float rotation) :
 			Position(position), Scale(scale / 2), Rotation(rotation) {}
 		constexpr ~Rectangle() = default;
+
+		inline Vec2 GetMin() const {
+			if (Rotation == 0.f) {
+				return Vec2{ Position - Scale };
+			}
+			const auto c = std::cos(Rotation);
+			const auto s = std::sin(Rotation);
+
+			const auto ex = Scale.x;
+			const auto ey = Scale.y;
+
+			const auto px = std::abs(ex * c) + std::abs(ey * -s);
+			const auto py = std::abs(ex * s) + std::abs(ey * c);
+
+			return Vec2{Position.x - px, Position.y - py};
+		}
+
+		inline Vec2 GetMax() const {
+			if (Rotation == 0.f) {
+				return Vec2{ Position + Scale };
+			}
+			const auto c = std::cos(Rotation);
+			const auto s = std::sin(Rotation);
+
+			const auto ex = Scale.x;
+			const auto ey = Scale.y;
+
+			const auto px = std::abs(ex * c) + std::abs(ey * -s);
+			const auto py = std::abs(ex * s) + std::abs(ey * c);
+
+			return Vec2{ Position.x + px, Position.y + py };
+		}
 	};
 
 	struct Square {

@@ -20,6 +20,9 @@ namespace Spyen {
 		std::vector<Node*> GetNodes();
 		std::vector<Node*> GetNodesWithRigidBodies();
 
+		// for testing 
+		size_t GetSize() const { return m_Nodes.size(); }
+
 		std::vector<std::unique_ptr<Node>>::iterator begin();
 		std::vector<std::unique_ptr<Node>>::iterator end();
 		std::vector<std::unique_ptr<Node>>::const_iterator begin() const;
