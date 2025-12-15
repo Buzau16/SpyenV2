@@ -79,14 +79,8 @@ namespace Spyen {
 				//accumulator -= PhysicsStep;
 			//}
 
-			m_SceneManager->GetActiveScene()->OnUpdate(TimeStep);
-
 			// Rendering
-			m_Renderer->BeginFrame(m_SceneManager->GetActiveScene()->GetCamera(), m_Window->GetWidth(), m_Window->GetHeight());
-
-			m_SceneManager->GetActiveScene()->OnRender(m_Renderer.get());
-
-			m_Renderer->EndFrame();
+			m_SceneManager->GetActiveScene()->OnRender(m_Renderer.get(), m_Window->GetWidth(), m_Window->GetHeight());
 
 			/*auto fps = 1.0f / TimeStep;
 			SPY_CORE_INFO("FPS: {}", fps);*/
@@ -96,6 +90,6 @@ namespace Spyen {
 	}
 	void Engine::RaiseEvent(Event& event)
 	{
-		m_SceneManager->GetActiveScene()->OnEvent(event);
+		//m_SceneManager->GetActiveScene()->OnEvent(event);
 	}
 }

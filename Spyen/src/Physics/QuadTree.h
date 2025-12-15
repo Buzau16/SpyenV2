@@ -3,6 +3,7 @@
 
 #include "Renderer/Renderer.h"
 #include "Scene/Components.h"
+#include <Scene/Entity.h>
 
 namespace Spyen {
 
@@ -35,8 +36,8 @@ namespace Spyen {
 		~QuadTree(); 
 
 		void Subdivide();
-		bool Insert(const RigidBody& box);
-		std::vector<RigidBody> Query(const Boundary& boundary) const;
+		bool Insert(const Entity& entity);
+		std::vector<Entity> Query(const Boundary& boundary) const;
 
 
 		// For debbuging
@@ -47,7 +48,7 @@ namespace Spyen {
 		QuadTree* m_SouthWest = nullptr;
 		QuadTree* m_SouthEast = nullptr;
 		bool m_IsDivided = false;
-		std::vector<RigidBody> m_Colliders;
+		std::vector<Entity> m_Entities;
 		Boundary m_Boundary;
 		uint32_t m_Capacity = 0;
 	};

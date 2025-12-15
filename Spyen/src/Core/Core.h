@@ -10,11 +10,13 @@
 #include <memory>
 #include <AssetManager/AssetManager.h>
 #include <Physics/PhysicsEngine.h>
-#include <Core/SceneManager.h>
+#include <Scene/SceneManager.h>
 #include <Audio/AudioEngine.h>
 #include <Events/Event.h>
 
 namespace Spyen {
+
+	// TODO: Refactor the quad tree to use the new entity system and the PhysicsEngine::OnUpdate function
 	class Engine {
 	public:
 		Engine() = default;

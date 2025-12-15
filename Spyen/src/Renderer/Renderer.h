@@ -11,7 +11,7 @@ namespace Spyen {
 	// Credit to: https://www.youtube.com/@TheCherno for the rendering architecture
 	struct QuadVertex {
 		glm::vec2 Position;
-		glm::vec3 Color;
+		glm::vec4 Color;
 		glm::vec2 TextureCoords;
 		int TextureIndex;
 	};
@@ -30,18 +30,18 @@ namespace Spyen {
 
 		void BeginBatch();
 
-		void BeginFrame(const Camera& camera, const uint32_t width, const uint32_t height);
+		void BeginFrame(const SceneCamera& camera, const uint32_t width, const uint32_t height);
 		void EndFrame();
 
 		// Draw Functions
 		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture);
-		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color);
+		void DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec4& color);
 
 		// Under the hood function kind of
-		void DrawQuad(const glm::mat4& transform, const glm::vec3& color);
+		void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
 		void DrawQuad(const glm::mat4& transform, const Texture* texture);
 
-		void DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec3& color);
+		void DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec4& color);
 
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 

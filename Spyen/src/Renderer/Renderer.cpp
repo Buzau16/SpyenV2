@@ -7,6 +7,8 @@
 
 #include "BufferElement.h"
 #include <glm/ext/matrix_transform.hpp>
+#include <Scene/SceneCamera.h>
+#include <Math/Math.h>
 
 
 namespace Spyen {
@@ -26,7 +28,7 @@ namespace Spyen {
 		m_QuadVertexBuffer->Bind();
 		m_QuadVertexBuffer->SetLayout({
 			{ ShaderDataType::Float2, "a_Position"},
-			{ ShaderDataType::Float3, "a_Color"},
+			{ ShaderDataType::Float4, "a_Color"},
 			{ ShaderDataType::Float2, "a_TexCoord"},
 			{ ShaderDataType::Int, "a_TexIndex"}
 			});
@@ -64,7 +66,7 @@ namespace Spyen {
 		m_LineVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(LineVertex));
 		m_LineVertexBuffer->SetLayout({
 			{ShaderDataType::Float2, "a_Position"},
-			{ShaderDataType::Float3, "a_Color"}
+			{ShaderDataType::Float4, "a_Color"}
 		});
 		m_LineVertexArray->AddVertexBuffer(m_LineVertexBuffer);
 
@@ -108,7 +110,7 @@ namespace Spyen {
 		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
 	}
 
-	void Renderer::BeginFrame(const Camera& camera, const uint32_t width, const uint32_t height)
+	void Renderer::BeginFrame(const SceneCamera& camera, const uint32_t width, const uint32_t height)
 	{
 		m_CameraBuffer->SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
 		m_DrawingSpace = { {width / 2, height / 2}, {width, height}, 0.f };
@@ -148,7 +150,7 @@ namespace Spyen {
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture)
 	{
-		const Rectangle quad = Rectangle{Math::ToSpyenVec2(position), Math::ToSpyenVec2(scale), rotation};
+		const Spyen::Rectangle quad = Rectangle{Math::ToSpyenVec2(position), Math::ToSpyenVec2(scale), rotation};
 		if (!IsQuadInFrustum(quad)) {
 			//SPY_CORE_INFO("Culling quad at: {},{}", quad.Position.x, quad.Position.y);
 			return;
@@ -165,7 +167,7 @@ namespace Spyen {
 		DrawQuad(transform, texture);
 	}
 
-	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec3& color)
+	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const glm::vec4& color)
 	{
 		const Rectangle quad = Rectangle{ Math::ToSpyenVec2(position), Math::ToSpyenVec2(scale), rotation };
 		if (!IsQuadInFrustum(quad)) {
@@ -185,7 +187,7 @@ namespace Spyen {
 		DrawQuad(transform, color);
 	}
 
-	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec3& color)
+	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
 		glm::vec2 textCoords[4] = {
 			{ 0.0f, 0.0f },
@@ -196,7 +198,7 @@ namespace Spyen {
 
 		for (int i = 0; i < 4; i++) {
 			m_QuadVertexBufferPtr->Position = transform * m_QuadPositions[i];
-			m_QuadVertexBufferPtr->Color = glm::vec4(color.r, color.g, color.b, 1.0f);
+			m_QuadVertexBufferPtr->Color = color;
 			m_QuadVertexBufferPtr->TextureCoords = textCoords[i];
 			m_QuadVertexBufferPtr->TextureIndex = 0;
 			m_QuadVertexBufferPtr++;
@@ -231,7 +233,7 @@ namespace Spyen {
 		uint32_t VertexOffset = (m_QuadIndexCount / 6) * 4;
 		for (int i = 0; i < 4; i++) {
 			m_QuadVertexBufferPtr->Position = transform * m_QuadPositions[i];
-			m_QuadVertexBufferPtr->Color = {1.0f, 1.0f, 1.0f};
+			m_QuadVertexBufferPtr->Color = {1.0f, 1.0f, 1.0f, 1.f};
 			m_QuadVertexBufferPtr->TextureCoords = textCoords[i];
 			m_QuadVertexBufferPtr->TextureIndex = texIdx;
 			m_QuadVertexBufferPtr++;
@@ -239,7 +241,7 @@ namespace Spyen {
 		m_QuadIndexCount += 6;
 	}
 
-	void Renderer::	DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec3& color)
+	void Renderer::	DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec4& color)
 	{
 		m_LineVertexBufferPtr->Position = p0;
 		m_LineVertexBufferPtr->Color = color;

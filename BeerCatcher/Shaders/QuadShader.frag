@@ -6,7 +6,7 @@ layout(std430, binding = 0) readonly buffer HandleBuffer{
 	sampler2D handles[];
 };
 
-in vec3 v_Color;
+in vec4 v_Color;
 in vec2 v_TexCoord;
 in flat int v_TexIndex;
 
@@ -18,5 +18,5 @@ void main()
 	vec4 texColor = texture(tex, v_TexCoord);
 	if(texColor.a < 0.1) discard;
 
-	FragColor = texture(tex, v_TexCoord) * vec4(v_Color, 1.0);
+	FragColor = texture(tex, v_TexCoord) * v_Color;
 }

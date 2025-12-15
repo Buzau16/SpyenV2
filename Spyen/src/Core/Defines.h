@@ -4,6 +4,7 @@
 
 
 // Can be used by the user
+// everything here is part of the old scene system, try to avoid!
 #define SP_SYNTHESIZE(type, name, func) \
 	constexpr type Get##func() const noexcept { return name; }\
 	inline void Set##func(const type& value) noexcept { name = value; }

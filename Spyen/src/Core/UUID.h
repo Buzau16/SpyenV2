@@ -6,7 +6,7 @@ namespace Spyen {
 	public:
 		UUID();
 		///UUID()
-		UUID(const UUID&) = delete;
+		UUID(const UUID&) = default;
 		UUID(const uint64_t uuid);
 
 

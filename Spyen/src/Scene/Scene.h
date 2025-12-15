@@ -1,45 +1,33 @@
 #pragma once
-#include "NodeGraph.h"
-#include "Camera.h"
-#include <Time/TimeStep.h>
-#include <memory>
-#include "Node.h"
-#include <Events/Event.h>
+#include <entt/entt.hpp>
+#include <string>
+#include <unordered_map>
+#include <Core/UUID.h>
 
 
 namespace Spyen {
+	class Entity;
 	class Renderer;
 
-	class Scene{
+	class Scene
+	{
 	public:
 		Scene() = default;
 		~Scene() = default;
 
-		void OnInit();
-		void OnUpdate(Timestep dt);
-		void OnRender(Renderer* renderer);
-		void OnEvent(Event& event);
+		Entity& CreateEntity(const std::string& name = std::string());
+		Entity& CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 
-		void AddNode(std::unique_ptr<Node> node);
-		void RemoveNode(Node* node);
-		Node* GetNode(const std::string_view name);
-		std::vector<Node*> GetNodesWithTag(const std::string_view tag);
-		std::vector<RigidBody> GetRigidBodies();
-		std::vector<Node*> GetNodesWithRigidBodies();
-		std::vector<Node*> GetNodes();
+		void OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept;
 
-		SP_SYNTHESIZE(std::string, Name, Name);
 
-		Camera& GetCamera() noexcept;
-		NodeGraph& GetNodeGraph() noexcept;
-
-		static std::unique_ptr<Scene> Create();
-
-	protected:
-		std::string Name;
-		Camera Camera;
-		NodeGraph NodeGraph;
+	private:
+		// refactor this to use uuids instead of strings for the key
+		std::unordered_map<UUID, Entity> m_EntityMap;
+		entt::registry m_Registry;
+		// a Camera should be an entity or it can be a component of an entity
+		friend class Entity;
 	};
-}
 
+}
 

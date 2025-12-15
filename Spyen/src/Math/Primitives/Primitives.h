@@ -4,7 +4,7 @@
 namespace Spyen {
 	struct Rectangle {
 		Vec2 Position = { 0,0 };
-		Vec2 Scale = { 0, 0 }; // is used a a half scale, the anchor point is the middle
+		Vec2 Scale = { 0, 0 }; // Half size, the anchor point being the middle of the rect
 		float Rotation = 0.f;
 
 		constexpr Rectangle() = default;

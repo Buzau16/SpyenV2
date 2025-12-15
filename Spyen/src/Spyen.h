@@ -3,6 +3,7 @@
 #include <Core/Core.h>
 #include <Core/Defines.h>
 #include <Core/Log.h>
+#include <Core/Director.h>
 
 #include <Audio/IAudioEngine.h>
 
@@ -19,10 +20,7 @@
 
 #include <Math/Math.h>
 
-#include <Scene/Camera.h>
 #include <Scene/Components.h>
 #include <Scene/Scene.h>
-#include <Scene/Node.h>
-#include <Scene/Sprite.h>
 
 #include <Time/TimeStep.h>

@@ -1,93 +1,51 @@
 #include "spypch.h"
 #include "Scene.h"
+
+#include <Scene/Entity.h>
+#include <Scene/Components.h>
 #include <Renderer/Renderer.h>
-#include <Events/NodeEvents.h>
 
 namespace Spyen {
-	void Scene::OnInit()
-	{
-		Camera.OnInit();
-		for (auto& node : NodeGraph) {
-			node->OnInit();
-		}
-	}
-	void Scene::OnUpdate(Timestep dt)
-	{
-		Camera.OnUpdate(dt);
-		for (auto& node : NodeGraph) {
-			node->OnUpdate(dt);
-		}
+    Entity& Scene::CreateEntity(const std::string& name)
+    {
+        return CreateEntityWithUUID(UUID(), name);
+    }
 
-		NodeGraph.ProccesDeffered();
+    Entity& Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
+    {
+        Entity entity = { m_Registry.create(), this };
+        entity.AddComponent<IDComponent>(uuid);
+        entity.AddComponent<TransformComponent>();
+        entity.AddComponent<TagComponent>().Tag = name.empty() ? "Entity" : name;
 
-		//SPY_CORE_INFO("Current nodes #: ", NodeGraph.GetSize());
-	}
-	void Scene::OnRender(Renderer* renderer)
-	{
-		for (auto& node : NodeGraph) {
-			node->OnRender(renderer);
-		}
-	}
+        m_EntityMap[uuid] = entity;
+        return entity;
+    }
 
-	void Scene::OnEvent(Event& event)
-	{
-		Camera.OnEvent(event);
-		if (event.Handled) return;
+    void Scene::OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept
+    {
+        SceneCamera camera;
+        // Get the camera if exists
+        const auto cameras = m_Registry.view<CameraComponent>();
+        for (auto [entity, cc] : cameras.each()) {
+            if (cc.MainCamera) {
+                camera = cc.Camera;
+            }
+        }
 
-		for (auto& node : NodeGraph) {
-			node->OnEvent(event);
-			if (event.Handled)
-				break;
-		}
-	}
+        // Drawing quads
+        const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
 
-	void Scene::AddNode(std::unique_ptr<Node> node)
-	{
-		NodeGraph.AddNode(std::move(node));
-	}
+        renderer->BeginFrame(camera, width, height);
+        for (auto [entity, tc, src] : entities.each()) {
+            if (src.Texture == nullptr) {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
+            }
+            else {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
+            }
+        }
+        renderer->EndFrame();
+    }
 
-	void Scene::RemoveNode(Node* node)
-	{
-		NodeGraph.RemoveNode(node);
-	}
-
-	Node* Scene::GetNode(const std::string_view name)
-	{
-		return NodeGraph.GetNode(name);
-	}
-
-	std::vector<Node*> Scene::GetNodesWithTag(const std::string_view tag)
-	{
-		return NodeGraph.GetNodesWithTag(tag);
-	}
-
-	std::vector<RigidBody> Scene::GetRigidBodies()
-	{
-		return NodeGraph.GetRigidBodies();
-	}
-
-	std::vector<Node*> Scene::GetNodesWithRigidBodies()
-	{
-		return NodeGraph.GetNodesWithRigidBodies();
-	}
-
-	std::vector<Node*> Scene::GetNodes()
-	{
-		return NodeGraph.GetNodes();
-	}
-
-	Camera& Scene::GetCamera() noexcept
-	{
-		return Camera;
-	}
-
-	NodeGraph& Scene::GetNodeGraph() noexcept
-	{
-		return Scene::NodeGraph;
-	}
-
-	std::unique_ptr<Scene> Scene::Create()
-	{
-		return std::make_unique<Scene>();
-	}
 }
