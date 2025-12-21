@@ -14,7 +14,7 @@ namespace Spyen {
 
 	void Director::SetActiveScene(const std::string& name)
 	{
-		return s_Instance->m_SceneManager->SetActiveScene(name);
+		return s_Instance->m_SceneManager->Transition(name);
 	}
 
 	void Director::AddScene(const std::string& name, std::unique_ptr<Scene> scene)

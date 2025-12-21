@@ -150,6 +150,9 @@
       <Project>{946C1C0E-0081-44BF-C902-E81E35D640F0}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\PlayerScript.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -13,7 +13,7 @@
 
 namespace Spyen {
 
-	// TODO: Add events!
+	// TODO: Add scripting/systems and events
 
 	constexpr float PhysicsStep = 1.0f / 60.f;
 
@@ -80,6 +80,7 @@ namespace Spyen {
 			//}
 
 			// Rendering
+			m_SceneManager->GetActiveScene()->OnUpdate(TimeStep);
 			m_SceneManager->GetActiveScene()->OnRender(m_Renderer.get(), m_Window->GetWidth(), m_Window->GetHeight());
 
 			/*auto fps = 1.0f / TimeStep;

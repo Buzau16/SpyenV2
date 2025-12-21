@@ -25,8 +25,8 @@ namespace Spyen {
 		}
 
 		template<typename T>
-		T& GetComponent() {
-			SPY_CORE_ASSERT(!HasComponent<T>(), "Entity does not have this component!");
+		T& GetComponent(){
+			SPY_CORE_ASSERT(HasComponent<T>(), "Entity does not have this component!");
 			return m_Scene->m_Registry.get<T>(m_EntityHandle);
 		}
 
@@ -47,6 +47,8 @@ namespace Spyen {
 	private:
 		entt::entity m_EntityHandle{ entt::null };
 		Scene* m_Scene;
+
+		friend class Scene;
 	};
 
 }

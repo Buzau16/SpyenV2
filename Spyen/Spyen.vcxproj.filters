@@ -123,7 +123,7 @@
     <ClInclude Include="src\Events\MouseEvents.h">
       <Filter>src\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Events\NodeEvents.h">
+    <ClInclude Include="src\Events\EntityEvents.h">
       <Filter>src\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\Input.h">
@@ -277,6 +277,8 @@
     <ClInclude Include="src\Scene\Components.h" />
     <ClInclude Include="src\Scene\SceneCamera.h" />
     <ClInclude Include="src\Scene\SceneManager.h" />
+    <ClInclude Include="src\Scripting\Script.h" />
+    <ClInclude Include="src\Scripting\ScriptEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -364,5 +366,6 @@
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
   </ItemGroup>
 </Project>

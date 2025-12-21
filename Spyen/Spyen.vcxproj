@@ -163,6 +163,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scripting\ScriptEngine.h" />
+    <ClInclude Include="src\Scripting\Script.h" />
     <ClInclude Include="src\Scene\SceneManager.h" />
     <ClInclude Include="src\Scene\SceneCamera.h" />
     <ClInclude Include="src\Scene\Components.h" />
@@ -182,7 +184,7 @@
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\KeyEvents.h" />
     <ClInclude Include="src\Events\MouseEvents.h" />
-    <ClInclude Include="src\Events\NodeEvents.h" />
+    <ClInclude Include="src\Events\EntityEvents.h" />
     <ClInclude Include="src\Events\WindowEvents.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\KeyCodes.h" />
@@ -235,6 +237,7 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="src\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />

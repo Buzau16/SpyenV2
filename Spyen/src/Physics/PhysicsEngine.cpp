@@ -6,49 +6,65 @@
 #include "Math/Math.h"
 #include <AssetManager/IAssetManager.h>
 #include <Core/Director.h>
-#include <Events/NodeEvents.h>
+#include <Events/EntityEvents.h>
 
 
 namespace Spyen
 {
-	// todo: run this on another thread
-	void PhysicsEngine::Update(Scene* scene,const glm::vec2& dimensions, double Timestep)
+	void PhysicsEngine::ResolveCollisions(Spyen::Scene* scene, Spyen::QuadTree& tree)
 	{
-		// update each object from a scene
-		auto tree = QuadTree({dimensions.x / 2,dimensions.y / 2, dimensions.x, dimensions.y}, 64);
-		auto rbs = scene->GetRigidBodies();
-		auto nodes = scene->GetNodesWithRigidBodies();
-
-		//SPY_CORE_INFO("Proccesing physics for {} bodies", nodes.size());
-
+		auto collidable_objects = scene->GetEntitiesWith<TransformComponent, BoxColliderComponent>();
 		Boundary object_search_boundary = {};
 		int32_t search_offset = 256;
 
-		for (const auto& rb : rbs) {
-			tree.Insert(rb);
+		for (const auto& [entity, tc, bcc] : collidable_objects.each()) {
+			// possible bug
+			ColliderEntity ce;
+			ce.entity = entity;
+			ce.ColliderPos = tc.Position + bcc.Offset;
+			ce.ColliderScale = tc.Scale * bcc.Offset;
+			ce.ColliderRotation = tc.Rotation + bcc.Rotation;
+			tree.Insert(ce);
 		}
 
-		for (auto& node : nodes) {
-			auto c = node->GetRigidBody()->GetCollider();
-			object_search_boundary = { c.Position.x, c.Position.y, c.Position.x + c.Scale.x + search_offset, c.Position.y + c.Scale.y + search_offset };
+		for (const auto& [entity, tc, bcc] : collidable_objects.each()) {
+			object_search_boundary = { tc.Position.x, tc.Position.y, tc.Position.x + tc.Scale.x + search_offset, tc.Position.y + tc.Scale.y + search_offset };
 			auto possible_collisions = tree.Query(object_search_boundary);
-			for (auto& rb : possible_collisions) {
-				if (c.Position == rb.GetCollider().Position) {
+
+			for (auto& other : possible_collisions) {
+				if (other.entity == entity) {
 					continue;
 				}
-				if (Spyen::Math::IsColliding(c, rb.GetCollider())) {
-					//SPY_CORE_INFO("Collision detected!");
-					NodeHitEvent e(node, rb.GetParent());
-					Director::RaiseEvent(e);
+
+				OBB st = OBB({ tc.Position + bcc.Offset }, { tc.Scale * bcc.Scale }, tc.Rotation + bcc.Rotation);
+				OBB nd = OBB(other.ColliderPos, other.ColliderScale, other.ColliderRotation);
+
+				if (Spyen::Math::IsColliding(st, nd)) {
+					//SPY_CORE_INFO("A collision is happening!");
 				}
 			}
-
-			// Integration
-			auto rb = node->GetRigidBody();
-			if (!rb->IsKinematic()) {
-				node->Move(rb->GetVelocity() * Timestep);
+		}
+	}
+	void PhysicsEngine::UpdateRigidBodies(Spyen::Scene* scene, QuadTree& tree, double ts)
+	{
+		auto view = scene->GetEntitiesWith<TransformComponent, RigidBodyComponent>();
+		for (auto [entity, tc, rbc] : view.each()) {
+			switch (rbc.Type) {
+				case RigidBodyComponent::BodyType::Static: break;
+				case RigidBodyComponent::BodyType::Dynamic: {
+					rbc.Velocity += rbc.Acceleration * ts;
+					tc.Position += rbc.Velocity * ts;
+					break;
+				}
+				case RigidBodyComponent::BodyType::Kinematic: break;
 			}
 		}
-
+	}
+	// todo: run this on another thread
+	void PhysicsEngine::Update(Scene* scene,const glm::vec2& dimensions, double Timestep)
+	{
+		auto tree = QuadTree({ dimensions.x / 2, dimensions.y / 2, dimensions.x, dimensions.y }, 8);
+		ResolveCollisions(scene, tree);
+		UpdateRigidBodies(scene, tree, Timestep);
 	}
 }

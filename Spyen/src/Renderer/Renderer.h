@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Scene/Camera.h"
 #include "SSBO.h"
 #include "UniformBuffer.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
+#include <Scene/SceneCamera.h>
+#include <Scene/Components.h>
 
 namespace Spyen {
 	// Credit to: https://www.youtube.com/@TheCherno for the rendering architecture

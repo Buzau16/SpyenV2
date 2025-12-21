@@ -15,7 +15,7 @@ enum class EventType {
 	KeyPressed, KeyReleased,
 	WindowResized,
 	MouseMoved, MouseScrolled, MouseButtonPressed, MouseButtonReleased,
-	NodeCreated, NodeDestroyed, NodeHit
+	EntityCreated, EntityDestroyed, EntityHit
 };
 
 namespace Spyen {

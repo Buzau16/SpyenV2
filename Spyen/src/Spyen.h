@@ -12,7 +12,7 @@
 #include <Events/KeyEvents.h>
 #include <Events/MouseEvents.h>
 #include <Events/WindowEvents.h>
-#include <Events/NodeEvents.h>
+#include <Events/EntityEvents.h>
 
 #include <Input/Input.h>
 #include <Input/KeyCodes.h>
@@ -22,5 +22,6 @@
 
 #include <Scene/Components.h>
 #include <Scene/Scene.h>
+#include <Scripting/Script.h>
 
 #include <Time/TimeStep.h>

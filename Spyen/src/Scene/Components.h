@@ -11,7 +11,7 @@
 namespace Spyen {
 	struct TransformComponent {
 		Vec2 Position = { 0.f, 0.f };
-		Vec2 Scale = { 1.f, 1.f };
+		Vec2 Scale = { 100.f, 100.f };
 		float Rotation = 0.f;
 		float ZIndex = 0.f;
 
@@ -37,6 +37,7 @@ namespace Spyen {
 	struct BoxColliderComponent {
 		Vec2 Offset = { 0.f, 0.f };
 		Vec2 Scale = { 1.f, 1.f }; // is multiplied by the entities Scale
+		float Rotation = 0.f;
 	};
 
 	struct IDComponent {
@@ -50,5 +51,11 @@ namespace Spyen {
 	struct CameraComponent {
 		SceneCamera Camera;
 		bool MainCamera = true;
+	};
+
+	class Script;
+
+	struct ScriptComponent {
+		Script* ScriptInstance = nullptr;
 	};
 }
