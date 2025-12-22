@@ -56,6 +56,6 @@ namespace Spyen {
 	class Script;
 
 	struct ScriptComponent {
-		Script* ScriptInstance = nullptr;
+		std::unique_ptr<Script> ScriptInstance = nullptr;
 	};
 }

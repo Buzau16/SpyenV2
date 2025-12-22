@@ -23,6 +23,8 @@ namespace Spyen {
 		glm::vec3 Color;
 	};
 
+	// Todo: Maybe split up the rendering to include some instancing where necessary
+
 	class Renderer
 	{
 	public:

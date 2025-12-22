@@ -40,7 +40,11 @@ namespace Spyen
 				OBB nd = OBB(other.ColliderPos, other.ColliderScale, other.ColliderRotation);
 
 				if (Spyen::Math::IsColliding(st, nd)) {
-					//SPY_CORE_INFO("A collision is happening!");
+					// a bit scuffed
+					Entity e = { entity, Director::GetActiveScene() };
+					Entity r = { other.entity, Director::GetActiveScene() };
+					EntityHitEvent event{ e,r };
+					Director::RaiseEvent(event);
 				}
 			}
 		}

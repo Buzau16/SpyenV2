@@ -4,19 +4,19 @@
 #include <Scene/Entity.h>
 
 namespace Spyen {
-	class NodeEvent : public Event {
+	class EntityEvent : public Event {
 	public:
 		inline Entity GetEntity() const { return m_Entity; }
 	protected:
-		NodeEvent(Entity& entity) : m_Entity(entity) {};
-		virtual ~NodeEvent() = default;
+		EntityEvent(Entity& entity) : m_Entity(entity) {};
+		virtual ~EntityEvent() = default;
 
 		Entity& m_Entity;
 	};
 
-	class NodeHitEvent : public NodeEvent {
+	class EntityHitEvent : public EntityEvent {
 	public:
-		NodeHitEvent(Entity& hitter, Entity& target) : NodeEvent(hitter), m_Target(target) {};
+		EntityHitEvent(Entity& hitter, Entity& target) : EntityEvent(hitter), m_Target(target) {};
 		inline Entity& GetTarget() const { return m_Target; }
 
 		SP_SYNTHESIZE_EVENT_FUNC(EntityHit)

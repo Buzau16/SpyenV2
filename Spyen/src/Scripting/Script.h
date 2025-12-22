@@ -11,8 +11,11 @@ namespace Spyen {
 
 		virtual void OnCreate() {};
 		virtual void OnUpdate(Timestep ts) {};
+		virtual void OnEvent(Event& event) {};
 	protected:
 		// Helpers
+		void Destroy(Entity entity) { m_Parent.m_Scene->DestroyEntity(entity); }
+		void DestroySelf() { m_Parent.m_Scene->DestroyEntity(m_Parent); };
 
 		// Transform
 		Vec2& GetPosition() noexcept { return m_Parent.GetComponent<TransformComponent>().Position; }
@@ -25,7 +28,7 @@ namespace Spyen {
 
 	private:
 		Entity m_Parent;
-		friend class Scene;
+		friend class ScriptEngine;
 	};
 
 }

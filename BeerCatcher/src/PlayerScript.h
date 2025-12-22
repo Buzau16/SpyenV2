@@ -22,6 +22,15 @@ public:
 			pos.x += 250.f * ts;
 		}
 	}
-private:
+
+	void OnEvent(Spyen::Event& event) override {
+		Spyen::EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<Spyen::EntityHitEvent>([&](Spyen::EntityHitEvent& e) { return OnCollision(e); });
+	}
+
+	bool OnCollision(Spyen::EntityHitEvent& event) {
+		SPY_INFO("COX");
+		return true;
+	}
 
 };

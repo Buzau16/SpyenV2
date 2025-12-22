@@ -35,6 +35,7 @@ namespace Spyen {
 		std::unique_ptr<AssetManager> m_AssetManager = nullptr;
 		std::unique_ptr<PhysicsEngine> m_PhysicsEngine = nullptr;
 		std::unique_ptr<SceneManager> m_SceneManager = nullptr;
+		//std::vector<Event&> m_EventQueue;
 		friend class Director;
 	};
 }

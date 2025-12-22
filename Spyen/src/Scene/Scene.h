@@ -9,6 +9,7 @@
 namespace Spyen {
 	class Entity;
 	class Renderer;
+	class Event;
 
 	class Scene
 	{
@@ -19,6 +20,7 @@ namespace Spyen {
 		Entity CreateEntity(const std::string& name = std::string());
 		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		Entity FindEntityByName(const std::string& name);
+		void DestroyEntity(Entity& entity);
 
 
 		template<typename... T>
@@ -26,15 +28,20 @@ namespace Spyen {
 			return m_Registry.view<T...>();
 		}
 
-		void OnInit();
+		void OnAttach();
 		void OnUpdate(Timestep ts);
 		void OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept;
-		void OnRemove();
+		void OnEvent(Event& event);
+		void OnDetach();
 
 		static std::unique_ptr<Scene> Create();
 
 	private:
+		void FlushDestroyQueue();
+
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
+		std::vector<entt::entity> m_DestroyQueue;
+		//std::vector<entt::entity> m_CreateQueue;
 		entt::registry m_Registry;
 		// a Camera should be an entity or it can be a component of an entity
 		friend class Entity;

@@ -6,6 +6,7 @@
 #include <Renderer/Renderer.h>
 #include <Scripting/ScriptEngine.h>
 #include <Scripting/Script.h>
+#include <Events/Event.h>
 
 namespace Spyen {
     Entity Scene::CreateEntity(const std::string& name)
@@ -35,14 +36,29 @@ namespace Spyen {
         return {};
     }
 
-    void Scene::OnInit()
+    void Scene::DestroyEntity(Entity& entity)
+    {
+        m_DestroyQueue.push_back(entity.m_EntityHandle);
+    }
+
+    void Scene::OnAttach()
     {
         const auto& view = m_Registry.view<ScriptComponent>();
         for (const auto& [e, sc] : view.each()) {
             Entity entity = { e, this };
-            sc.ScriptInstance->m_Parent = entity;
+            ScriptEngine::InitializeScript(entity);
             ScriptEngine::InvokeOnCreate(entity);
         }
+    }
+
+    void Scene::FlushDestroyQueue()
+    {
+        // possible memory leak
+        for (auto e : m_DestroyQueue) {
+            if (m_Registry.valid(e))
+                m_Registry.destroy(e);
+        }
+        m_DestroyQueue.clear();
     }
 
     void Scene::OnUpdate(Timestep ts)
@@ -52,6 +68,8 @@ namespace Spyen {
             Entity entity = { e, this };
             ScriptEngine::InvokeOnUpdate(entity, ts);
         }
+
+        FlushDestroyQueue();
     }
 
     void Scene::OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept
@@ -80,8 +98,22 @@ namespace Spyen {
         renderer->EndFrame();
     }
 
-    void Scene::OnRemove()
+    void Scene::OnEvent(Event& event)
     {
+        const auto& view = m_Registry.view<ScriptComponent>();
+        for (const auto& [entity, sc] : view.each()) {
+            Entity e = { entity, this };
+            ScriptEngine::InvokeOnEvent(e, event);
+        }
+    }
+
+    void Scene::OnDetach()
+    {
+        const auto& view = m_Registry.view<ScriptComponent>();
+        for (const auto& [e, sc] : view.each()) {
+            Entity entity = { e, this };
+            ScriptEngine::CleanupScript(entity);
+        }
     }
 
     std::unique_ptr<Scene> Scene::Create()

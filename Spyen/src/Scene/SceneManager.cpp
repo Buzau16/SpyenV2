@@ -17,7 +17,10 @@ namespace Spyen {
 			SPY_CORE_ERROR("Scene {} doesnt not exist!", name.c_str());
 			return;
 		}
+		// maybe a nullptr dereference
+		if(m_ActiveScene)
+			m_ActiveScene->OnDetach();
 		m_ActiveScene = m_SceneMap.at(name).get();
-		m_ActiveScene->OnInit();
+		m_ActiveScene->OnAttach();
 	}
 }
