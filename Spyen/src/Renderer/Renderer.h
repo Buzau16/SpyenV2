@@ -23,6 +23,16 @@ namespace Spyen {
 		glm::vec3 Color;
 	};
 
+	struct LightVertex {
+		glm::vec2 Position;
+	};
+
+	struct LightData {
+		glm::vec3 Color;
+		float Radius;
+		float Intensity;
+	};
+
 	// Todo: Maybe split up the rendering to include some instancing where necessary
 
 	class Renderer
@@ -46,6 +56,8 @@ namespace Spyen {
 
 		void DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec4& color);
 
+		void DrawLight(const glm::vec2& position, const glm::vec3& color, const float radius, const float intensity);
+
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
 	private:
@@ -55,23 +67,34 @@ namespace Spyen {
 		QuadVertex* m_QuadVertexBufferPtr = nullptr;
 		LineVertex* m_LineVertexBufferBase = nullptr;
 		LineVertex* m_LineVertexBufferPtr = nullptr;
+		LightVertex* m_LightVertexBufferBase = nullptr;
+		LightVertex* m_LightVertexBufferPtr = nullptr;
+
 		std::vector<uint64_t> m_TextureHandles;
+		std::vector<LightData> m_LightDatas;
 		Rectangle m_DrawingSpace;
 		std::shared_ptr<VertexBuffer> m_QuadVertexBuffer = nullptr;
+		std::shared_ptr<VertexBuffer> m_LightVertexBuffer = nullptr;
 		std::shared_ptr<IndexBuffer> m_QuadIndexBuffer = nullptr;
 		std::shared_ptr<VertexBuffer> m_LineVertexBuffer = nullptr;
 
-		std::unique_ptr<Shader> m_QuadShader = nullptr;
-		std::unique_ptr<Shader> m_LineShader = nullptr;
-		std::unique_ptr<VertexArray> m_QuadVertexArray = nullptr;
-		std::unique_ptr<VertexArray> m_LineVertexArray = nullptr;
-		std::unique_ptr<SSBO> m_HandleBuffer = nullptr;
-		std::unique_ptr<UniformBuffer> m_CameraBuffer = nullptr;
-		std::unique_ptr<Texture> m_WhiteTexture = nullptr;
+		Shader m_QuadShader;
+		Shader m_LineShader;
+		Shader m_LightShader;
+		VertexArray m_QuadVertexArray;
+		VertexArray m_LineVertexArray;
+		VertexArray m_LightVertexArray;
+		SSBO m_HandleBuffer;
+		SSBO m_LightDataBuffer;
+		UniformBuffer m_CameraBuffer;
+		UniformBuffer m_LightCountBuffer;
+		Texture m_WhiteTexture;
 		glm::vec4 m_QuadPositions[4];
 		uint32_t m_QuadIndexCount = 0;
 		uint32_t m_LineVertexCount = 0;
+		uint32_t m_LightIndexCount = 0;
 		float m_LineWidth = 1.0f;
+		uint32_t m_LightCount = 0;
 
 	};
 

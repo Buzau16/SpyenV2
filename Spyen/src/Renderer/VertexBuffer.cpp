@@ -11,7 +11,10 @@ namespace Spyen {
 		glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
 
 		GLenum error = glGetError();
-		SPY_CORE_ASSERT(error == GL_NO_ERROR, "Failed to create vertex buffer. With error code {0}", error);
+		if (!error == GL_NO_ERROR) {
+			SPY_CORE_CRITICAL("Failed to create vertex buffer: {}", error);
+		}
+		SPY_CORE_ASSERT(error == GL_NO_ERROR, "Failed to create vertex buffer");
 	}
 
 	VertexBuffer::~VertexBuffer()

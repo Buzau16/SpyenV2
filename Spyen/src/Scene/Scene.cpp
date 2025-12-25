@@ -82,11 +82,16 @@ namespace Spyen {
                 camera = cc.Camera;
             }
         }
+        renderer->BeginFrame(camera, width, height);
+
+        // Background
+        
+
 
         // Drawing quads
         const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
 
-        renderer->BeginFrame(camera, width, height);
+        
         for (auto [entity, tc, src] : entities.each()) {
             if (src.Texture == nullptr) {
                 renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
@@ -95,7 +100,18 @@ namespace Spyen {
                 renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
             }
         }
+        // drawing lights
+
+        const auto lights = m_Registry.view<TransformComponent, Light2D>();
+        for (auto [entity, tc, lc] : lights.each()) {
+
+        }
+
+
+
         renderer->EndFrame();
+
+        
     }
 
     void Scene::OnEvent(Event& event)

@@ -279,6 +279,8 @@
     <ClInclude Include="src\Scene\SceneManager.h" />
     <ClInclude Include="src\Scripting\Script.h" />
     <ClInclude Include="src\Scripting\ScriptEngine.h" />
+    <ClInclude Include="src\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Renderer\RenderCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -367,5 +369,7 @@
     <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="src\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Renderer\RenderCommand.cpp" />
   </ItemGroup>
 </Project>

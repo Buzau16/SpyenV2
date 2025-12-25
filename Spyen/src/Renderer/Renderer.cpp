@@ -10,19 +10,35 @@
 #include <Scene/SceneCamera.h>
 #include <Math/Math.h>
 
+#include "RenderCommand.h"
+
 
 namespace Spyen {
 	constexpr uint32_t MaxQuads		= 10000;
 	constexpr uint32_t MaxVertices	= MaxQuads * 4;
 	constexpr uint32_t MaxIndices	= MaxQuads * 6;
 
-	Renderer::Renderer()
+
+	// helper function
+	/*inline int GetNextBindingPoint() {
+		static int BindingPoint = 0;
+		return BindingPoint++;
+	};*/
+
+	Renderer::Renderer() :
+		m_QuadShader("QuadShader", "Shaders/QuadShader.vert", "Shaders/QuadShader.frag"),
+		m_LineShader("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag"),
+		m_LightShader("LightShader", "Shaders/LightShader.vert", "Shaders/LightShader.frag"),
+		m_WhiteTexture({1,1,4}),
+		m_HandleBuffer(nullptr, sizeof(uint64_t) * MaxQuads),
+		m_CameraBuffer(sizeof(glm::mat4), 1),
+		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads),
+		m_LightCountBuffer(sizeof(uint32_t), 3)
 	{
 
 		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
-		m_QuadVertexArray = std::make_unique<VertexArray>();
-		m_QuadVertexArray->Bind();
+		m_QuadVertexArray.Bind();
 
 		m_QuadVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(QuadVertex));
 		m_QuadVertexBuffer->Bind();
@@ -32,7 +48,7 @@ namespace Spyen {
 			{ ShaderDataType::Float2, "a_TexCoord"},
 			{ ShaderDataType::Int, "a_TexIndex"}
 			});
-		m_QuadVertexArray->AddVertexBuffer(m_QuadVertexBuffer);
+		m_QuadVertexArray.AddVertexBuffer(m_QuadVertexBuffer);
 
 		m_QuadPositions[1] = { 0.5f, -0.5f, 1.f, 1.0f };
 		m_QuadPositions[0] = { -0.5f, -0.5f, 1.0f, 1.0f };
@@ -51,40 +67,36 @@ namespace Spyen {
 			offset += 4;
 		}
 		m_QuadIndexBuffer = std::make_shared<IndexBuffer>(indices, MaxIndices);
-		m_QuadVertexArray->AddIndexBuffer(m_QuadIndexBuffer);
+		m_QuadVertexArray.AddIndexBuffer(m_QuadIndexBuffer);
 		delete[] indices;
-
-		m_QuadShader = std::make_unique<Shader>("QuadShader", "Shaders/QuadShader.vert", "Shaders/QuadShader.frag");
-
-		m_QuadShader->Bind();
 
 		// Initializing for the Lines
 		m_LineVertexBufferBase = new LineVertex[MaxVertices];
-		m_LineVertexArray = std::make_unique<VertexArray>();
-		m_LineVertexArray->Bind();
+		m_LineVertexArray.Bind();
 
 		m_LineVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(LineVertex));
 		m_LineVertexBuffer->SetLayout({
 			{ShaderDataType::Float2, "a_Position"},
 			{ShaderDataType::Float4, "a_Color"}
 		});
-		m_LineVertexArray->AddVertexBuffer(m_LineVertexBuffer);
+		m_LineVertexArray.AddVertexBuffer(m_LineVertexBuffer);
 
-		m_LineShader = std::make_unique<Shader>("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag");
-
-		// Make a ssbo for texture handles
-		m_HandleBuffer = std::make_unique<SSBO>(nullptr, sizeof(uint64_t) * MaxQuads);
+		m_LightVertexBufferBase = new LightVertex[MaxVertices];
+		m_LightVertexArray.Bind();
+		m_LightVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(LightVertex));
+		m_LightVertexBuffer->SetLayout({
+			{ ShaderDataType::Float2, "a_Position"},
+			{ ShaderDataType::Float3, "a_Color"},
+			{ ShaderDataType::Float, "a_Radius"},
+			{ ShaderDataType::Float, "a_Intensity"}
+			});
+		m_LightVertexArray.AddVertexBuffer(m_LightVertexBuffer);
+		m_LightVertexArray.AddIndexBuffer(m_QuadIndexBuffer);
 
 		// Create a white texture
-		TextureSpecification specs = {.Width = 1, .Height = 1, .BitDepth = 4};
-		m_WhiteTexture = std::make_unique <Texture>(specs);
 		uint32_t whiteTextureData = 0xffffffff;
-		m_WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
-		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
-
-		//m_Camera = std::make_unique<Camera>(glm::vec2{ 0.0f, 0.0f }, 1.0f, glm::ivec2{ 1280, 720 });
-
-		m_CameraBuffer = std::make_unique<UniformBuffer>(sizeof(glm::mat4), 1);
+		m_WhiteTexture.SetData(&whiteTextureData, sizeof(uint32_t));
+		m_TextureHandles.push_back(m_WhiteTexture.GetTextureHandle());
 
 		SPY_CORE_INFO("Renderer Loaded!");
 		SPY_CORE_INFO("  Vendor: {0}", (const char*)glGetString(GL_VENDOR));
@@ -96,6 +108,7 @@ namespace Spyen {
 	{
 		delete[] m_QuadVertexBufferBase;
 		delete[] m_LineVertexBufferBase;
+		delete[] m_LightVertexBufferBase;
 	}
 
 	void Renderer::BeginBatch()
@@ -106,13 +119,19 @@ namespace Spyen {
 		m_LineVertexCount = 0;
 		m_LineVertexBufferPtr = m_LineVertexBufferBase;
 
+		m_LightCount = 0;
+		m_LightIndexCount = 0;
+		m_LineVertexBufferPtr = m_LineVertexBufferBase;
+
+		m_LightDatas.clear();
+
 		m_TextureHandles.clear();
-		m_TextureHandles.push_back(m_WhiteTexture->GetTextureHandle());
+		m_TextureHandles.push_back(m_WhiteTexture.GetTextureHandle());
 	}
 
 	void Renderer::BeginFrame(const SceneCamera& camera, const uint32_t width, const uint32_t height)
 	{
-		m_CameraBuffer->SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
+		m_CameraBuffer.SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
 		m_DrawingSpace = { {width / 2, height / 2}, {width, height}, 0.f };
 
 		BeginBatch();
@@ -122,28 +141,41 @@ namespace Spyen {
 	{
 		if (m_QuadIndexCount)
 		{
-
 			GLsizeiptr buffer_size = reinterpret_cast<uint8_t*>(m_QuadVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_QuadVertexBufferBase);
 			m_QuadVertexBuffer->SetData(m_QuadVertexBufferBase, buffer_size);
 
-			m_QuadShader->Bind();
+			m_QuadShader.Bind();
 
-			m_HandleBuffer->Bind(0);
-			m_HandleBuffer->SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
-			m_QuadShader->SetUniformHandles("u_Textures", m_TextureHandles.data(), static_cast<uint32_t>(m_TextureHandles.size()));
+			m_HandleBuffer.Bind(0);
+			m_HandleBuffer.SetData(m_TextureHandles.data(), sizeof(uint64_t) * m_TextureHandles.size());
+			m_QuadShader.SetUniformHandles("u_Textures", m_TextureHandles.data(), static_cast<uint32_t>(m_TextureHandles.size()));
 
-			m_QuadVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_QuadIndexCount), GL_UNSIGNED_INT, nullptr);
+			RenderCommand::DrawIndexed(&m_QuadVertexArray, m_QuadIndexCount);
+			m_LightShader.Unbind();
 		}
 		if (m_LineVertexCount)
 		{
 			size_t buffer_size = reinterpret_cast<uint8_t*>(m_LineVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_LineVertexBufferBase);
 			m_LineVertexBuffer->SetData(m_LineVertexBufferBase, buffer_size);
 
-			m_LineShader->Bind();
-			m_LineVertexArray->Bind();
-			glLineWidth(m_LineWidth);
-			glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(buffer_size));
+			m_LineShader.Bind();
+			RenderCommand::SetLineWidth(m_LineWidth);
+			RenderCommand::DrawLines(&m_LineVertexArray, static_cast<uint32_t>(buffer_size));
+			m_LineShader.Unbind();
+		}
+		if (m_LightIndexCount) {
+			size_t buffer_size = reinterpret_cast<uint8_t*>(m_LightVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_LightVertexBufferBase);
+			m_LightVertexBuffer->SetData(m_LightVertexBufferBase, buffer_size);
+
+			m_LightShader.Bind();
+
+			m_LightDataBuffer.Bind(2);
+			m_LightDataBuffer.SetData(m_LightDatas.data(), m_LightDatas.size() * sizeof(LightData));
+			m_LightCountBuffer.SetData(&m_LightCount, sizeof(uint32_t) * m_LightCount);
+
+
+			RenderCommand::DrawIndexed(&m_LightVertexArray, m_LightIndexCount);
+			m_LightShader.Unbind();
 		}
 		
 	}
@@ -216,7 +248,7 @@ namespace Spyen {
 			{ 0.0f, 1.0f }
 		};
 
-		uint64_t handle = texture ? texture->GetTextureHandle() : m_WhiteTexture->GetTextureHandle();
+		uint64_t handle = texture ? texture->GetTextureHandle() : m_WhiteTexture.GetTextureHandle();
 		uint32_t texIdx = 0;
 
 		auto it = std::ranges::find(m_TextureHandles, handle);
@@ -241,7 +273,7 @@ namespace Spyen {
 		m_QuadIndexCount += 6;
 	}
 
-	void Renderer::	DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec4& color)
+	void Renderer::DrawLine(const glm::vec2& p0, const glm::vec2& p1, const glm::vec4& color)
 	{
 		m_LineVertexBufferPtr->Position = p0;
 		m_LineVertexBufferPtr->Color = color;
@@ -252,6 +284,26 @@ namespace Spyen {
 		m_LineVertexBufferPtr++;
 
 		m_LineVertexCount += 2;
+	}
+	void Renderer::DrawLight(const glm::vec2& position, const glm::vec3& color, const float radius, const float intensity)
+	{
+		// culling needs to be different as i light offscreen can have an affect on the final composite
+		if (m_LightIndexCount >= MaxIndices) {
+			EndFrame();
+			BeginBatch();
+		}
+
+		m_LightDatas.push_back({ color, radius, intensity });
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f));
+
+		for (int i = 0; i < 4; i++) {
+			m_LightVertexBufferPtr->Position = transform * m_QuadPositions[i];
+			m_LightVertexBufferPtr++;
+		}
+
+		m_QuadIndexCount += 6;
+		m_LightCount++;
 	}
 	bool Renderer::IsQuadInFrustum(const Rectangle& rect)
 	{

@@ -13,7 +13,7 @@
 
 namespace Spyen {
 
-	// TODO: Add scripting/systems and events
+	// TODO: Add lighting 2D
 
 	constexpr float PhysicsStep = 1.0f / 60.f;
 
