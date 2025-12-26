@@ -59,12 +59,12 @@ namespace Spyen {
 		std::unique_ptr<Script> ScriptInstance = nullptr;
 	};
 
-	struct Sky2D {
+	struct SkyComponent {
 		Vec3 Color = {1.f, 1.f, 1.f};
 		float LightIntensity = 1.f;
 	};
 
-	struct Light2D {
+	struct LightComponent {
 		Vec3 Color = { 1.f, 1.f, 1.f };
 		float Radius = 10.f;
 		float Intensity = 1.f;

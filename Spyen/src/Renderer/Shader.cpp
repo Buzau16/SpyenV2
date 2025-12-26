@@ -42,8 +42,8 @@ namespace Spyen
 			return;
 		}
 
-		glValidateProgram(m_RendererID);
-		glGetProgramiv(m_RendererID, GL_VALIDATE_STATUS, &result);
+		//glValidateProgram(m_RendererID);
+		/*glGetProgramiv(m_RendererID, GL_VALIDATE_STATUS, &result);
 		if (result == GL_FALSE)
 		{
 			int length;
@@ -54,7 +54,7 @@ namespace Spyen
 			std::cout << message << std::endl;
 			glDeleteProgram(m_RendererID);
 			return;
-		}
+		}*/
 
 		glDeleteShader(vs);
 		glDeleteShader(fs);

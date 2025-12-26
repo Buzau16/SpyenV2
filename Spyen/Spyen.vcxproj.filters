@@ -162,9 +162,6 @@
     <ClInclude Include="src\Renderer\IndexBuffer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\Renderer.h">
-      <Filter>src\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer\SSBO.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
@@ -281,6 +278,7 @@
     <ClInclude Include="src\Scripting\ScriptEngine.h" />
     <ClInclude Include="src\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">

@@ -4,19 +4,39 @@
 #include "glad/glad.h"
 
 namespace Spyen {
-	Framebuffer::Framebuffer()
+	Framebuffer::Framebuffer(const FramebufferSpecs& specs) : m_Specs(specs)
 	{
-		glGenFramebuffers(1, &m_RendererID);
+		glCreateFramebuffers(1, &m_RendererID);
+		glViewport(0, 0, m_Specs.Width, m_Specs.Height);
+		Bind();
+		if (m_Specs.Attachments & FramebufferAttachments::COLOR) {
+			GenerateColorAttachment();
+		}
+		Unbind();
 	}
 	Framebuffer::~Framebuffer()
 	{
 		glDeleteFramebuffers(1, &m_RendererID);
+		if (m_ColorAttachment) {
+			glDeleteTextures(1, &m_ColorAttachment);
+		}
 	}
-	void Framebuffer::Bind()
+	void Framebuffer::Bind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 	}
-	void Framebuffer::Unbind()
+	void Framebuffer::GenerateColorAttachment()
+	{
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
+
+		glTextureStorage2D(m_ColorAttachment, 1, GL_RGBA8, m_Specs.Width, m_Specs.Height);
+
+		glTextureParameteri(m_ColorAttachment, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTextureParameteri(m_ColorAttachment, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glNamedFramebufferTexture(m_RendererID, GL_COLOR_ATTACHMENT0, m_ColorAttachment, 0);
+	}
+	void Framebuffer::Unbind() const
 	{
 		if (!IsFramebufferComplete()) {
 			return;

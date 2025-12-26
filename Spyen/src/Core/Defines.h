@@ -1,7 +1,7 @@
 #pragma once
 
 // To be used only in the Spyen source Code
-
+#define SP_BIT(x) (1 << x)
 
 // Can be used by the user
 // everything here is part of the old scene system, try to avoid!

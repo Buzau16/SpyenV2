@@ -11,6 +11,8 @@
 #include <Core/Director.h>
 #include <GLFW/glfw3.h>
 
+#include <iostream>
+
 namespace Spyen {
 
 	// TODO: Add lighting 2D
@@ -19,6 +21,7 @@ namespace Spyen {
 
 	Engine::Engine(const uint32_t width, const uint32_t height, const std::string& title)
 	{
+		
 		WindowSpecifications specs{
 			.Width = width,
 			.Height = height,
@@ -36,6 +39,7 @@ namespace Spyen {
 		m_PhysicsEngine = std::make_unique<PhysicsEngine>();
 		m_SceneManager = std::make_unique<SceneManager>();
 		Director::s_Instance = this;
+		
 	}
 
 	Engine::~Engine()
@@ -62,8 +66,6 @@ namespace Spyen {
 			m_Window->PollEvents();
 
 			//glfwSwapInterval(0);
-
-			m_Window->Clear(0.33f, 0.7f, 0.96f);
 
 			const auto Time = static_cast<float>(glfwGetTime());
 			Timestep TimeStep(Time - LastFrameTime);

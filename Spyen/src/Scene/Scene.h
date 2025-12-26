@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <Core/UUID.h>
 #include <Time/TimeStep.h>
+#include <Renderer/Framebuffer.h>
 
 
 namespace Spyen {
@@ -38,6 +39,8 @@ namespace Spyen {
 
 	private:
 		void FlushDestroyQueue();
+		void AmbientLightPass(const Framebuffer& fb) const;
+		void GeometryPass(const Framebuffer& fb, Renderer* renderer, uint32_t width, uint32_t height) const;
 
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
 		std::vector<entt::entity> m_DestroyQueue;

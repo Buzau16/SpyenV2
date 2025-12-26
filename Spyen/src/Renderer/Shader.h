@@ -29,6 +29,8 @@ namespace Spyen {
 		void SetUniformHandle(const std::string& name, const uint64_t handle);
 		void SetUniformHandles(const std::string& name, const uint64_t* handles, uint32_t count);
 
+		uint32_t GetRendererID() const { return m_RendererID; }
+
 
 		void Test();
 

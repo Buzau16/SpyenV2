@@ -18,24 +18,18 @@ namespace Spyen {
 	constexpr uint32_t MaxVertices	= MaxQuads * 4;
 	constexpr uint32_t MaxIndices	= MaxQuads * 6;
 
-
-	// helper function
-	/*inline int GetNextBindingPoint() {
-		static int BindingPoint = 0;
-		return BindingPoint++;
-	};*/
-
 	Renderer::Renderer() :
 		m_QuadShader("QuadShader", "Shaders/QuadShader.vert", "Shaders/QuadShader.frag"),
 		m_LineShader("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag"),
-		m_LightShader("LightShader", "Shaders/LightShader.vert", "Shaders/LightShader.frag"),
+		m_CompositeShader("CompositeShader", "Shaders/CompositeShader.vert", "Shaders/CompositeShader.frag"),
+		//m_LightShader("LightShader", "Shaders/LightShader.vert", "Shaders/LightShader.frag"),
+		//m_SkyShader("SkyShader", "Shaders/SkyShader.vert", "Shaders/SkyShader.frag"),
 		m_WhiteTexture({1,1,4}),
 		m_HandleBuffer(nullptr, sizeof(uint64_t) * MaxQuads),
 		m_CameraBuffer(sizeof(glm::mat4), 1),
 		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads),
 		m_LightCountBuffer(sizeof(uint32_t), 3)
 	{
-
 		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
 		m_QuadVertexArray.Bind();
@@ -98,6 +92,27 @@ namespace Spyen {
 		m_WhiteTexture.SetData(&whiteTextureData, sizeof(uint32_t));
 		m_TextureHandles.push_back(m_WhiteTexture.GetTextureHandle());
 
+
+		// compositing
+		m_CompositeVertexArray.Bind();
+		float fullscreen_quad[] = {
+			-1.f, -1.f,
+			-1.f,  1.f,
+			 1.f,  1.f,
+			 1.f, -1.f
+		};
+		m_CompositeVertexBuffer = std::make_shared<VertexBuffer>(fullscreen_quad, sizeof(fullscreen_quad));
+		m_CompositeVertexBuffer->SetLayout({
+			{ ShaderDataType::Float2, "a_Position"}
+			});
+		m_CompositeVertexArray.AddVertexBuffer(m_CompositeVertexBuffer);
+		uint32_t fsindices[6] = {
+			0, 2, 1,  // First triangle
+			0, 3, 2   // Second triangle
+		};
+		m_CompositeIndexBuffer = std::make_shared<IndexBuffer>(fsindices, 6);
+		m_CompositeVertexArray.AddIndexBuffer(m_CompositeIndexBuffer);
+
 		SPY_CORE_INFO("Renderer Loaded!");
 		SPY_CORE_INFO("  Vendor: {0}", (const char*)glGetString(GL_VENDOR));
 		SPY_CORE_INFO("  Renderer: {0}", (const char*)glGetString(GL_RENDERER));
@@ -151,7 +166,7 @@ namespace Spyen {
 			m_QuadShader.SetUniformHandles("u_Textures", m_TextureHandles.data(), static_cast<uint32_t>(m_TextureHandles.size()));
 
 			RenderCommand::DrawIndexed(&m_QuadVertexArray, m_QuadIndexCount);
-			m_LightShader.Unbind();
+			m_QuadShader.Unbind();
 		}
 		if (m_LineVertexCount)
 		{
@@ -163,7 +178,7 @@ namespace Spyen {
 			RenderCommand::DrawLines(&m_LineVertexArray, static_cast<uint32_t>(buffer_size));
 			m_LineShader.Unbind();
 		}
-		if (m_LightIndexCount) {
+		/*if (m_LightIndexCount) {
 			size_t buffer_size = reinterpret_cast<uint8_t*>(m_LightVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_LightVertexBufferBase);
 			m_LightVertexBuffer->SetData(m_LightVertexBufferBase, buffer_size);
 
@@ -176,7 +191,7 @@ namespace Spyen {
 
 			RenderCommand::DrawIndexed(&m_LightVertexArray, m_LightIndexCount);
 			m_LightShader.Unbind();
-		}
+		}*/
 		
 	}
 
@@ -305,6 +320,31 @@ namespace Spyen {
 		m_QuadIndexCount += 6;
 		m_LightCount++;
 	}
+
+	void Renderer::CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, m_DrawingSpace.Scale.x * 2, m_DrawingSpace.Scale.y * 2);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		m_CompositeShader.Bind();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, geometry.GetColorAttachment());
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, ambient.GetColorAttachment());
+
+		m_CompositeShader.SetUniform1i("g_Geometry", 0);
+		m_CompositeShader.SetUniform1i("g_Ambient", 1);
+
+		RenderCommand::DrawIndexed(&m_CompositeVertexArray, 6);
+		
+		m_CompositeShader.Unbind();
+	}
+
 	bool Renderer::IsQuadInFrustum(const Rectangle& rect)
 	{
 		return Math::IsColliding(rect, m_DrawingSpace);

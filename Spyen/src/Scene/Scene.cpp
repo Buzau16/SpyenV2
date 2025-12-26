@@ -7,6 +7,9 @@
 #include <Scripting/ScriptEngine.h>
 #include <Scripting/Script.h>
 #include <Events/Event.h>
+#include <Renderer/Framebuffer.h>
+#include <Renderer/RenderCommand.h>
+#include <glad/glad.h>
 
 namespace Spyen {
     Entity Scene::CreateEntity(const std::string& name)
@@ -61,6 +64,53 @@ namespace Spyen {
         m_DestroyQueue.clear();
     }
 
+    void Scene::AmbientLightPass(const Framebuffer& fb) const
+    {
+        Vec3 sky_color = { 0.f, 0.f, 0.f };
+        float intensity = 0.f;
+        const auto sky = m_Registry.view<SkyComponent>();
+        for (auto [entity, sc] : sky.each()) {
+            sky_color = sc.Color;
+            intensity = sc.LightIntensity;
+        }
+        
+        fb.Bind();
+        RenderCommand::ClearColor(sky_color - (1.f - intensity));
+        RenderCommand::Clear(GL_COLOR_BUFFER_BIT);
+        fb.Unbind();
+    }
+
+    void Scene::GeometryPass(const Framebuffer& fb, Renderer* renderer, uint32_t width, uint32_t height) const
+    {
+        SceneCamera camera;
+        // Get the camera if exists
+        const auto cameras = m_Registry.view<CameraComponent>();
+        for (auto [entity, cc] : cameras.each()) {
+            if (cc.MainCamera) {
+                camera = cc.Camera;
+            }
+        }
+
+        const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
+
+        fb.Bind();
+        RenderCommand::ClearColor({ 1.f, 1.f, 1.f });
+        RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        renderer->BeginFrame(camera, width, height);
+
+        for (auto [entity, tc, src] : entities.each()) {
+            if (src.Texture == nullptr) {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
+            }
+            else {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
+            }
+        }
+
+        renderer->EndFrame();
+        fb.Unbind();
+    }
+
     void Scene::OnUpdate(Timestep ts)
     {
         const auto& view = m_Registry.view<ScriptComponent>();
@@ -74,44 +124,13 @@ namespace Spyen {
 
     void Scene::OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept
     {
-        SceneCamera camera;
-        // Get the camera if exists
-        const auto cameras = m_Registry.view<CameraComponent>();
-        for (auto [entity, cc] : cameras.each()) {
-            if (cc.MainCamera) {
-                camera = cc.Camera;
-            }
-        }
-        renderer->BeginFrame(camera, width, height);
+        Framebuffer ambient_light_buffer = Framebuffer(FramebufferSpecs{width, height, FramebufferAttachments::COLOR });
+        AmbientLightPass(ambient_light_buffer);
 
-        // Background
+        Framebuffer geometry_buffer = Framebuffer(FramebufferSpecs{ width, height, FramebufferAttachments::COLOR });
+        GeometryPass(geometry_buffer, renderer, width, height);
         
-
-
-        // Drawing quads
-        const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
-
-        
-        for (auto [entity, tc, src] : entities.each()) {
-            if (src.Texture == nullptr) {
-                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
-            }
-            else {
-                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
-            }
-        }
-        // drawing lights
-
-        const auto lights = m_Registry.view<TransformComponent, Light2D>();
-        for (auto [entity, tc, lc] : lights.each()) {
-
-        }
-
-
-
-        renderer->EndFrame();
-
-        
+        renderer->CompositeFinalImage(geometry_buffer, ambient_light_buffer);
     }
 
     void Scene::OnEvent(Event& event)

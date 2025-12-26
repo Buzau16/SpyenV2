@@ -5,6 +5,7 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
+#include "Renderer/Framebuffer.h"
 #include <Scene/SceneCamera.h>
 #include <Scene/Components.h>
 
@@ -60,6 +61,8 @@ namespace Spyen {
 
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
+		void CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient);
+
 	private:
 		bool IsQuadInFrustum(const Rectangle& rect);
 
@@ -77,13 +80,17 @@ namespace Spyen {
 		std::shared_ptr<VertexBuffer> m_LightVertexBuffer = nullptr;
 		std::shared_ptr<IndexBuffer> m_QuadIndexBuffer = nullptr;
 		std::shared_ptr<VertexBuffer> m_LineVertexBuffer = nullptr;
+		std::shared_ptr<VertexBuffer> m_CompositeVertexBuffer = nullptr;
+		std::shared_ptr<IndexBuffer> m_CompositeIndexBuffer = nullptr;
 
 		Shader m_QuadShader;
 		Shader m_LineShader;
-		Shader m_LightShader;
+		//Shader m_LightShader;
+		Shader m_CompositeShader;
 		VertexArray m_QuadVertexArray;
 		VertexArray m_LineVertexArray;
 		VertexArray m_LightVertexArray;
+		VertexArray m_CompositeVertexArray;
 		SSBO m_HandleBuffer;
 		SSBO m_LightDataBuffer;
 		UniformBuffer m_CameraBuffer;

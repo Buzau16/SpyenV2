@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <iostream>
 #include <memory>
 #include <string>
 #include <algorithm>
@@ -11,3 +11,4 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+

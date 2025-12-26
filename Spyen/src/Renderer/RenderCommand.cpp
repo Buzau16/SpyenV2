@@ -14,9 +14,9 @@ namespace Spyen {
 	{
 		glClear(mask);
 	}
-	void RenderCommand::ClearColor(const Vec3& color)
+	void RenderCommand::ClearColor(const Vec3& color, const float alpha)
 	{
-		glClearColor(color.x, color.y, color.z, 1.f);
+		glClearColor(color.x, color.y, color.z, alpha);
 	}
 	void RenderCommand::DrawIndexed(VertexArray* va, uint32_t indexcount)
 	{

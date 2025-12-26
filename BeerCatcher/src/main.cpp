@@ -3,6 +3,8 @@
 #include "PlayerScript.h"
 #include "FoodScript.h"
 
+#include <iostream>
+
 constexpr uint32_t Width = 1280;
 constexpr uint32_t Height = 720;
 
@@ -26,6 +28,10 @@ int main() {
 	box.AddComponent<Spyen::SpriteRenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Food");
 	box.GetComponent<Spyen::TransformComponent>().Position = { 400, 400 };
 	SP_ADD_SCRIPT(box, FoodScript);
+
+	auto sky = scene->CreateEntity();
+	auto& ambient = sky.AddComponent<Spyen::SkyComponent>();
+	ambient.LightIntensity = 0.1f;
 
 	Spyen::Director::AddScene("main", std::move(scene));
 	

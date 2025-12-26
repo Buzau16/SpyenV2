@@ -23,7 +23,6 @@ namespace Spyen {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 		m_Window = glfwCreateWindow(m_Specs.Width, m_Specs.Height, m_Specs.Title.c_str(), nullptr, nullptr);
 		if (!m_Window) {
@@ -34,10 +33,9 @@ namespace Spyen {
 		glfwMakeContextCurrent(m_Window);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+			std::cerr << "ERROR WITH GLAD\n";
 			SPY_CORE_CRITICAL("Failed to load OpenGL functions");
 		}
-
-		glfwMakeContextCurrent(m_Window);
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);

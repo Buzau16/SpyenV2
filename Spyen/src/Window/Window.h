@@ -30,6 +30,7 @@ namespace Spyen {
 		void Clear(const float r, const float g, const float b, const float a = 1.0f) noexcept;
 		void RaiseEvent(Event& event);
 
+
 		[[nodiscard]] uint32_t GetWidth() const noexcept { return m_Specs.Width; }
 		[[nodiscard]] uint32_t GetHeight() const noexcept { return m_Specs.Height; }
 		[[nodiscard]] GLFWwindow* GetWindowHandle() const noexcept { return m_Window; };

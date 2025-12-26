@@ -1,6 +1,5 @@
 #version 460 core
 
-
 struct LightData{
 	vec2 Color;
 	float Radius;

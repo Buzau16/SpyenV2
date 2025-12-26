@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-
-#include "Renderer/Renderer.h"
 #include "Scene/Components.h"
 #include <Scene/Entity.h>
 
@@ -36,6 +34,8 @@ namespace Spyen {
 		Vec2 ColliderScale;
 		float ColliderRotation;
 	};
+
+	class Renderer;
 
 	class QuadTree
 	{
