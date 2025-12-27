@@ -31,8 +31,35 @@ int main() {
 
 	auto sky = scene->CreateEntity();
 	auto& ambient = sky.AddComponent<Spyen::SkyComponent>();
-	ambient.LightIntensity = 0.1f;
+	ambient.Color = { 0.1, 0.06, 0.3 };
+	ambient.LightIntensity = 1.f;
 
+	// test lights
+	{
+		auto light = scene->CreateEntity();
+		light.GetComponent<Spyen::TransformComponent>().Position = { 0, 720 };
+		auto& lc = light.AddComponent<Spyen::LightComponent>();
+		lc.Color = { 0.99, 0.77, 0.49 };
+		lc.Intensity = 1.f;
+		lc.Radius = 800.f;
+	}
+	{
+		auto light = scene->CreateEntity();
+		light.GetComponent<Spyen::TransformComponent>().Position = { 800, 200 };
+		auto& lc = light.AddComponent<Spyen::LightComponent>();
+		lc.Color = { 0.47, 0.2, 0.94 };
+		lc.Intensity = 1.f;
+		lc.Radius = 400.f;
+	}
+	{
+		auto light = scene->CreateEntity();
+		light.GetComponent<Spyen::TransformComponent>().Position = { 600, 200 };
+		auto& lc = light.AddComponent<Spyen::LightComponent>();
+		//lc.Color = { 0.1f, 1.f, 0.5f };
+		lc.Intensity = 1.f;
+		lc.Radius = 200.f;
+
+	}
 	Spyen::Director::AddScene("main", std::move(scene));
 	
 	Spyen::Director::SetActiveScene("main");

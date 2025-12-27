@@ -6,7 +6,7 @@
 
 namespace Spyen
 {
-	SSBO::SSBO(const void* data, size_t size)
+	SSBO::SSBO(const void* data, size_t size) : m_BufferSize(size)
 	{
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_RendererID);

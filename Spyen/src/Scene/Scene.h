@@ -11,6 +11,7 @@ namespace Spyen {
 	class Entity;
 	class Renderer;
 	class Event;
+	class SceneCamera;
 
 	class Scene
 	{
@@ -31,7 +32,7 @@ namespace Spyen {
 
 		void OnAttach();
 		void OnUpdate(Timestep ts);
-		void OnRender(Renderer* renderer, uint32_t width, uint32_t height) const noexcept;
+		void OnRender(Renderer* renderer, uint32_t width, uint32_t height) noexcept;
 		void OnEvent(Event& event);
 		void OnDetach();
 
@@ -39,8 +40,9 @@ namespace Spyen {
 
 	private:
 		void FlushDestroyQueue();
-		void AmbientLightPass(const Framebuffer& fb) const;
-		void GeometryPass(const Framebuffer& fb, Renderer* renderer, uint32_t width, uint32_t height) const;
+		void AmbientLightPass(const Framebuffer& fb);
+		void GeometryPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height);
+		void LightPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height);
 
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
 		std::vector<entt::entity> m_DestroyQueue;

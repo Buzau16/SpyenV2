@@ -8,6 +8,8 @@
 #include "Renderer/Framebuffer.h"
 #include <Scene/SceneCamera.h>
 #include <Scene/Components.h>
+#include <span>
+#include <Math/Vector/Vec.h>
 
 namespace Spyen {
 	// Credit to: https://www.youtube.com/@TheCherno for the rendering architecture
@@ -26,12 +28,15 @@ namespace Spyen {
 
 	struct LightVertex {
 		glm::vec2 Position;
+		int Index;
 	};
 
 	struct LightData {
 		glm::vec3 Color;
 		float Radius;
+		glm::vec2 Position;
 		float Intensity;
+		float _padding;
 	};
 
 	// Todo: Maybe split up the rendering to include some instancing where necessary
@@ -61,7 +66,9 @@ namespace Spyen {
 
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
-		void CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient);
+		void CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient, const Framebuffer& light);
+
+		void UploadOccluderData(std::span<Vec2> vertices);
 
 	private:
 		bool IsQuadInFrustum(const Rectangle& rect);
@@ -85,7 +92,7 @@ namespace Spyen {
 
 		Shader m_QuadShader;
 		Shader m_LineShader;
-		//Shader m_LightShader;
+		Shader m_LightShader;
 		Shader m_CompositeShader;
 		VertexArray m_QuadVertexArray;
 		VertexArray m_LineVertexArray;
@@ -93,8 +100,10 @@ namespace Spyen {
 		VertexArray m_CompositeVertexArray;
 		SSBO m_HandleBuffer;
 		SSBO m_LightDataBuffer;
+		SSBO m_OccluderDataBuffer;
+		bool IsOccluderDataInit = false;
 		UniformBuffer m_CameraBuffer;
-		UniformBuffer m_LightCountBuffer;
+		UniformBuffer m_OccluderCountBuffer;
 		Texture m_WhiteTexture;
 		glm::vec4 m_QuadPositions[4];
 		uint32_t m_QuadIndexCount = 0;
@@ -102,7 +111,6 @@ namespace Spyen {
 		uint32_t m_LightIndexCount = 0;
 		float m_LineWidth = 1.0f;
 		uint32_t m_LightCount = 0;
-
 	};
 
 }

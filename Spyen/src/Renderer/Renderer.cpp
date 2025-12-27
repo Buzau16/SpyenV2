@@ -1,4 +1,4 @@
-#include "spypch.h"
+﻿#include "spypch.h"
 #include "Renderer.h"
 
 #include <glad/glad.h>
@@ -10,25 +10,30 @@
 #include <Scene/SceneCamera.h>
 #include <Math/Math.h>
 
+#include <span>
+
 #include "RenderCommand.h"
+#include "Framebuffer.h"
 
 
 namespace Spyen {
 	constexpr uint32_t MaxQuads		= 10000;
 	constexpr uint32_t MaxVertices	= MaxQuads * 4;
 	constexpr uint32_t MaxIndices	= MaxQuads * 6;
+	constexpr uint32_t MaxLights	= 1000;
+
+	// next binding slot: 6
 
 	Renderer::Renderer() :
 		m_QuadShader("QuadShader", "Shaders/QuadShader.vert", "Shaders/QuadShader.frag"),
 		m_LineShader("LineShader", "Shaders/LineShader.vert", "Shaders/LineShader.frag"),
 		m_CompositeShader("CompositeShader", "Shaders/CompositeShader.vert", "Shaders/CompositeShader.frag"),
-		//m_LightShader("LightShader", "Shaders/LightShader.vert", "Shaders/LightShader.frag"),
-		//m_SkyShader("SkyShader", "Shaders/SkyShader.vert", "Shaders/SkyShader.frag"),
+		m_LightShader("LightShader", "Shaders/LightShader.vert", "Shaders/LightShader.frag"),
 		m_WhiteTexture({1,1,4}),
 		m_HandleBuffer(nullptr, sizeof(uint64_t) * MaxQuads),
 		m_CameraBuffer(sizeof(glm::mat4), 1),
 		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads),
-		m_LightCountBuffer(sizeof(uint32_t), 3)
+		m_OccluderCountBuffer(sizeof(uint32_t), 5)
 	{
 		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
@@ -77,12 +82,10 @@ namespace Spyen {
 
 		m_LightVertexBufferBase = new LightVertex[MaxVertices];
 		m_LightVertexArray.Bind();
-		m_LightVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxVertices * sizeof(LightVertex));
+		m_LightVertexBuffer = std::make_shared<VertexBuffer>(nullptr, MaxLights * sizeof(LightVertex));
 		m_LightVertexBuffer->SetLayout({
 			{ ShaderDataType::Float2, "a_Position"},
-			{ ShaderDataType::Float3, "a_Color"},
-			{ ShaderDataType::Float, "a_Radius"},
-			{ ShaderDataType::Float, "a_Intensity"}
+			{ ShaderDataType::Int, "a_LightIndex"}
 			});
 		m_LightVertexArray.AddVertexBuffer(m_LightVertexBuffer);
 		m_LightVertexArray.AddIndexBuffer(m_QuadIndexBuffer);
@@ -136,7 +139,7 @@ namespace Spyen {
 
 		m_LightCount = 0;
 		m_LightIndexCount = 0;
-		m_LineVertexBufferPtr = m_LineVertexBufferBase;
+		m_LightVertexBufferPtr = m_LightVertexBufferBase;
 
 		m_LightDatas.clear();
 
@@ -167,6 +170,7 @@ namespace Spyen {
 
 			RenderCommand::DrawIndexed(&m_QuadVertexArray, m_QuadIndexCount);
 			m_QuadShader.Unbind();
+			m_HandleBuffer.Unbind();
 		}
 		if (m_LineVertexCount)
 		{
@@ -178,20 +182,30 @@ namespace Spyen {
 			RenderCommand::DrawLines(&m_LineVertexArray, static_cast<uint32_t>(buffer_size));
 			m_LineShader.Unbind();
 		}
-		/*if (m_LightIndexCount) {
+		if (m_LightIndexCount) {
 			size_t buffer_size = reinterpret_cast<uint8_t*>(m_LightVertexBufferPtr) - reinterpret_cast<uint8_t*>(m_LightVertexBufferBase);
 			m_LightVertexBuffer->SetData(m_LightVertexBufferBase, buffer_size);
 
 			m_LightShader.Bind();
 
+
+
+			m_LightShader.SetUniform1i("u_LightCount", m_LightCount);
+
+			if (m_LightCount != m_LightDatas.size()) {
+				SPY_CORE_ERROR("WTF");
+			}
+
 			m_LightDataBuffer.Bind(2);
 			m_LightDataBuffer.SetData(m_LightDatas.data(), m_LightDatas.size() * sizeof(LightData));
-			m_LightCountBuffer.SetData(&m_LightCount, sizeof(uint32_t) * m_LightCount);
 
+			//m_OccluderDataBuffer.Bind(4);
 
 			RenderCommand::DrawIndexed(&m_LightVertexArray, m_LightIndexCount);
 			m_LightShader.Unbind();
-		}*/
+			m_LightDataBuffer.Unbind();
+			//m_OccluderDataBuffer.Unbind();
+		}
 		
 	}
 
@@ -308,20 +322,28 @@ namespace Spyen {
 			BeginBatch();
 		}
 
-		m_LightDatas.push_back({ color, radius, intensity });
+		m_LightDatas.push_back({ color, radius, position, intensity, 0.0f });
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f));
+		auto squareL = (2 * radius);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) *
+								glm::scale(glm::mat4(1.f), glm::vec3(squareL, squareL, 1.f));
+
+
+		int index = m_LightCount;
 
 		for (int i = 0; i < 4; i++) {
 			m_LightVertexBufferPtr->Position = transform * m_QuadPositions[i];
+			m_LightVertexBufferPtr->Index = index;
 			m_LightVertexBufferPtr++;
 		}
 
-		m_QuadIndexCount += 6;
+		m_LightIndexCount += 6;
 		m_LightCount++;
+		//SPY_CORE_INFO("Drew light {} at ({}, {})", index, position.x, position.y);
 	}
 
-	void Renderer::CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient)
+	void Renderer::CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient, const Framebuffer& light)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, m_DrawingSpace.Scale.x * 2, m_DrawingSpace.Scale.y * 2);
@@ -337,12 +359,27 @@ namespace Spyen {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, ambient.GetColorAttachment());
 
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, light.GetColorAttachment());
+
 		m_CompositeShader.SetUniform1i("g_Geometry", 0);
 		m_CompositeShader.SetUniform1i("g_Ambient", 1);
+		m_CompositeShader.SetUniform1i("g_Light", 2);
 
 		RenderCommand::DrawIndexed(&m_CompositeVertexArray, 6);
 		
 		m_CompositeShader.Unbind();
+	}
+
+	void Renderer::UploadOccluderData(std::span<Vec2> vertices)
+	{
+		if (!IsOccluderDataInit || vertices.size_bytes() != m_OccluderDataBuffer.GetBufferSize()) {
+			m_OccluderDataBuffer = SSBO(vertices.data(), vertices.size_bytes());
+			IsOccluderDataInit = true;
+		}
+		else {
+			m_OccluderDataBuffer.SetData(vertices.data(), vertices.size_bytes());
+		}
 	}
 
 	bool Renderer::IsQuadInFrustum(const Rectangle& rect)

@@ -33,6 +33,8 @@ namespace Spyen
 		// 360 degrees
 		constexpr double PI2 = std::numbers::pi * 2.0;
 
+		constexpr double SQRT2 = 1.4142135623730950;
+
 		glm::vec2 ToGLMVec2(const Vec2& v);
 		glm::vec3 ToGLMVec3(const Vec3& v);
 		glm::ivec2 ToGLMIVec2(const IVec2& v);

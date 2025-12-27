@@ -68,5 +68,14 @@ namespace Spyen {
 		Vec3 Color = { 1.f, 1.f, 1.f };
 		float Radius = 10.f;
 		float Intensity = 1.f;
+		bool CastShadow = true;
+	};
+
+	struct LightOccluderComponent {
+		enum class OccluderShape {
+			NONE = 0, QUAD
+		};
+		OccluderShape Shape = OccluderShape::QUAD;
+		std::vector<Vec2> Vertices;
 	};
 }
