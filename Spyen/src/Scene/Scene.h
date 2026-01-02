@@ -40,16 +40,13 @@ namespace Spyen {
 
 	private:
 		void FlushDestroyQueue();
-		void AmbientLightPass(const Framebuffer& fb);
-		void GeometryPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height);
-		void LightPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height);
 
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
 		std::vector<entt::entity> m_DestroyQueue;
 		//std::vector<entt::entity> m_CreateQueue;
 		entt::registry m_Registry;
-		// a Camera should be an entity or it can be a component of an entity
 		friend class Entity;
+		friend class Renderer;
 	};
 
 }

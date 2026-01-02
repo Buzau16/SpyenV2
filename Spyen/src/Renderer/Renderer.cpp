@@ -35,6 +35,7 @@ namespace Spyen {
 		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads),
 		m_OccluderCountBuffer(sizeof(uint32_t), 5)
 	{
+		m_CameraBuffer.Bind(1);
 		// Initializing for the quads
 		m_QuadVertexBufferBase = new QuadVertex[MaxVertices];
 		m_QuadVertexArray.Bind();
@@ -147,11 +148,18 @@ namespace Spyen {
 		m_TextureHandles.push_back(m_WhiteTexture.GetTextureHandle());
 	}
 
-	void Renderer::BeginFrame(const SceneCamera& camera, const uint32_t width, const uint32_t height)
+	void Renderer::BeginFrame(const FramebufferTarget& fb, const SceneCamera& camera, const uint32_t width, const uint32_t height)
 	{
-		m_CameraBuffer.SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
+		if (!IsFramebufferInit || m_DrawingSpace.Scale.x * 2 != width || m_DrawingSpace.Scale.y * 2 != height) {
+			m_LightFramebuffer = std::make_unique<Framebuffer>(FramebufferSpecs{ width, height, FramebufferAttachments::COLOR });
+			m_GeometryFramebuffer = std::make_unique<Framebuffer>(FramebufferSpecs{ width, height, FramebufferAttachments::COLOR });
+			IsFramebufferInit = true;
+		}
 		m_DrawingSpace = { {width / 2, height / 2}, {width, height}, 0.f };
-
+		GetCurrentFrameBuffer(fb)->Bind();
+		m_CurrentFrameBuffer = GetCurrentFrameBuffer(fb);
+		m_CameraBuffer.SetData(glm::value_ptr(camera.GetViewProjection()), sizeof(glm::mat4));
+		
 		BeginBatch();
 	}
 
@@ -207,6 +215,7 @@ namespace Spyen {
 			//m_OccluderDataBuffer.Unbind();
 		}
 		
+		m_CurrentFrameBuffer->Unbind();
 	}
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, float rotation, const Texture* texture)
@@ -343,28 +352,25 @@ namespace Spyen {
 		//SPY_CORE_INFO("Drew light {} at ({}, {})", index, position.x, position.y);
 	}
 
-	void Renderer::CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient, const Framebuffer& light)
+	void Renderer::CompositeFinalImage()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, m_DrawingSpace.Scale.x * 2, m_DrawingSpace.Scale.y * 2);
+		glDisable(GL_DEPTH_TEST);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		/*glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
 
 		m_CompositeShader.Bind();
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, geometry.GetColorAttachment());
+		glBindTexture(GL_TEXTURE_2D, m_GeometryFramebuffer->GetColorAttachment());
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, ambient.GetColorAttachment());
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, light.GetColorAttachment());
+		glBindTexture(GL_TEXTURE_2D, m_LightFramebuffer->GetColorAttachment());
 
 		m_CompositeShader.SetUniform1i("g_Geometry", 0);
-		m_CompositeShader.SetUniform1i("g_Ambient", 1);
-		m_CompositeShader.SetUniform1i("g_Light", 2);
+		m_CompositeShader.SetUniform1i("g_Light", 1);
 
 		RenderCommand::DrawIndexed(&m_CompositeVertexArray, 6);
 		
@@ -385,5 +391,20 @@ namespace Spyen {
 	bool Renderer::IsQuadInFrustum(const Rectangle& rect)
 	{
 		return Math::IsColliding(rect, m_DrawingSpace);
+	}
+	Framebuffer* Renderer::GetCurrentFrameBuffer(const FramebufferTarget& target)
+	{
+		switch (target) {
+		case FramebufferTarget::NONE: {
+			SPY_CORE_CRITICAL("No framebuffer target specified, falling back to geometry");
+			return m_GeometryFramebuffer.get();
+		}
+		case FramebufferTarget::GEOMETRY: {
+			return m_GeometryFramebuffer.get();
+		}
+		case FramebufferTarget::LIGHT: {
+			return m_LightFramebuffer.get();
+		}
+		}
 	}
 }

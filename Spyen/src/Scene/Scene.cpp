@@ -64,81 +64,6 @@ namespace Spyen {
         m_DestroyQueue.clear();
     }
 
-    void Scene::AmbientLightPass(const Framebuffer& fb)
-    {
-        Vec3 sky_color = { 0.f, 0.f, 0.f };
-        float intensity = 0.f;
-        const auto sky = m_Registry.view<SkyComponent>();
-        for (auto [entity, sc] : sky.each()) {
-            sky_color = sc.Color;
-            intensity = sc.LightIntensity;
-        }
-        
-        fb.Bind();
-        RenderCommand::ClearColor(sky_color - (1.f - intensity));
-        RenderCommand::Clear(GL_COLOR_BUFFER_BIT);
-        fb.Unbind();
-    }
-
-    void Scene::GeometryPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height)
-    {
-        const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
-
-        fb.Bind();
-        RenderCommand::ClearColor({ 1.f, 1.f, 1.f });
-        RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderer->BeginFrame(camera, width, height);
-
-        for (auto [entity, tc, src] : entities.each()) {
-            if (src.Texture == nullptr) {
-                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
-            }
-            else {
-                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
-            }
-        }
-
-        renderer->EndFrame();
-        fb.Unbind();
-    }
-
-    void Scene::LightPass(const Framebuffer& fb, const SceneCamera& camera, Renderer* renderer, uint32_t width, uint32_t height)
-    {
-        auto lights = m_Registry.view<TransformComponent, LightComponent>();
-
-    //    /*auto occluders = m_Registry.view<TransformComponent, LightOccluderComponent>();
-    //    for (auto [entity, tc, loc] : occluders.each()) {
-    //        switch (loc.Shape) {
-    //        case LightOccluderComponent::OccluderShape::QUAD:
-    //            Vec2 st = tc.Position - tc.Scale / 2;
-    //            Vec2 nd = { st.x, st.y + tc.Scale.y };
-    //            Vec2 rd = st + tc.Scale;
-    //            Vec2 th = { st.x + tc.Scale.x, st.y };
-    //            loc.Vertices.reserve(4);
-    //            loc.Vertices.emplace_back(st);
-    //            loc.Vertices.emplace_back(nd);
-    //            loc.Vertices.emplace_back(rd);
-    //            loc.Vertices.emplace_back(th);
-    //        }
-    //    }*/
-
-        fb.Bind();
-        RenderCommand::ClearColor({ 0.f, 0.f, 0.f }, 0.0f);
-        RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE);
-        glDisable(GL_DEPTH_TEST);
-        renderer->BeginFrame(camera, width, height);
-        for (auto [entity, tc, lc] : lights.each()) {
-            renderer->DrawLight(Math::ToGLMVec2(tc.Position), Math::ToGLMVec3(lc.Color), lc.Radius, lc.Intensity);
-        }
-        renderer->EndFrame();
-
-        glDisable(GL_BLEND);
-        fb.Unbind();
-    }
-
     void Scene::OnUpdate(Timestep ts)
     {
         const auto& view = m_Registry.view<ScriptComponent>();
@@ -161,15 +86,58 @@ namespace Spyen {
             }
         }
 
-        Framebuffer ambient_light_buffer = Framebuffer(FramebufferSpecs{width, height, FramebufferAttachments::COLOR });
-        Framebuffer geometry_buffer = Framebuffer(FramebufferSpecs{ width, height, FramebufferAttachments::COLOR });
-        Framebuffer light_buffer = Framebuffer(FramebufferSpecs{ width, height, FramebufferAttachments::COLOR });
+        SkyComponent sky;
+        const auto skys = m_Registry.view<SkyComponent>();
+        for (auto [entity, sc] : skys.each()) {
+            sky.Color = sc.Color;
+            sky.LightIntensity = sc.LightIntensity;
+        }
 
-        AmbientLightPass(ambient_light_buffer);
-        GeometryPass(geometry_buffer, camera, renderer, width, height);
-        LightPass(light_buffer, camera, renderer, width, height);
+        const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
+        auto lights = m_Registry.view<TransformComponent, LightComponent>();
+
+        // Ambient lighting
+        //renderer->SubmitAmbientLight(sky);
+        //
+        //
+
         
-        renderer->CompositeFinalImage(geometry_buffer, ambient_light_buffer, light_buffer);
+        
+
+        // Geometry pass
+        renderer->BeginFrame(FramebufferTarget::GEOMETRY, camera, width, height);
+        RenderCommand::ClearColor({ 1.f, 1.f, 1.f });
+        RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        for (auto [entity, tc, src] : entities.each()) {
+            if (src.Texture == nullptr) {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
+            }
+            else {
+                renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
+            }
+        }
+
+        renderer->EndFrame();
+
+        //// Light Pass
+        renderer->BeginFrame(FramebufferTarget::LIGHT, camera, width, height);
+        RenderCommand::ClearColor(sky.Color * sky.LightIntensity, 1.0f);
+        RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE);
+        glDisable(GL_DEPTH_TEST);
+
+        for (auto [entity, tc, lc] : lights.each()) {
+            renderer->DrawLight(Math::ToGLMVec2(tc.Position), Math::ToGLMVec3(lc.Color), lc.Radius, lc.Intensity);
+        }
+        renderer->EndFrame();
+        glDisable(GL_BLEND);
+
+
+
+        renderer->CompositeFinalImage();
     }
 
     void Scene::OnEvent(Event& event)

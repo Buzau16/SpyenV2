@@ -4,6 +4,17 @@
 #include "glad/glad.h"
 
 namespace Spyen {
+	void Framebuffer::Cleanup()
+	{
+		if (m_ColorAttachment) glDeleteTextures(1, &m_ColorAttachment);
+		if (m_DepthAttachment) glDeleteTextures(1, &m_DepthAttachment);
+		if (m_RendererID) glDeleteFramebuffers(1, &m_RendererID);
+
+		m_RendererID = 0;
+		m_ColorAttachment = 0;
+		m_DepthAttachment = 0;
+	}
+
 	Framebuffer::Framebuffer(const FramebufferSpecs& specs) : m_Specs(specs)
 	{
 		glCreateFramebuffers(1, &m_RendererID);
@@ -13,6 +24,33 @@ namespace Spyen {
 			GenerateColorAttachment();
 		}
 		Unbind();
+	}
+	Framebuffer::Framebuffer(Framebuffer&& other) noexcept
+		: m_RendererID(other.m_RendererID),
+		m_ColorAttachment(other.m_ColorAttachment),
+		m_DepthAttachment(other.m_DepthAttachment),
+		m_Specs(std::move(other.m_Specs))
+	{
+		other.m_RendererID = 0;
+		other.m_ColorAttachment = 0;
+		other.m_DepthAttachment = 0;
+	}
+	Framebuffer& Framebuffer::operator=(Framebuffer&& other) noexcept
+	{
+		if (this != &other)
+		{
+			Cleanup();
+
+			m_RendererID = other.m_RendererID;
+			m_ColorAttachment = other.m_ColorAttachment;
+			m_DepthAttachment = other.m_DepthAttachment;
+			m_Specs = std::move(other.m_Specs);
+
+			other.m_RendererID = 0;
+			other.m_ColorAttachment = 0;
+			other.m_DepthAttachment = 0;
+		}
+		return *this;
 	}
 	Framebuffer::~Framebuffer()
 	{

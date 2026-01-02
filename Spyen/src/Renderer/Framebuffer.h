@@ -24,6 +24,13 @@ namespace Spyen {
 	public:
 		Framebuffer() = default;
 		Framebuffer(const FramebufferSpecs& specs);
+
+		Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator=(const Framebuffer&) = delete;
+
+		Framebuffer(Framebuffer&& other) noexcept;
+		Framebuffer& operator=(Framebuffer&& other) noexcept;
+
 		~Framebuffer();
 
 		void Bind() const;
@@ -32,6 +39,7 @@ namespace Spyen {
 
 		uint32_t GetColorAttachment() const { return m_ColorAttachment; }
 	private:
+		void Cleanup();
 		void GenerateColorAttachment();
 
 		uint32_t m_RendererID;

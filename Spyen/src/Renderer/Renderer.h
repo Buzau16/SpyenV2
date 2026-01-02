@@ -40,6 +40,9 @@ namespace Spyen {
 	};
 
 	// Todo: Maybe split up the rendering to include some instancing where necessary
+	enum class FramebufferTarget {
+		NONE = 0, GEOMETRY, LIGHT, AMBIENT
+	};
 
 	class Renderer
 	{
@@ -49,7 +52,7 @@ namespace Spyen {
 
 		void BeginBatch();
 
-		void BeginFrame(const SceneCamera& camera, const uint32_t width, const uint32_t height);
+		void BeginFrame(const FramebufferTarget& fb, const SceneCamera& camera, const uint32_t width, const uint32_t height);
 		void EndFrame();
 
 		// Draw Functions
@@ -66,12 +69,13 @@ namespace Spyen {
 
 		void SetLineWidth(const float& width) { m_LineWidth = width; }
 
-		void CompositeFinalImage(const Framebuffer& geometry, const Framebuffer& ambient, const Framebuffer& light);
+		void CompositeFinalImage();
 
 		void UploadOccluderData(std::span<Vec2> vertices);
 
 	private:
 		bool IsQuadInFrustum(const Rectangle& rect);
+		Framebuffer* GetCurrentFrameBuffer(const FramebufferTarget& target);
 
 		QuadVertex* m_QuadVertexBufferBase = nullptr;
 		QuadVertex* m_QuadVertexBufferPtr = nullptr;
@@ -89,6 +93,11 @@ namespace Spyen {
 		std::shared_ptr<VertexBuffer> m_LineVertexBuffer = nullptr;
 		std::shared_ptr<VertexBuffer> m_CompositeVertexBuffer = nullptr;
 		std::shared_ptr<IndexBuffer> m_CompositeIndexBuffer = nullptr;
+
+		std::unique_ptr<Framebuffer> m_LightFramebuffer = nullptr;
+		std::unique_ptr<Framebuffer> m_GeometryFramebuffer = nullptr;
+		bool IsFramebufferInit = false;
+		Framebuffer* m_CurrentFrameBuffer = nullptr;
 
 		Shader m_QuadShader;
 		Shader m_LineShader;

@@ -31,8 +31,8 @@ int main() {
 
 	auto sky = scene->CreateEntity();
 	auto& ambient = sky.AddComponent<Spyen::SkyComponent>();
-	ambient.Color = { 0.1, 0.06, 0.3 };
-	ambient.LightIntensity = 1.f;
+	ambient.Color = { 1.f, 1.f, 1.f };
+	ambient.LightIntensity = 0.5f;
 
 	// test lights
 	{
