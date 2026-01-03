@@ -14,6 +14,7 @@ int main() {
 	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/Player.png");
 	Spyen::IAssetManager::LoadTexture("Food", "assets/textures/Apple.png");
 	Spyen::IAssetManager::LoadSound("shot", "assets/sounds/shot.mp3");
+	Spyen::IAssetManager::LoadTexture("Dummy", "assets/textures/Box.png");
 
 	auto scene = Spyen::Scene::Create();
 
@@ -28,6 +29,12 @@ int main() {
 	box.AddComponent<Spyen::SpriteRenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Food");
 	box.GetComponent<Spyen::TransformComponent>().Position = { 400, 400 };
 	SP_ADD_SCRIPT(box, FoodScript);
+
+	auto child = scene->CreateEntity("child");
+	child.SetParent(entity);
+	child.AddComponent<Spyen::SpriteRenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Dummy");
+	child.GetComponent<Spyen::ParentComponent>().PositionOffset = { 25, 0 };
+	child.GetComponent<Spyen::TransformComponent>().ZIndex = 0.f;
 
 	auto sky = scene->CreateEntity();
 	auto& ambient = sky.AddComponent<Spyen::SkyComponent>();

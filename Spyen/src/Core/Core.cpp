@@ -16,6 +16,9 @@
 namespace Spyen {
 
 	// TODO: Add lighting 2D
+	// - Light occlusion
+
+	// TODO: Refactor the sound system
 
 	constexpr float PhysicsStep = 1.0f / 60.f;
 
@@ -65,7 +68,7 @@ namespace Spyen {
 		while (m_Window->IsOpen()) {
 			m_Window->PollEvents();
 
-			//glfwSwapInterval(0);
+			glfwSwapInterval(0);
 
 			const auto Time = static_cast<float>(glfwGetTime());
 			Timestep TimeStep(Time - LastFrameTime);

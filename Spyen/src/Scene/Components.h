@@ -7,6 +7,7 @@
 #include <Renderer/Texture.h>
 #include <Core/UUID.h>
 #include <Scene/SceneCamera.h>
+#include <entt/entt.hpp>
 
 namespace Spyen {
 	struct TransformComponent {
@@ -69,6 +70,11 @@ namespace Spyen {
 		float Radius = 10.f;
 		float Intensity = 1.f;
 		bool CastShadow = true;
+	};
+
+	struct ParentComponent {
+		entt::entity Parent = entt::null;
+		Vec2 PositionOffset = { 0,0 };
 	};
 
 	struct LightOccluderComponent {

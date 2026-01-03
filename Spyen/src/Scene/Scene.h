@@ -13,6 +13,8 @@ namespace Spyen {
 	class Event;
 	class SceneCamera;
 
+	// TODO: look into the sprite sorting later if it tanks the performance
+
 	class Scene
 	{
 	public:

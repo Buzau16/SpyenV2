@@ -358,9 +358,6 @@ namespace Spyen {
 		glViewport(0, 0, m_DrawingSpace.Scale.x * 2, m_DrawingSpace.Scale.y * 2);
 		glDisable(GL_DEPTH_TEST);
 
-		/*glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
-
 		m_CompositeShader.Bind();
 
 		glActiveTexture(GL_TEXTURE0);

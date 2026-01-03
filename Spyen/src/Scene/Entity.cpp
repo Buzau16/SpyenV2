@@ -10,5 +10,8 @@ namespace Spyen {
 		m_EntityHandle = entt::null;
 		m_Scene = nullptr;
 	}
-
+	void Entity::SetParent(const Entity& entity)
+	{
+		GetComponent<ParentComponent>().Parent = entity.m_EntityHandle;
+	}
 }

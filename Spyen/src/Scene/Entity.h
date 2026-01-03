@@ -39,10 +39,13 @@ namespace Spyen {
 		void RemoveComponent() const {
 			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
+
+		void SetParent(const Entity& entity);
 		
 
 		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 		const std::string& GetTag() { return GetComponent<TagComponent>().Tag; }
+		
 		
 	private:
 		entt::entity m_EntityHandle{ entt::null };
