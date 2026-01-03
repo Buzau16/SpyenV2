@@ -96,7 +96,7 @@ project "Spyen"
 
 project "BeerCatcher"
 	location "BeerCatcher"
-	kind "ConsoleApp"
+	kind "WindowedApp"
 	language "C++"
 	characterset "Unicode"
 

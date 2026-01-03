@@ -8,7 +8,7 @@
 constexpr uint32_t Width = 1280;
 constexpr uint32_t Height = 720;
 
-int main() {
+int WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Spyen::Engine engine(Width, Height, "Penis");
 
 	Spyen::IAssetManager::LoadTexture("Box", "assets/textures/Player.png");
@@ -30,11 +30,11 @@ int main() {
 	box.GetComponent<Spyen::TransformComponent>().Position = { 400, 400 };
 	SP_ADD_SCRIPT(box, FoodScript);
 
-	auto child = scene->CreateEntity("child");
+	/*auto child = scene->CreateEntity("child");
 	child.SetParent(entity);
 	child.AddComponent<Spyen::SpriteRenderComponent>().Texture = Spyen::IAssetManager::GetTexture("Dummy");
 	child.GetComponent<Spyen::ParentComponent>().PositionOffset = { 25, 0 };
-	child.GetComponent<Spyen::TransformComponent>().ZIndex = 0.f;
+	child.GetComponent<Spyen::TransformComponent>().ZIndex = 0.f;*/
 
 	auto sky = scene->CreateEntity();
 	auto& ambient = sky.AddComponent<Spyen::SkyComponent>();

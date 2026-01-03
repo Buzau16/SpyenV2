@@ -86,7 +86,6 @@
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,7 +106,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_GL;SPYEN_DLL_BUILD;SP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;src;vendor\glad\include;vendor\glm\include;vendor\glfw\include;vendor\spdlog\include;vendor\entt;vendor\stb_image\include;vendor\miniaudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
@@ -138,7 +137,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_GL;SPYEN_DLL_BUILD;SP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;src;vendor\glad\include;vendor\glm\include;vendor\glfw\include;vendor\spdlog\include;vendor\entt;vendor\stb_image\include;vendor\miniaudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
@@ -163,16 +162,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Renderer\Renderer.h" />
-    <ClInclude Include="src\Scripting\ScriptEngine.h" />
-    <ClInclude Include="src\Scripting\Script.h" />
-    <ClInclude Include="src\Scene\SceneManager.h" />
-    <ClInclude Include="src\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Scene\Components.h" />
-    <ClInclude Include="src\Scene\Scene.h" />
-    <ClInclude Include="src\Scene\Entity.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\AssetManager\IAssetManager.h" />
     <ClInclude Include="src\Audio\AudioEngine.h" />
@@ -184,10 +173,10 @@
     <ClInclude Include="src\Core\Log.h" />
     <ClInclude Include="src\Core\UUID.h" />
     <ClInclude Include="src\Core\locked_ptr.h" />
+    <ClInclude Include="src\Events\EntityEvents.h" />
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\KeyEvents.h" />
     <ClInclude Include="src\Events\MouseEvents.h" />
-    <ClInclude Include="src\Events\EntityEvents.h" />
     <ClInclude Include="src\Events\WindowEvents.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\KeyCodes.h" />
@@ -200,7 +189,10 @@
     <ClInclude Include="src\Physics\QuadTree.h" />
     <ClInclude Include="src\Renderer\BufferElement.h" />
     <ClInclude Include="src\Renderer\BufferLayout.h" />
+    <ClInclude Include="src\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\SSBO.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
     <ClInclude Include="src\Renderer\ShaderDataType.h" />
@@ -208,6 +200,13 @@
     <ClInclude Include="src\Renderer\UniformBuffer.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Scene\Components.h" />
+    <ClInclude Include="src\Scene\Entity.h" />
+    <ClInclude Include="src\Scene\Scene.h" />
+    <ClInclude Include="src\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Scene\SceneManager.h" />
+    <ClInclude Include="src\Scripting\Script.h" />
+    <ClInclude Include="src\Scripting\ScriptEngine.h" />
     <ClInclude Include="src\Spyen.h" />
     <ClInclude Include="src\Time\TimeStep.h" />
     <ClInclude Include="src\Window\Window.h" />
@@ -239,13 +238,6 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
-    <ClCompile Include="src\Scene\SceneManager.cpp" />
-    <ClCompile Include="src\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\Scene\Scene.cpp" />
-    <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
@@ -259,7 +251,9 @@
     <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Physics\QuadTree.cpp" />
+    <ClCompile Include="src\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\SSBO.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
@@ -267,6 +261,11 @@
     <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Scene\Entity.cpp" />
+    <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="src\Time\TimeStep.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="src\spypch.cpp">

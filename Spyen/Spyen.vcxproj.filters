@@ -37,6 +37,9 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{0A06D2B3-7670-862A-BFAE-37D02B58647F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scripting">
+      <UniqueIdentifier>{6FBC2D98-DB7C-A9CE-A4B7-F24B1037EEAA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Time">
       <UniqueIdentifier>{EB0B26CF-D7D8-80DA-00F2-6E82EC1DB668}</UniqueIdentifier>
     </Filter>
@@ -114,6 +117,9 @@
     <ClInclude Include="src\Core\locked_ptr.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Events\EntityEvents.h">
+      <Filter>src\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Events\Event.h">
       <Filter>src\Events</Filter>
     </ClInclude>
@@ -123,7 +129,7 @@
     <ClInclude Include="src\Events\MouseEvents.h">
       <Filter>src\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Events\EntityEvents.h">
+    <ClInclude Include="src\Events\WindowEvents.h">
       <Filter>src\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Input\Input.h">
@@ -159,7 +165,16 @@
     <ClInclude Include="src\Renderer\BufferLayout.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Framebuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\IndexBuffer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\RenderCommand.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\SSBO.h">
@@ -182,6 +197,30 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\VertexBuffer.h">
       <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Components.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Entity.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Scene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\SceneCamera.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\SceneManager.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\Script.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptEngine.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spyen.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Time\TimeStep.h">
       <Filter>src\Time</Filter>
@@ -267,18 +306,6 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Events\WindowEvents.h" />
-    <ClInclude Include="src\Spyen.h" />
-    <ClInclude Include="src\Scene\Entity.h" />
-    <ClInclude Include="src\Scene\Scene.h" />
-    <ClInclude Include="src\Scene\Components.h" />
-    <ClInclude Include="src\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Scene\SceneManager.h" />
-    <ClInclude Include="src\Scripting\Script.h" />
-    <ClInclude Include="src\Scripting\ScriptEngine.h" />
-    <ClInclude Include="src\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
@@ -320,7 +347,13 @@
     <ClCompile Include="src\Physics\QuadTree.cpp">
       <Filter>src\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Framebuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\IndexBuffer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\RenderCommand.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Renderer.cpp">
@@ -344,6 +377,21 @@
     <ClCompile Include="src\Renderer\VertexBuffer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\Entity.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\Scene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneCamera.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneManager.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp">
+      <Filter>src\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Time\TimeStep.cpp">
       <Filter>src\Time</Filter>
     </ClCompile>
@@ -362,12 +410,5 @@
     <ClCompile Include="vendor\stb_image\include\stb_image\stb_image.c">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\Entity.cpp" />
-    <ClCompile Include="src\Scene\Scene.cpp" />
-    <ClCompile Include="src\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\Scene\SceneManager.cpp" />
-    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
-    <ClCompile Include="src\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Renderer\RenderCommand.cpp" />
   </ItemGroup>
 </Project>
