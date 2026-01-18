@@ -12,10 +12,6 @@
 #include <glad/glad.h>
 
 namespace Spyen {
-    struct Renderable {
-        const TransformComponent* Transform;
-        const SpriteRenderComponent* Sprite;
-    };
 
     Entity Scene::CreateEntity(const std::string& name)
     {
@@ -114,48 +110,25 @@ namespace Spyen {
 
         const auto entities = m_Registry.view<TransformComponent, SpriteRenderComponent>();
         auto lights = m_Registry.view<TransformComponent, LightComponent>();
-
-        std::vector<Renderable> renderables;
-        renderables.reserve(entities.size_hint());
-
-        for (auto [entity, tc, src] : entities.each()) {
-            renderables.push_back({ &tc, &src });
-        }
-
-        std::sort(renderables.begin(), renderables.end(), [](const Renderable& a, const Renderable& b) {
-            if (a.Transform->ZIndex != b.Transform->ZIndex) {
-                return a.Transform->ZIndex < b.Transform->ZIndex;
-            }
-            else {
-                return a.Transform->Position.y < b.Transform->Position.y;
-            }
-            });
+        
 
         // Geometry pass
         renderer->BeginFrame(FramebufferTarget::GEOMETRY, camera, width, height);
-        RenderCommand::ClearColor({ 1.f, 1.f, 1.f });
+        RenderCommand::ClearColor({ 0.f, 0.f, 0.f });
         RenderCommand::Clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        for (auto& renderable : renderables) {
-            if (renderable.Sprite->Texture == nullptr) {
-                renderer->DrawQuad(Math::ToGLMVec2(renderable.Transform->Position), Math::ToGLMVec2(renderable.Transform->Scale), renderable.Transform->Rotation, renderable.Sprite->Color);
-            }
-            else {
-                renderer->DrawQuad(Math::ToGLMVec2(renderable.Transform->Position), Math::ToGLMVec2(renderable.Transform->Scale), renderable.Transform->Rotation, renderable.Sprite->Texture);
-            }
-        }
-
-        /*for (auto [entity, tc, src] : entities.each()) {
+        for (auto [entity, tc, src] : entities.each()) {
             if (src.Texture == nullptr) {
                 renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Color);
             }
             else {
                 renderer->DrawQuad(Math::ToGLMVec2(tc.Position), Math::ToGLMVec2(tc.Scale), tc.Rotation, src.Texture);
-                SPY_CORE_INFO("Rendering Quad: x: {}, y: {}", tc.Position.x, tc.Position.y);
+                //SPY_CORE_INFO("Rendering Quad: x: {}, y: {}", tc.Position.x, tc.Position.y);
             }
-        }*/
+        }
 
         renderer->EndFrame();
+
 
         //// Light Pass
         renderer->BeginFrame(FramebufferTarget::LIGHT, camera, width, height);

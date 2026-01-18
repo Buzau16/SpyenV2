@@ -71,7 +71,7 @@ namespace Spyen {
 
 		void CompositeFinalImage();
 
-		void UploadOccluderData(std::span<Vec2> vertices);
+		//void UploadOccluderData(std::span<Vec2> vertices);
 
 	private:
 		bool IsQuadInFrustum(const Rectangle& rect);
@@ -109,10 +109,7 @@ namespace Spyen {
 		VertexArray m_CompositeVertexArray;
 		SSBO m_HandleBuffer;
 		SSBO m_LightDataBuffer;
-		SSBO m_OccluderDataBuffer;
-		bool IsOccluderDataInit = false;
 		UniformBuffer m_CameraBuffer;
-		UniformBuffer m_OccluderCountBuffer;
 		Texture m_WhiteTexture;
 		glm::vec4 m_QuadPositions[4];
 		uint32_t m_QuadIndexCount = 0;

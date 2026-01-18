@@ -87,13 +87,7 @@
     <ClInclude Include="src\AssetManager\AssetManager.h">
       <Filter>src\AssetManager</Filter>
     </ClInclude>
-    <ClInclude Include="src\AssetManager\IAssetManager.h">
-      <Filter>src\AssetManager</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\AudioEngine.h">
-      <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Audio\IAudioEngine.h">
       <Filter>src\Audio</Filter>
     </ClInclude>
     <ClInclude Include="src\Audio\Sound.h">
@@ -306,18 +300,13 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AssetManager\AssetManager.cpp">
       <Filter>src\AssetManager</Filter>
     </ClCompile>
-    <ClCompile Include="src\AssetManager\IAssetManager.cpp">
-      <Filter>src\AssetManager</Filter>
-    </ClCompile>
     <ClCompile Include="src\Audio\AudioEngine.cpp">
-      <Filter>src\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Audio\IAudioEngine.cpp">
       <Filter>src\Audio</Filter>
     </ClCompile>
     <ClCompile Include="src\Audio\Sound.cpp">
@@ -410,5 +399,6 @@
     <ClCompile Include="vendor\stb_image\include\stb_image\stb_image.c">
       <Filter>vendor\stb_image\include\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\ConstantBuffer.cpp" />
   </ItemGroup>
 </Project>

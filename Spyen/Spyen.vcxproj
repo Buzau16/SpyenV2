@@ -162,10 +162,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBuffer.h" />
     <ClInclude Include="src\AssetManager\AssetManager.h" />
-    <ClInclude Include="src\AssetManager\IAssetManager.h" />
     <ClInclude Include="src\Audio\AudioEngine.h" />
-    <ClInclude Include="src\Audio\IAudioEngine.h" />
     <ClInclude Include="src\Audio\Sound.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Core\Defines.h" />
@@ -238,10 +237,9 @@
     <ClInclude Include="vendor\stb_image\include\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\ConstantBuffer.cpp" />
     <ClCompile Include="src\AssetManager\AssetManager.cpp" />
-    <ClCompile Include="src\AssetManager\IAssetManager.cpp" />
     <ClCompile Include="src\Audio\AudioEngine.cpp" />
-    <ClCompile Include="src\Audio\IAudioEngine.cpp" />
     <ClCompile Include="src\Audio\Sound.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Core\Director.cpp" />

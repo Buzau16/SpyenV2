@@ -32,8 +32,7 @@ namespace Spyen {
 		m_WhiteTexture({1,1,4}),
 		m_HandleBuffer(nullptr, sizeof(uint64_t) * MaxQuads),
 		m_CameraBuffer(sizeof(glm::mat4), 1),
-		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads),
-		m_OccluderCountBuffer(sizeof(uint32_t), 5)
+		m_LightDataBuffer(nullptr, sizeof(LightData) * MaxQuads)
 	{
 		m_CameraBuffer.Bind(1);
 		// Initializing for the quads
@@ -196,8 +195,6 @@ namespace Spyen {
 
 			m_LightShader.Bind();
 
-
-
 			m_LightShader.SetUniform1i("u_LightCount", m_LightCount);
 
 			if (m_LightCount != m_LightDatas.size()) {
@@ -207,12 +204,9 @@ namespace Spyen {
 			m_LightDataBuffer.Bind(2);
 			m_LightDataBuffer.SetData(m_LightDatas.data(), m_LightDatas.size() * sizeof(LightData));
 
-			//m_OccluderDataBuffer.Bind(4);
-
 			RenderCommand::DrawIndexed(&m_LightVertexArray, m_LightIndexCount);
 			m_LightShader.Unbind();
 			m_LightDataBuffer.Unbind();
-			//m_OccluderDataBuffer.Unbind();
 		}
 		
 		m_CurrentFrameBuffer->Unbind();
@@ -372,17 +366,6 @@ namespace Spyen {
 		RenderCommand::DrawIndexed(&m_CompositeVertexArray, 6);
 		
 		m_CompositeShader.Unbind();
-	}
-
-	void Renderer::UploadOccluderData(std::span<Vec2> vertices)
-	{
-		if (!IsOccluderDataInit || vertices.size_bytes() != m_OccluderDataBuffer.GetBufferSize()) {
-			m_OccluderDataBuffer = SSBO(vertices.data(), vertices.size_bytes());
-			IsOccluderDataInit = true;
-		}
-		else {
-			m_OccluderDataBuffer.SetData(vertices.data(), vertices.size_bytes());
-		}
 	}
 
 	bool Renderer::IsQuadInFrustum(const Rectangle& rect)

@@ -4,7 +4,7 @@
 #include "QuadTree.h"
 #include "Scene/Components.h"
 #include "Math/Math.h"
-#include <AssetManager/IAssetManager.h>
+#include <Scene/Scene.h>
 #include <Core/Director.h>
 #include <Events/EntityEvents.h>
 

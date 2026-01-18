@@ -5,9 +5,8 @@
 #include <Core/Log.h>
 #include <Core/Director.h>
 
-#include <Audio/IAudioEngine.h>
-
-#include <AssetManager/IAssetManager.h>
+#include <Audio/AudioEngine.h>
+#include <AssetManager/AssetManager.h>
 
 #include <Events/KeyEvents.h>
 #include <Events/MouseEvents.h>

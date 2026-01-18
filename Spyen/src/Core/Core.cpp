@@ -2,12 +2,9 @@
 #include "Core.h"
 #include <filesystem>
 
-
-#include "AssetManager/IAssetManager.h"
 #include "Physics/QuadTree.h"
 #include "Scene/Components.h"
 #include "Time/TimeStep.h"
-#include <Audio/IAudioEngine.h>
 #include <Core/Director.h>
 #include <GLFW/glfw3.h>
 
@@ -35,29 +32,17 @@ namespace Spyen {
 		SPY_CORE_INFO("Working directory: {}", std::filesystem::current_path().string());
 		m_Window = std::make_unique<Window>(specs);
 		m_Renderer = std::make_unique<Renderer>();
-		m_AudioEngine = std::make_unique<AudioEngine>();
-		IAudioEngine::s_Engine = m_AudioEngine.get();
-		m_AssetManager = std::make_unique<AssetManager>();
-		IAssetManager::s_Instance = m_AssetManager.get();
-		m_PhysicsEngine = std::make_unique<PhysicsEngine>();
 		m_SceneManager = std::make_unique<SceneManager>();
+		AudioEngine::Init();
 		Director::s_Instance = this;
-		
 	}
 
 	Engine::~Engine()
 	{
-		if (IAssetManager::s_Instance)
-		{
-			IAssetManager::s_Instance = nullptr;
-		}
-		if (IAudioEngine::s_Engine)
-		{
-			IAudioEngine::s_Engine = nullptr;
-		}
 		if (Director::s_Instance) {
 			Director::s_Instance = nullptr;
 		}
+		AudioEngine::Destroy();
 	}
 
 	void Engine::Run() const
@@ -79,7 +64,7 @@ namespace Spyen {
 			// look into this as it makes the game engine run painfully slow at a high amount of objects clumped together
 			// Update physics at a fixed rate, independent of the fps / the rate that the game loop is running at
 			while (accumulator >= PhysicsStep) {
-				m_PhysicsEngine->Update(m_SceneManager->GetActiveScene(), {m_Window->GetWidth(), m_Window->GetHeight()}, PhysicsStep);
+				PhysicsEngine::Update(m_SceneManager->GetActiveScene(), {m_Window->GetWidth(), m_Window->GetHeight()}, PhysicsStep);
 				accumulator -= PhysicsStep;
 			}
 

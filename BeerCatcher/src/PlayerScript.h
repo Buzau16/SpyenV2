@@ -30,6 +30,7 @@ public:
 
 	bool OnCollision(Spyen::EntityHitEvent& event) {
 		SPY_INFO("COX");
+		Spyen::AudioEngine::PlaySound("shot");
 		return true;
 	}
 

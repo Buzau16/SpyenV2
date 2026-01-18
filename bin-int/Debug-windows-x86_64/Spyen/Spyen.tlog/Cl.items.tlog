@@ -1,12 +1,5 @@
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Framebuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Framebuffer.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\RenderCommand.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\RenderCommand.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scripting\ScriptEngine.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\ScriptEngine.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\SceneManager.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\SceneManager.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\SceneCamera.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\SceneCamera.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Scene.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Scene.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Entity.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Entity.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\ConstantBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\ConstantBuffer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\AssetManager\AssetManager.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\AssetManager.obj
-C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\AssetManager\IAssetManager.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\IAssetManager.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Audio\AudioEngine.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\AudioEngine.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Audio\IAudioEngine.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\IAudioEngine.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Audio\Sound.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Sound.obj
@@ -18,7 +11,9 @@ C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Input\Input.cpp;C:\Use
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Math\Math.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Math.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Physics\PhysicsEngine.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\PhysicsEngine.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Physics\QuadTree.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\QuadTree.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Framebuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Framebuffer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\IndexBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\IndexBuffer.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\RenderCommand.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\RenderCommand.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Renderer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Renderer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\SSBO.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\SSBO.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Shader.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Shader.obj
@@ -26,6 +21,11 @@ C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\Texture.cpp;C
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\UniformBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\UniformBuffer.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\VertexArray.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\VertexArray.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Renderer\VertexBuffer.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\VertexBuffer.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Entity.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Entity.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\Scene.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Scene.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\SceneCamera.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\SceneCamera.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scene\SceneManager.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\SceneManager.obj
+C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Scripting\ScriptEngine.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\ScriptEngine.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Time\TimeStep.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\TimeStep.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\Window\Window.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\Window.obj
 C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\Spyen\src\spypch.cpp;C:\Users\gpro9\source\repos\Buzau16\BeerCatcher\bin-int\Debug-windows-x86_64\Spyen\spypch.obj

@@ -7,11 +7,8 @@
 
 namespace Spyen
 {
-	AssetManager::AssetManager()
-	{
-		SPY_CORE_INFO("Initializing Asset Manager");
-	}
-
+	std::unordered_map<std::string, std::unique_ptr<Texture>> AssetManager::m_TextureMap;
+	std::unordered_map<std::string, std::unique_ptr<Sound>> AssetManager::m_SoundMap;
 	Texture* AssetManager::LoadTexture(const std::string& name, const std::filesystem::path& path)
 	{
 		SPY_CORE_ASSERT(!m_TextureMap.contains(name), "Texture {} already exists!", name);

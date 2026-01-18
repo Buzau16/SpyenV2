@@ -31,9 +31,6 @@ namespace Spyen {
 		// The order of these matters! Messing with the order might cause crashes or memory corruption
 		std::unique_ptr<Window> m_Window = nullptr;
 		std::unique_ptr<Renderer> m_Renderer = nullptr;
-		std::unique_ptr<AudioEngine> m_AudioEngine = nullptr;
-		std::unique_ptr<AssetManager> m_AssetManager = nullptr;
-		std::unique_ptr<PhysicsEngine> m_PhysicsEngine = nullptr;
 		std::unique_ptr<SceneManager> m_SceneManager = nullptr;
 		//std::vector<Event&> m_EventQueue;
 		friend class Director;

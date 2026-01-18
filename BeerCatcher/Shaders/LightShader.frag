@@ -23,7 +23,7 @@ out vec4 FragColor;
 uniform int u_LightCount;
 
 void main(){
-	vec2 fragPos = v_WorldPos;
+	vec2 fragPos = gl_FragCoord.xy;
     vec2 lightPos = ld[v_LightIndex].Position;
     float radius = ld[v_LightIndex].Radius;
     

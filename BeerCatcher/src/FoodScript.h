@@ -18,7 +18,7 @@ public:
 	bool OnCollision(Spyen::EntityHitEvent& event) {
 		eaten = true;
 		SPY_INFO("Food eaten");
-		return true;
+		return false;
 	}
 private:
 	bool eaten = false;

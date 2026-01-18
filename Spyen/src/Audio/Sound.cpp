@@ -1,14 +1,14 @@
 #include "spypch.h"
 #include "Sound.h"
 #include <filesystem>
-#include "Audio/IAudioEngine.h"
 #include <Core/Defines.h>
+#include <Audio/AudioEngine.h>
 #include <Core/Log.h>
 
 namespace Spyen {
 	Sound::Sound(const std::filesystem::path& path)
 	{
-		SPY_CORE_ASSERT(ma_sound_init_from_file(IAudioEngine::GetEngine(), path.string().c_str(), MA_SOUND_FLAG_DECODE, NULL, NULL, &m_Sound) == MA_SUCCESS, "Failed to load sound!");
+		SPY_CORE_ASSERT(ma_sound_init_from_file(AudioEngine::GetEngine(), path.string().c_str(), MA_SOUND_FLAG_DECODE, NULL, NULL, &m_Sound) == MA_SUCCESS, "Failed to load sound!");
 	}
 
 	Sound::~Sound()

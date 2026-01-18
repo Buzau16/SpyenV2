@@ -7,14 +7,16 @@ namespace Spyen {
 	class AudioEngine
 	{
 	public:
-		AudioEngine();
-		~AudioEngine();
 
-		void PlaySound(const std::string& name);
-		void StopSound(const std::string& name);
+		static void Init();
+		static void Destroy();
+		static void PlaySound(const std::string& name);
+		static void StopSound(const std::string& name);
+
+		static ma_engine* GetEngine() { return &m_Engine; };
 
 	private:
-		ma_engine m_Engine;
+		static ma_engine m_Engine;
 		friend class IAudioEngine;
 	};
 
