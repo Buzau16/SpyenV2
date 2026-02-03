@@ -99,6 +99,7 @@ StyleCopReport.xml
 *.svclog
 *.sc
 **/Makefile
+*.vscode
 
 ### C ###
 # Prerequisites
