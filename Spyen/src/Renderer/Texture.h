@@ -15,6 +15,7 @@ namespace Spyen
 	{
 	public:
 		Texture() = default;
+		// TODO: Remove this constructor
 		Texture(const std::filesystem::path& path);
 		Texture(const TextureSpecification& specs);
 		~Texture();

@@ -8,7 +8,7 @@
 constexpr uint32_t Width = 1280;
 constexpr uint32_t Height = 720;
 
-int WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+int main() {
 	Spyen::Engine engine(Width, Height, "Penis");
 
 	Spyen::AssetManager::LoadTexture("Box", "assets/textures/Player.png");

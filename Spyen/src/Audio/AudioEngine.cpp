@@ -23,12 +23,12 @@ namespace Spyen {
 
 	void AudioEngine::PlaySound(const std::string& name)
 	{
-		AssetManager::GetSound(name.c_str())->Play();
+		//AssetManager::GetSound(name.c_str())->Play();
 	}
 
 	void AudioEngine::StopSound(const std::string& name)
 	{
-		AssetManager::GetSound(name.c_str())->Stop();
+		//AssetManager::GetSound(name.c_str())->Stop();
 	}
 
 }

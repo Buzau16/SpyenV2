@@ -1,5 +1,5 @@
 #include "spypch.h"
-#include "math.h"
+#include "Math.h"
 
 #include <glm/glm.hpp>
 

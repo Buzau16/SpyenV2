@@ -8,7 +8,6 @@
 #include <Window/Window.h>
 #include <Renderer/Renderer.h>
 #include <memory>
-#include <AssetManager/AssetManager.h>
 #include <Physics/PhysicsEngine.h>
 #include <Scene/SceneManager.h>
 #include <Audio/AudioEngine.h>

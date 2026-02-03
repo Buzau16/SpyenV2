@@ -5,7 +5,7 @@
 #include <Core/UUID.h>
 #include <Time/TimeStep.h>
 #include <Renderer/Framebuffer.h>
-
+#include <AssetManager/SceneAssetManager.h>
 
 namespace Spyen {
 	class Entity;
@@ -47,7 +47,9 @@ namespace Spyen {
 		std::vector<entt::entity> m_DestroyQueue;
 		//std::vector<entt::entity> m_CreateQueue;
 		entt::registry m_Registry;
+		SceneAssetManager m_AssetManager;
 		friend class Entity;
+		friend class AssetManager;
 		friend class Renderer;
 	};
 

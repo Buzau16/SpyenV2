@@ -1,5 +1,16 @@
 #pragma once
 
+#ifdef _WIN64
+	#define SP_PLATFORM_WINDOWS
+#elif defined(_WIN32)
+	#error "x86 builds are not supported!"
+#elif defined(__linux__)
+	#define SP_PLATFORM_LINUX
+#elif
+	#error "Platform not supported!"
+#endif
+
+
 // To be used only in the Spyen source Code
 #define SP_BIT(x) (1 << x)
 
@@ -29,4 +40,11 @@
 
 #define SP_IS_SAME_TYPE(target, type) typeid(*target) == typeid(type)
 
-#define SP_ADD_SCRIPT(entity, script) entity.AddComponent<Spyen::ScriptComponent>().ScriptInstance = std::make_unique<script>();
+// add script is modified from using a unique ptr for now
+#define SP_ADD_SCRIPT(entity, script) entity.AddComponent<Spyen::ScriptComponent>().ScriptInstance = new script;
+
+#if defined(_MSC_VER)
+	#define SP_DEBUGBRAKE() __debugbrake()
+#elif defined(__GNUC__) || defined(__clang__)
+	#define SP_DEBUGBRAKE() __builtin_trap()
+#endif

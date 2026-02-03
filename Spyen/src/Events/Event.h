@@ -31,7 +31,7 @@ namespace Spyen {
 		virtual std::string ToString() { return GetName(); }
 		
 		template <typename T>
-		bool Is() const { return GetEventType() == T::GetStaticEventType(); };
+		bool Is() { return GetEventType() == T::GetStaticEventType(); };
 
 	public:
 		bool Handled = false;

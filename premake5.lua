@@ -18,11 +18,7 @@ project "Spyen"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "spypch.h"
-	pchsource "%{prj.name}/src/spypch.cpp"	
-
     flags { "MultiProcessorCompile" }
-    buildoptions { "/utf-8" }
 
 	
 	files {
@@ -51,23 +47,47 @@ project "Spyen"
 		"%{prj.name}/vendor/miniaudio/include"
 	}
 
-	libdirs{
-		"%{prj.name}/vendor/glfw/lib"
-	}
-	
-	links {
-		"glfw3",
-		"opengl32"
-	}
 
 	filter "files:Spyen/vendor/**.c"
 	flags {"NoPCH"}
 	
+    filter "action:gmake*"
+        buildoptions { 
+            "-std=c++23"
+        }
+
+    filter "system:linux"
+		libdirs{
+		    "%{prj.name}/vendor/glfw/lib/linux"
+	    }
+        links {
+            "GL",
+            "X11",
+            "pthread",
+            "dl",
+            "glfw3"
+        }
+        buildoptions {
+            "-finput-charset=UTF-8",
+            "-fexec-charset=UTF-8"
+        }
 	filter "system:windows"
 		cppdialect "C++23"
 		staticruntime "Off"
 		systemversion "latest"
+
+        libdirs{
+		    "%{prj.name}/vendor/glfw/lib/windows"
+	    }
+	
+
+        links {
+            "glfw3",
+            "opengl32"
+        }
+
 		
+        buildoptions { "/utf-8" }
 		
 		defines {
 			"SP_PLATFORM_WINDOWS",
@@ -104,7 +124,6 @@ project "BeerCatcher"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	
 	flags { "MultiProcessorCompile" }
-    buildoptions { "/utf-8" }
 
 
 	prebuildcommands{
@@ -125,28 +144,60 @@ project "BeerCatcher"
 		"Spyen/vendor/miniaudio/include"
 	}
 
+	
+
+    filter "action:gmake*"
+        buildoptions { "-std=c++23" }
+
+    filter "system:linux"
+
 	libdirs{
+		"Spyen/vendor/glfw/lib/linux"
 	}
 	
 	links {
-		"Spyen"
+    	"Spyen",
+    	"GL",
+    	"X11",
+   		"pthread",
+   		"dl",
+    	"glfw3"
 	}
+    buildoptions {
+        "-finput-charset=UTF-8",
+        "-fexec-charset=UTF-8"
+    }
 
 	filter "system:windows"
 		cppdialect "C++23"
 		staticruntime "Off"
 		systemversion "latest"
+
+        buildoptions { "/utf-8" }
+
+		libdirs{
+			"Spyen/vendor/glfw/lib/windows"
+		}	
+	
+		links {
+    		"Spyen",
+    		"GL",
+    		"X11",
+   			"pthread",
+   			"dl",
+    		"glfw3"
+		}
 		
 		defines {
 			"SP_PLATFORM_WINDOWS"
 		}
 
+        linkoptions { "/NODEFAULTLIB:MSVCRT" }
+
 	filter "configurations:Debug"
 		defines "SP_DEBUG"
 		runtime "Debug"
-		symbols "On"
-		linkoptions { "/NODEFAULTLIB:MSVCRT" }
-		
+		symbols "On"		
 		
 	filter "configurations:Release"
 		defines "SP_RELEASE"

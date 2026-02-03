@@ -4,8 +4,7 @@
 #include <Core/Log.h>
 
 namespace Spyen {
-	template<typename T>
-	requires std::is_arithmetic_v<T>
+	template<typename T> requires std::is_arithmetic_v<T>
 	struct Vector2 {
 		T x, y;
 

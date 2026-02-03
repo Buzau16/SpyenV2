@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 #include <memory>
+#include <Core/Defines.h>
 
 // This ignores all warnings raised inside External headers
 #pragma warning(push, 0)
@@ -48,8 +49,8 @@ namespace Spyen {
 #define SPY_CRITICAL(...)      ::Spyen::Log::GetClientLogger()->critical(__VA_ARGS__)
 
 
-#define SPY_ASSERT(x, ...) { if(!(x)) { SPY_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define SPY_CORE_ASSERT(x, ...) { if(!(x)) { SPY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define SPY_ASSERT(x, ...) { if(!(x)) { SPY_ERROR("Assertion Failed: {0}", __VA_ARGS__); SP_DEBUGBRAKE()(); } }
+#define SPY_CORE_ASSERT(x, ...) { if(!(x)) { SPY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); SP_DEBUGBRAKE(); } }
 #else
 #define SPY_ASSERT(x, ...) x
 #define SPY_CORE_ASSERT(x, ...) x

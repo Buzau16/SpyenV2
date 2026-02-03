@@ -5,6 +5,7 @@
 #include "Physics/QuadTree.h"
 #include "Scene/Components.h"
 #include "Time/TimeStep.h"
+#include <AssetManager/AssetManager.h>
 #include <Core/Director.h>
 #include <GLFW/glfw3.h>
 
@@ -16,6 +17,8 @@ namespace Spyen {
 	// - Light occlusion
 
 	// TODO: Refactor the sound system
+
+	// TODO: Refactor the Asset system to use assets, hopefully not crashes will be happening when closing
 
 	constexpr float PhysicsStep = 1.0f / 60.f;
 
